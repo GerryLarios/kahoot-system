@@ -1,0 +1,704 @@
+[
+  {
+    "id": "nextjs-interview",
+    "title": "Nextjs Interview",
+    "description": "For the NextJS Interview",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is Next.js?",
+        "options": [
+          "A React framework for building full-stack web applications.",
+          "A CSS framework built for server-side styling only.",
+          "A database ORM maintained by Vercel.",
+          "A browser extension for debugging React apps."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The official docs describe Next.js as a React framework for building full-stack web applications with features such as routing, rendering, and tooling built in."
+      },
+      {
+        "id": 2,
+        "question": "What is the quickest way to create a new Next.js app?",
+        "options": [
+          "Install React manually and then add Next.js later.",
+          "Use create-next-app.",
+          "Copy the Next.js source code into a local folder.",
+          "Create an app directory and skip package installation."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The installation page recommends create-next-app as the fastest way to scaffold a new Next.js project with sensible defaults."
+      },
+      {
+        "id": 3,
+        "question": "In the official quick start, what do you do right after creating the app?",
+        "options": [
+          "Run a production build immediately.",
+          "Open the database dashboard.",
+          "Change the bundler to Webpack first.",
+          "Change into the project directory and start the dev server."
+        ],
+        "correctAnswer": 3,
+        "explanation": "The quick start flow is: create the app, cd into it, run the development server, and visit the local URL in your browser."
+      },
+      {
+        "id": 4,
+        "question": "What local URL is used in the official quick start to view a Next.js app?",
+        "options": [
+          "http://localhost:8000",
+          "http://localhost:3000",
+          "http://127.0.0.1:5000",
+          "http://localhost:8080"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The official quick start instructs you to visit http://localhost:3000 after starting the development server."
+      },
+      {
+        "id": 5,
+        "question": "What is the minimum Node.js version listed in the system requirements?",
+        "options": ["18.0", "19.5", "20.9", "22.0"],
+        "correctAnswer": 2,
+        "explanation": "The installation page lists Node.js 20.9 as the minimum supported version for the development environment."
+      },
+      {
+        "id": 6,
+        "question": "Which operating systems are explicitly listed as supported development environments?",
+        "options": [
+          "macOS, Windows including WSL, and Linux.",
+          "Only macOS and Linux.",
+          "Only Windows and ChromeOS.",
+          "Any mobile operating system with Node installed."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The system requirements section names macOS, Windows including WSL, and Linux as supported environments."
+      },
+      {
+        "id": 7,
+        "question": "How does the documentation describe browser support for Next.js?",
+        "options": [
+          "It supports modern browsers with zero configuration.",
+          "It requires manual polyfill setup for all browsers.",
+          "It only supports Chromium-based browsers.",
+          "It works only when JavaScript is disabled."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The supported browsers section says Next.js supports modern browsers with zero configuration."
+      },
+      {
+        "id": 8,
+        "question": "Which scaffold command behavior does the `--yes` flag enable when using create-next-app?",
+        "options": [
+          "It forces Webpack instead of Turbopack.",
+          "It skips prompts by using saved preferences or defaults.",
+          "It disables TypeScript support.",
+          "It creates the project without installing dependencies."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that `--yes` skips interactive prompts and applies saved preferences or the recommended defaults."
+      },
+      {
+        "id": 9,
+        "question": "Which features are enabled by the recommended defaults in create-next-app according to the docs?",
+        "options": [
+          "Only JavaScript and Webpack.",
+          "TypeScript, Tailwind CSS, ESLint, App Router, Turbopack, import alias `@/*`, and AGENTS.md.",
+          "Redux, GraphQL, Prisma, and Docker.",
+          "Pages Router, Babel, Sass, and Cypress."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The installation page explicitly lists the recommended defaults, including TypeScript, Tailwind CSS, ESLint, App Router, Turbopack, the `@/*` alias, and AGENTS.md."
+      },
+      {
+        "id": 10,
+        "question": "If you choose to customize settings in create-next-app, which routing option can you choose?",
+        "options": [
+          "Only Pages Router is available.",
+          "App Router can be enabled or disabled.",
+          "You must configure routing manually after scaffolding.",
+          "You can only choose hash-based routing."
+        ],
+        "correctAnswer": 1,
+        "explanation": "One of the prompts asks whether you want to use the App Router, which is the recommended routing system in the docs."
+      },
+      {
+        "id": 11,
+        "question": "Which linter choices are offered in the installation prompts?",
+        "options": [
+          "TSLint, ESLint, or StandardJS.",
+          "ESLint, Biome, or None.",
+          "Prettier, ESLint, or Rome only.",
+          "Biome only."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The create-next-app customization flow includes a linter prompt with ESLint, Biome, or None as the options."
+      },
+      {
+        "id": 12,
+        "question": "What optional compiler-related prompt appears in the create-next-app customization flow?",
+        "options": [
+          "Whether to use the React Compiler.",
+          "Whether to use the Rust TypeScript compiler.",
+          "Whether to compile with SWC or Babel only.",
+          "Whether to use the Edge compiler for all code."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The prompt list shown in the installation docs includes an option asking whether you would like to use React Compiler."
+      },
+      {
+        "id": 13,
+        "question": "What does the `src/` directory prompt let you decide during project creation?",
+        "options": [
+          "Whether to keep all dependencies in src.",
+          "Whether to place your application code inside a `src/` directory.",
+          "Whether static assets must live in src/public.",
+          "Whether routes are generated from the src root automatically only in production."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs show a prompt asking if you want your code inside a `src/` directory, which is an organizational preference."
+      },
+      {
+        "id": 14,
+        "question": "What does the import alias prompt configure by default?",
+        "options": [
+          "A default alias of `~/`.",
+          "A default alias of `src/*`.",
+          "A default alias of `@/*`.",
+          "A default alias of `#app/*`."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The installation flow shows that the default import alias is `@/*`, and you can customize it if you want."
+      },
+      {
+        "id": 15,
+        "question": "Why might create-next-app include AGENTS.md according to the docs?",
+        "options": [
+          "To store production secrets.",
+          "To document database migrations.",
+          "To guide coding agents to write up-to-date Next.js code.",
+          "To replace the README file."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The recommended defaults mention AGENTS.md specifically as guidance for coding agents so they follow current Next.js practices."
+      },
+      {
+        "id": 16,
+        "question": "What is the main idea behind file-system routing in Next.js?",
+        "options": [
+          "Routes must be registered in a central router file.",
+          "Routes are generated from the folder and file structure of the app.",
+          "Only JSON files can become routes.",
+          "Routing is configured only through next.config.js."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The installation page explains that Next.js uses file-system routing, so the route structure is determined by how you organize files and folders."
+      },
+      {
+        "id": 17,
+        "question": "Which directory is required when manually setting up an App Router project?",
+        "options": ["pages", "routes", "app", "views"],
+        "correctAnswer": 2,
+        "explanation": "In the manual installation steps, the docs tell you to create an `app` directory because the App Router uses it for routes and layouts."
+      },
+      {
+        "id": 18,
+        "question": "What is the purpose of `app/layout.tsx` in a manually created App Router project?",
+        "options": [
+          "It is the root layout file for the application.",
+          "It defines ESLint rules for the app.",
+          "It is used only for API routes.",
+          "It configures image optimization."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The manual setup instructions identify `app/layout.tsx` as the root layout, which is required in the App Router."
+      },
+      {
+        "id": 19,
+        "question": "Which HTML tags must the root layout contain?",
+        "options": [
+          "Only a `<main>` tag.",
+          "Only a `<head>` tag.",
+          "`<html>` and `<body>` tags.",
+          "`<section>` and `<article>` tags."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The docs explicitly state that the root layout must contain the `<html>` and `<body>` tags."
+      },
+      {
+        "id": 20,
+        "question": "What is the role of `app/page.tsx` in the App Router?",
+        "options": [
+          "It defines the home page for the route segment.",
+          "It stores project-wide environment variables.",
+          "It replaces package.json scripts.",
+          "It is required only when using the Pages Router."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The installation guide has you create `app/page.tsx` as the home page content for the root route (`/`)."
+      },
+      {
+        "id": 21,
+        "question": "When a user visits `/`, which files are rendered in the manual App Router example?",
+        "options": [
+          "Only `app/layout.tsx`.",
+          "Only `app/page.tsx`.",
+          "`app/layout.tsx` and `app/page.tsx` together.",
+          "Only `public/index.html`."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The documentation states that both `layout.tsx` and `page.tsx` are rendered when visiting the root route."
+      },
+      {
+        "id": 22,
+        "question": "What happens if you forget to create the root layout and then run `next dev`?",
+        "options": [
+          "Next.js automatically creates the file.",
+          "The build always fails until you add Babel.",
+          "The app switches to the Pages Router.",
+          "Routing is disabled until you restart the machine."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs note that if the root layout is missing, Next.js will automatically create it when you run the development server."
+      },
+      {
+        "id": 23,
+        "question": "Why might you choose to use a `src` folder in a Next.js project?",
+        "options": [
+          "It is required for TypeScript to work.",
+          "It separates application code from root-level config files.",
+          "It is the only place where components are allowed.",
+          "It disables absolute imports by default."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The installation guide says a `src` folder is optional and can be used to keep application code separate from configuration files in the project root."
+      },
+      {
+        "id": 24,
+        "question": "What is the purpose of the `public` folder in Next.js?",
+        "options": [
+          "It stores private environment files.",
+          "It stores static assets such as images and fonts.",
+          "It contains route handlers only.",
+          "It replaces the app directory in production."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs describe `public` as an optional folder for static assets like images and fonts that can be served from the base URL."
+      },
+      {
+        "id": 25,
+        "question": "How do you reference a file named `public/profile.png` from your application code?",
+        "options": [
+          "`/public/profile.png`",
+          "`./public/profile.png`",
+          "`assets/profile.png`",
+          "`/profile.png`"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Files inside `public` are referenced from the base URL. The docs use `/profile.png` as the example path."
+      },
+      {
+        "id": 26,
+        "question": "Which package installation command is shown for manually creating a Next.js app?",
+        "options": [
+          "Install only `next` because React is bundled automatically.",
+          "Install `next`, `react`, and `react-dom`.",
+          "Install `next`, `vite`, and `react-router`.",
+          "Install `next`, `express`, and `webpack` only."
+        ],
+        "correctAnswer": 1,
+        "explanation": "In the manual installation section, the docs instruct you to install `next@latest`, `react@latest`, and `react-dom@latest`."
+      },
+      {
+        "id": 27,
+        "question": "Why do the docs still tell you to declare `react` and `react-dom` in `package.json` when using the App Router?",
+        "options": [
+          "Because the App Router cannot run without installing Vue.",
+          "Because they are needed for tooling and ecosystem compatibility.",
+          "Because Next.js does not include React at all.",
+          "Because they are only used for linting."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that the App Router uses React canary releases internally, but `react` and `react-dom` should still be declared for tooling and ecosystem compatibility."
+      },
+      {
+        "id": 28,
+        "question": "Which script starts the development server in a manually configured project?",
+        "options": ["`next build`", "`next start`", "`next dev`", "`eslint`"],
+        "correctAnswer": 2,
+        "explanation": "The package.json example on the installation page uses `next dev` for the `dev` script."
+      },
+      {
+        "id": 29,
+        "question": "Which script builds the application for production?",
+        "options": [
+          "`next dev`",
+          "`next build`",
+          "`next start`",
+          "`next lint`"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs describe `next build` as the command that builds the application for production."
+      },
+      {
+        "id": 30,
+        "question": "Which script starts the production server after a build?",
+        "options": [
+          "`next start`",
+          "`next dev`",
+          "`next serve`",
+          "`node server.js`"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The package.json example uses `next start` to run the production server after building the app."
+      },
+      {
+        "id": 31,
+        "question": "What does the `eslint` script do in the package.json example?",
+        "options": [
+          "It starts Turbopack.",
+          "It runs ESLint.",
+          "It compiles TypeScript to JavaScript.",
+          "It generates the app directory automatically."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The installation docs show `eslint` as the lint script for projects using ESLint."
+      },
+      {
+        "id": 32,
+        "question": "Which bundler is the default for `next dev` according to the installation docs?",
+        "options": ["Webpack", "Parcel", "Turbopack", "Rollup"],
+        "correctAnswer": 2,
+        "explanation": "The docs state that Turbopack is now the default bundler for the development server."
+      },
+      {
+        "id": 33,
+        "question": "How can you explicitly use Webpack instead of Turbopack for development?",
+        "options": [
+          "Run `next dev --webpack`.",
+          "Run `webpack next dev`.",
+          "Set `bundler=webpack` in `.env.local`.",
+          "Delete the app directory."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The installation page says you can switch to Webpack by running `next dev --webpack` or `next build --webpack`."
+      },
+      {
+        "id": 34,
+        "question": "After starting the dev server, what does the documentation suggest you edit to see live updates in the browser?",
+        "options": [
+          "`package.json`",
+          "`app/page.tsx`",
+          "`next.config.js`",
+          "`public/robots.txt`"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The run-the-development-server section says to edit `app/page.tsx` and save the file to see the changes reflected in the browser."
+      },
+      {
+        "id": 35,
+        "question": "How does Next.js add TypeScript support to a project according to the official docs?",
+        "options": [
+          "You must install a third-party TypeScript plugin before the app will run.",
+          "Rename a file to `.ts` or `.tsx` and run `next dev`.",
+          "TypeScript only works if you create the app with Babel disabled.",
+          "You must manually write all Next.js type declarations yourself."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The installation page says TypeScript support is built in. Renaming a file to `.ts` or `.tsx` and running `next dev` will trigger dependency installation and config generation."
+      },
+      {
+        "id": 36,
+        "question": "What file will Next.js automatically add when TypeScript is enabled in a project?",
+        "options": [
+          "`babel.config.ts`",
+          "`vite.config.ts`",
+          "`tsconfig.json`",
+          "`types.env.json`"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The docs state that when you enable TypeScript, Next.js adds a `tsconfig.json` file with recommended settings."
+      },
+      {
+        "id": 37,
+        "question": "What minimum TypeScript version is listed on the installation page?",
+        "options": ["4.8.0", "5.0.0", "5.1.0", "5.5.0"],
+        "correctAnswer": 2,
+        "explanation": "The TypeScript setup section lists version 5.1.0 as the minimum supported TypeScript version."
+      },
+      {
+        "id": 38,
+        "question": "What extra editor support does Next.js include for TypeScript users?",
+        "options": [
+          "A custom TypeScript plugin and type checker.",
+          "A built-in GraphQL schema generator.",
+          "A browser extension for compiling TS in Chrome.",
+          "An automatic Prisma client generator."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs mention that Next.js includes a custom TypeScript plugin and type checker that editors such as VS Code can use."
+      },
+      {
+        "id": 39,
+        "question": "How do the docs suggest enabling the Next.js TypeScript plugin in VS Code?",
+        "options": [
+          "Install a separate Vercel extension and restart the editor.",
+          "Choose “Use Workspace Version” from “TypeScript: Select TypeScript Version”.",
+          "Set `typescript.nextPlugin=true` in package.json.",
+          "Run `next ts-plugin enable` in the terminal."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The installation guide tells VS Code users to open the command palette, choose “TypeScript: Select TypeScript Version”, and then select “Use Workspace Version”."
+      },
+      {
+        "id": 40,
+        "question": "Which linting choices does the installation page recommend at a high level?",
+        "options": [
+          "Only ESLint is supported.",
+          "Only Biome is supported.",
+          "You can use either ESLint or Biome.",
+          "Linting is discouraged in Next.js 16 and later."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The linting section says Next.js supports linting with either ESLint or Biome, and you can run the chosen tool through package.json scripts."
+      },
+      {
+        "id": 41,
+        "question": "What is the recommended explicit ESLint config file mentioned in the docs?",
+        "options": [
+          "`eslint.config.mjs`",
+          "`.nextlintrc`",
+          "`lint.config.ts`",
+          "`vercel-eslint.json`"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs recommend creating an explicit ESLint configuration, and `eslint.config.mjs` is the suggested modern format."
+      },
+      {
+        "id": 42,
+        "question": "Starting with Next.js 16, what changed about linting during `next build`?",
+        "options": [
+          "The build always runs both ESLint and Biome automatically.",
+          "Linting was removed entirely from Next.js.",
+          "`next build` no longer runs the linter automatically.",
+          "Linting now requires the Pages Router only."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The installation page notes that beginning with Next.js 16, `next build` does not run the linter automatically, so linting should be done via explicit scripts."
+      },
+      {
+        "id": 43,
+        "question": "If a project still uses `next lint`, what migration path does the docs provide?",
+        "options": [
+          "Delete the lint script and rely on build errors only.",
+          "Use the `next-lint-to-eslint-cli` codemod.",
+          "Rename `next lint` to `next style`.",
+          "Switch the entire project to Babel."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The linting section recommends a codemod named `next-lint-to-eslint-cli` to migrate existing `next lint` scripts."
+      },
+      {
+        "id": 44,
+        "question": "What built-in TypeScript and JavaScript configuration features does Next.js support for cleaner imports?",
+        "options": [
+          "Only package exports.",
+          "Only import maps from HTML.",
+          "`baseUrl` and `paths` in `tsconfig.json` or `jsconfig.json`.",
+          "Only webpack aliases in `next.config.js`."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The absolute imports section explains that Next.js supports the `baseUrl` and `paths` options in `tsconfig.json` and `jsconfig.json`."
+      },
+      {
+        "id": 45,
+        "question": "What does the `baseUrl` option help you do in a Next.js project?",
+        "options": [
+          "Set the deployment URL for Vercel.",
+          "Choose the browser support matrix.",
+          "Resolve imports relative to a project directory such as `src/`.",
+          "Force all imports to remain deeply relative."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The docs show `baseUrl` being used to make imports cleaner by resolving them from a root like `src/` instead of long relative paths."
+      },
+      {
+        "id": 46,
+        "question": "What is the purpose of the `paths` option in `tsconfig.json` or `jsconfig.json`?",
+        "options": [
+          "To map module aliases such as `@/components/*` to actual directories.",
+          "To define HTTP redirects.",
+          "To configure static asset caching headers.",
+          "To create route handlers automatically."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The installation page uses `paths` to create aliases like `@/components/*`, which improves readability and avoids deep relative import chains."
+      },
+      {
+        "id": 47,
+        "question": "In the docs example, what does an import like `@/components/button` represent?",
+        "options": [
+          "A dynamic API route.",
+          "An absolute import alias pointing to a project directory.",
+          "A browser-only package provided by Chrome.",
+          "A required package from npm named `@/components`."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The alias example shows `@/components/button` as a cleaner replacement for long relative import paths."
+      },
+      {
+        "id": 48,
+        "question": "How are `paths` mappings interpreted relative to configuration?",
+        "options": [
+          "They are always relative to the public directory.",
+          "They are relative to the `baseUrl` location.",
+          "They are relative to `node_modules`.",
+          "They are relative to the OS home directory."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explicitly state that each `paths` mapping is resolved relative to the configured `baseUrl`."
+      },
+      {
+        "id": 49,
+        "question": "Which statement about `jsconfig.json` is correct in the context of Next.js aliases?",
+        "options": [
+          "It can be used instead of `tsconfig.json` in JavaScript projects.",
+          "It is only valid in the Pages Router.",
+          "It is required even when using TypeScript.",
+          "It replaces package.json completely."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The absolute imports section says that both `tsconfig.json` and `jsconfig.json` can be used for alias setup, depending on whether your project uses TypeScript or plain JavaScript."
+      },
+      {
+        "id": 50,
+        "question": "Which root layout signature shown in the docs is correct for an App Router TypeScript project?",
+        "options": [
+          "A function that receives `{ children }: { children: React.ReactNode }`.",
+          "A function that must receive `(req, res)`.",
+          "A class component extending `NextLayout`.",
+          "A function that returns only a `<head>` element."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The manual installation example uses a root layout function that accepts `children` typed as `React.ReactNode`."
+      },
+      {
+        "id": 51,
+        "question": "What is the simplest page content used in the manual installation example?",
+        "options": [
+          "A dashboard with nested layouts and data fetching.",
+          "An API route returning JSON.",
+          "An `<h1>Hello, Next.js!</h1>` home page.",
+          "A login form with server actions."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The manual setup example creates a minimal home page that returns `<h1>Hello, Next.js!</h1>`."
+      },
+      {
+        "id": 52,
+        "question": "Which built-in component does the installation page use when demonstrating how to render an image from `public`?",
+        "options": [
+          "`next/script`",
+          "`next/font`",
+          "`next/link`",
+          "`next/image`"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The public folder example imports `Image` from `next/image` to show how a static asset such as `/profile.png` can be rendered."
+      },
+      {
+        "id": 53,
+        "question": "If you manually configure scripts and want to lint with Biome, what kind of script do the docs suggest?",
+        "options": [
+          "A script such as `biome check`.",
+          "A script such as `next biome`.",
+          "A script such as `npm run next-lint`.",
+          "A script such as `next build --biome`."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The linting section shows Biome scripts like `biome check` and `biome format --write` as examples."
+      },
+      {
+        "id": 54,
+        "question": "What is the main purpose of `next start` compared to `next dev`?",
+        "options": [
+          "`next start` runs the production server, while `next dev` runs the development server.",
+          "`next start` installs dependencies, while `next dev` removes them.",
+          "`next start` is only for API routes, while `next dev` is only for pages.",
+          "They are identical commands with different names."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The package.json example distinguishes `next dev` for development and `next start` for serving the production build."
+      },
+      {
+        "id": 55,
+        "question": "Which statement best matches the App Router note in the manual installation docs?",
+        "options": [
+          "The App Router uses React canary releases built in.",
+          "The App Router requires React 17 exactly.",
+          "The App Router disables TypeScript support by default.",
+          "The App Router only works if you avoid layouts."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs note that the App Router uses React canary releases built in, including stable React 19 changes and newer framework-validated features."
+      },
+      {
+        "id": 56,
+        "question": "What is the purpose of the `lint:fix` script shown in the manual package.json example?",
+        "options": [
+          "To run the production server with auto-fixes.",
+          "To format HTML output in the browser.",
+          "To apply automatic lint fixes using ESLint.",
+          "To rebuild Turbopack caches."
+        ],
+        "correctAnswer": 2,
+        "explanation": "The package.json example includes `lint:fix` as `eslint --fix`, which runs ESLint and applies any automatic fixes it can."
+      },
+      {
+        "id": 57,
+        "question": "If you want to create a Next.js app without create-next-app, which approach does the docs call this?",
+        "options": [
+          "Hybrid installation.",
+          "Manual installation.",
+          "Server bootstrap mode.",
+          "Runtime-only setup."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The official installation page has a dedicated “Manual installation” section for setting up a project yourself without the scaffolding CLI."
+      },
+      {
+        "id": 58,
+        "question": "Which of the following is a correct reason to prefer create-next-app for beginners?",
+        "options": [
+          "It automatically sets up routing, linting, and other project defaults for you.",
+          "It avoids installing dependencies entirely.",
+          "It removes the need for React.",
+          "It only works for static export projects."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs position create-next-app as the quickest path because it scaffolds a working project and installs the required dependencies automatically."
+      },
+      {
+        "id": 59,
+        "question": "What is the key difference between a relative import like `../../../components/button` and an alias import like `@/components/button`?",
+        "options": [
+          "The alias version is cleaner and relies on configured absolute import settings.",
+          "The relative version only works in production.",
+          "The alias version only works in CSS files.",
+          "There is no practical difference between them."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs use this exact before-and-after example to show how aliases reduce deep relative paths and make imports easier to maintain."
+      },
+      {
+        "id": 60,
+        "question": "Which summary best reflects the official installation page's recommended path for getting started with Next.js today?",
+        "options": [
+          "Start with the App Router and let create-next-app scaffold a project with recommended defaults.",
+          "Begin with a custom Express server and add Next.js later.",
+          "Use the Pages Router by default because the App Router is deprecated.",
+          "Skip the development server and write only production config first."
+        ],
+        "correctAnswer": 0,
+        "explanation": "The official installation page centers the getting-started flow around create-next-app, the App Router, recommended defaults, and a fast local development loop."
+      }
+    ]
+  }
+]

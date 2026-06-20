@@ -1,0 +1,724 @@
+[
+  {
+    "id": "reactjs-interview",
+    "title": "React Interview",
+    "description": "Official React fundamentals interview quiz",
+    "questions": [
+      {
+        "id": 1,
+        "question": "How do the official docs describe React?",
+        "options": [
+          "A JavaScript library for rendering user interfaces",
+          "A server-side runtime for JavaScript APIs",
+          "A CSS framework for component styling",
+          "A database layer for browser applications"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The React docs describe React as a JavaScript library for rendering user interfaces."
+      },
+      {
+        "id": 2,
+        "question": "What is a React component in the Learn docs?",
+        "options": [
+          "A JSON object describing part of the DOM",
+          "A JavaScript function that can return markup",
+          "A CSS module with scoped styles",
+          "A built-in browser event"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that React components are JavaScript functions that return markup."
+      },
+      {
+        "id": 3,
+        "question": "Why do React component names start with a capital letter?",
+        "options": [
+          "Because lowercase names are reserved for Hooks",
+          "Because React uses capitalization to distinguish components from HTML tags",
+          "Because JavaScript requires all exported functions to be capitalized",
+          "Because only classes can render JSX"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Quick Start notes that component names must start with a capital letter, while built-in HTML tags are lowercase."
+      },
+      {
+        "id": 4,
+        "question": "What is JSX?",
+        "options": [
+          "A separate template language that React compiles on the server only",
+          "A syntax extension that lets you write HTML-like markup in JavaScript",
+          "A special JSON format for React props",
+          "A browser API for custom elements"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs define JSX as a syntax extension that lets you write markup inside JavaScript."
+      },
+      {
+        "id": 5,
+        "question": "Which statement about JSX is correct?",
+        "options": [
+          "JSX allows multiple top-level elements without a wrapper in a return statement",
+          "JSX is less strict than HTML",
+          "JSX tags must be properly closed and wrapped when returning multiple siblings",
+          "JSX can only contain static text"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The React docs emphasize that JSX is stricter than HTML: tags must be closed, and multiple siblings must be wrapped in a parent or fragment."
+      },
+      {
+        "id": 6,
+        "question": "What is the React-friendly prop name for applying a CSS class?",
+        "options": ["class", "cssClass", "className", "styles"],
+        "correctAnswer": 2,
+        "explanation": "React uses className to specify CSS classes in JSX."
+      },
+      {
+        "id": 7,
+        "question": "What do curly braces in JSX let you do?",
+        "options": [
+          "Declare a new component inline",
+          "Escape into JavaScript expressions",
+          "Attach CSS files directly",
+          "Disable automatic re-rendering"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs describe JSX curly braces as a way to embed JavaScript expressions inside markup or attributes."
+      },
+      {
+        "id": 8,
+        "question": "What are props in React?",
+        "options": [
+          "A built-in state store shared by all components",
+          "Information passed from a parent component to a child component",
+          "Special functions used to schedule effects",
+          "A low-level API for rendering to the DOM"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that props are how parent components pass information to child components."
+      },
+      {
+        "id": 9,
+        "question": "Which values can be passed through props according to the docs?",
+        "options": [
+          "Only strings and numbers",
+          "Only objects and arrays",
+          "Any JavaScript value, including objects, arrays, functions, and JSX",
+          "Only values that can be serialized to JSON"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The docs explicitly note that props can carry any JavaScript value, including functions, objects, arrays, and JSX."
+      },
+      {
+        "id": 10,
+        "question": "What is the children prop commonly used for?",
+        "options": [
+          "Holding internal component state",
+          "Representing nested content inside a component tag",
+          "Storing a component's effect dependencies",
+          "Referencing DOM nodes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs show children as the prop that represents nested content passed between a component's opening and closing tags."
+      },
+      {
+        "id": 11,
+        "question": "How does React handle conditional rendering?",
+        "options": [
+          "With a special template syntax unique to React",
+          "By using ordinary JavaScript like if, &&, and ?: inside components",
+          "By requiring a built-in Conditional component",
+          "By mutating the DOM directly in event handlers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say there is no special React-only conditional syntax; you use normal JavaScript control flow."
+      },
+      {
+        "id": 12,
+        "question": "Why does React ask for a key when rendering lists?",
+        "options": [
+          "To make arrays iterable in JSX",
+          "To help React identify which items changed, were inserted, or were removed",
+          "To force each item to render only once",
+          "To sort the list automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The list rendering docs say keys help React track each item's identity across updates."
+      },
+      {
+        "id": 13,
+        "question": "What is usually the best source for a key in a rendered list?",
+        "options": [
+          "A stable unique ID from the data",
+          "The array index in every case",
+          "A random number generated during render",
+          "The component's display name"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs recommend using a stable unique identifier from your data, such as a database ID."
+      },
+      {
+        "id": 14,
+        "question": "What does it mean for a component to be pure?",
+        "options": [
+          "It never uses props or state",
+          "Given the same inputs, it returns the same JSX and does not mutate preexisting values",
+          "It only renders built-in HTML tags",
+          "It must be written as a class"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs define purity as same inputs producing the same output and avoiding side effects during rendering."
+      },
+      {
+        "id": 15,
+        "question": "Why does React Strict Mode sometimes call components twice in development?",
+        "options": [
+          "To improve production performance automatically",
+          "To surface bugs caused by impure rendering logic",
+          "To simulate concurrent server rendering only",
+          "To preserve state across refreshes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that Strict Mode double-invokes rendering in development to help find impure logic."
+      },
+      {
+        "id": 16,
+        "question": "What is state in React?",
+        "options": [
+          "A component's memory that can change over time",
+          "A replacement for props in parent-child communication",
+          "A DOM-only storage mechanism",
+          "A static configuration object"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs describe state as component-specific memory used to remember information and update the UI over time."
+      },
+      {
+        "id": 17,
+        "question": "What does useState return?",
+        "options": [
+          "A reducer and a dispatch function",
+          "The current state and a function to update it",
+          "A ref object and a cleanup function",
+          "A context value and provider"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that useState returns a pair: the current state value and a setter function."
+      },
+      {
+        "id": 18,
+        "question": "What happens when you call a state setter like setCount?",
+        "options": [
+          "It changes the current variable immediately inside the same render",
+          "It requests a re-render with updated state",
+          "It mutates the DOM directly before React renders",
+          "It clears all sibling component state"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say setting state queues a re-render rather than immediately changing the already running code's local snapshot."
+      },
+      {
+        "id": 19,
+        "question": "How do the docs describe state inside an event handler?",
+        "options": [
+          "As a live mutable variable that changes immediately",
+          "As a snapshot fixed for that render",
+          "As a DOM attribute mirror",
+          "As a shared global value"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The 'State as a Snapshot' page explains that state behaves like a snapshot within the currently running render and event handler."
+      },
+      {
+        "id": 20,
+        "question": "Why might setScore(score + 1) called three times only increment once?",
+        "options": [
+          "Because React ignores repeated state updates in one event handler",
+          "Because each call reads the same state snapshot from that render",
+          "Because useState only supports one update per click",
+          "Because React batches only odd-numbered updates"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs show that repeated updates based on the same snapshot can collapse unless you use the updater form."
+      },
+      {
+        "id": 21,
+        "question": "What is the recommended fix for multiple sequential updates based on previous state?",
+        "options": [
+          "Call setState inside useEffect",
+          "Use the updater function form, like setScore(s => s + 1)",
+          "Mutate the state variable before calling the setter",
+          "Wrap each update in setTimeout"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs recommend the updater function when the next state depends on the previous state."
+      },
+      {
+        "id": 22,
+        "question": "How should you update an object stored in state?",
+        "options": [
+          "Mutate its properties directly, then call setState with the same object",
+          "Create a new object and set state to that copy",
+          "Use JSON.stringify before every update",
+          "Only update objects inside effects"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say state objects should be treated as read-only; create a new object instead of mutating the existing one."
+      },
+      {
+        "id": 23,
+        "question": "How should arrays in state be treated?",
+        "options": [
+          "As mutable values that should be edited in place",
+          "As read-only values that should be replaced with new arrays on update",
+          "As refs that never trigger re-renders",
+          "As DOM collections managed outside React"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say arrays in state should be treated as read-only and replaced with updated copies."
+      },
+      {
+        "id": 24,
+        "question": "What does 'lifting state up' mean?",
+        "options": [
+          "Moving state into context automatically",
+          "Moving shared state to the closest common parent so multiple children can stay in sync",
+          "Converting local state into a reducer",
+          "Persisting state across page reloads"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs describe lifting state up as moving shared state to the nearest common parent and passing it down via props."
+      },
+      {
+        "id": 25,
+        "question": "What is one common use of context according to the docs?",
+        "options": [
+          "Replacing keys in rendered lists",
+          "Passing data deeply without prop drilling",
+          "Mutating props in nested components",
+          "Scheduling effects after every render"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The context docs present it as a way to make information available deep in the tree without passing props through every layer."
+      },
+      {
+        "id": 26,
+        "question": "What problem does a reducer solve in React?",
+        "options": [
+          "It lets JSX return multiple root elements",
+          "It consolidates complex state update logic in one function",
+          "It automatically memoizes components",
+          "It replaces the DOM commit phase"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs recommend reducers when state updates are spread across many handlers and need to be centralized."
+      },
+      {
+        "id": 27,
+        "question": "What are the three high-level steps of a UI update in React?",
+        "options": [
+          "Parse, diff, hydrate",
+          "Trigger, render, commit",
+          "Mount, cache, flush",
+          "Import, compile, attach"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Render and Commit docs summarize React updates as trigger, render, and commit."
+      },
+      {
+        "id": 28,
+        "question": "Which two reasons can cause a component to render according to the docs?",
+        "options": [
+          "Initial render or a state update in the component or one of its ancestors",
+          "Only prop changes and context changes",
+          "Only direct DOM events and timers",
+          "Only parent re-renders and key changes"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs say a component renders for its initial render or when its own state or an ancestor's state updates."
+      },
+      {
+        "id": 29,
+        "question": "What happens during the render step?",
+        "options": [
+          "React directly mutates the browser DOM as it calls components",
+          "React calls components to figure out what should be displayed",
+          "React sends network requests for component data by default",
+          "React stores event handlers in localStorage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "During rendering, React calls components recursively to calculate the next UI output."
+      },
+      {
+        "id": 30,
+        "question": "What happens during the commit step?",
+        "options": [
+          "React applies the minimal DOM updates needed to match the latest render output",
+          "React re-runs all effects before touching the DOM",
+          "React resets all refs to null",
+          "React discards state snapshots from event handlers"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs explain that React commits by applying the minimal necessary DOM operations."
+      },
+      {
+        "id": 31,
+        "question": "Why might React leave an input alone during a re-render?",
+        "options": [
+          "Because React never updates form elements",
+          "Because if the input appears in the same place and its rendered output didn't change, React does not need to touch it",
+          "Because inputs are always controlled by the browser after the first paint",
+          "Because React cannot diff text inputs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Render and Commit docs show that React only changes DOM nodes when there is a meaningful difference between renders."
+      },
+      {
+        "id": 32,
+        "question": "What is a Hook in React?",
+        "options": [
+          "A built-in event emitted before commit",
+          "A function starting with use that lets components use React features",
+          "A prop reserved for parent-child communication",
+          "A replacement for JSX"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say functions starting with use are Hooks and let components access React features like state and effects."
+      },
+      {
+        "id": 33,
+        "question": "Where can Hooks be called according to the docs?",
+        "options": [
+          "Only inside loops so they re-run consistently",
+          "At the top level of components or other custom Hooks",
+          "Only in event handlers",
+          "Anywhere as long as the function name starts with use"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say Hooks must be called at the top level of React components or custom Hooks, not conditionally or in loops."
+      },
+      {
+        "id": 34,
+        "question": "What is a custom Hook?",
+        "options": [
+          "A browser extension React installs for debugging",
+          "A JavaScript function that uses Hooks to share reusable logic",
+          "A context provider with a special naming rule",
+          "A reducer that returns JSX"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs describe custom Hooks as functions you write to reuse logic built from existing Hooks."
+      },
+      {
+        "id": 35,
+        "question": "What is a ref useful for in React?",
+        "options": [
+          "Storing information that should trigger a re-render every time it changes",
+          "Remembering information without triggering a re-render and accessing DOM nodes when needed",
+          "Passing data to child components more efficiently than props",
+          "Defining list keys dynamically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The refs docs explain that refs let components remember values without re-rendering and can point to DOM nodes."
+      },
+      {
+        "id": 36,
+        "question": "What is the key difference between state and refs?",
+        "options": [
+          "Refs trigger re-renders, but state does not",
+          "Changing state re-renders a component, while changing a ref does not",
+          "State can store objects, but refs cannot",
+          "Refs are only available in class components"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say refs are retained across renders, but changing ref.current does not trigger a re-render the way state updates do."
+      },
+      {
+        "id": 37,
+        "question": "What is a common React use case for refs to DOM nodes?",
+        "options": [
+          "Automatically synchronizing server state",
+          "Focusing, scrolling to, or measuring an element managed by React",
+          "Replacing props in nested trees",
+          "Declaring reducers inline"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs use refs for DOM operations such as focusing an input, scrolling, or measuring layout."
+      },
+      {
+        "id": 38,
+        "question": "What is the purpose of useEffect according to the docs?",
+        "options": [
+          "To mutate state during render",
+          "To synchronize a component with a system outside React after rendering",
+          "To replace all event handlers",
+          "To memoize expensive calculations automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs describe Effects as the tool for synchronizing components with external systems after render."
+      },
+      {
+        "id": 39,
+        "question": "Which situation usually does need an Effect?",
+        "options": [
+          "Deriving fullName from firstName and lastName during render",
+          "Synchronizing a video element with an isPlaying prop",
+          "Rendering a list from an array with map()",
+          "Choosing between two JSX branches with a ternary"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs use Effects for synchronizing with external systems like a video player, but not for pure calculations derived during render."
+      },
+      {
+        "id": 40,
+        "question": "What is the official guidance when there is no external system involved?",
+        "options": [
+          "Prefer an Effect anyway to keep logic centralized",
+          "You often do not need an Effect",
+          "Use a ref instead of any state",
+          "Move the logic into react-dom"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The 'You Might Not Need an Effect' docs explicitly say that if there is no external system, you often should not use an Effect."
+      },
+      {
+        "id": 41,
+        "question": "Why is storing derived data like fullName in state often unnecessary?",
+        "options": [
+          "Because React cannot compare strings efficiently",
+          "Because it creates redundant state that can be calculated during rendering",
+          "Because derived state only works in class components",
+          "Because state values must be numbers or booleans"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs recommend calculating derived values like fullName during render instead of storing redundant state."
+      },
+      {
+        "id": 42,
+        "question": "What should an Effect often return?",
+        "options": [
+          "A reducer function",
+          "A cleanup function that stops or undoes the synchronization",
+          "A JSX fragment",
+          "A ref object"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs show many Effects returning cleanup functions, such as disconnecting a connection when the component re-syncs or unmounts."
+      },
+      {
+        "id": 43,
+        "question": "What development behavior do the docs mention for Effects in Strict Mode?",
+        "options": [
+          "Effects are skipped entirely until production",
+          "React runs an extra setup and cleanup cycle to help reveal missing cleanup logic",
+          "Effects are converted into event handlers",
+          "Effect dependency arrays are ignored"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that in development, Strict Mode runs an extra setup-cleanup cycle as a stress test."
+      },
+      {
+        "id": 44,
+        "question": "How do the docs describe an Effect's lifecycle compared to a component's lifecycle?",
+        "options": [
+          "They are identical: mount, update, unmount",
+          "An Effect starts synchronizing and later stops synchronizing, potentially many times",
+          "Effects only run once after mount",
+          "Effects only run when a parent re-renders"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The lifecycle docs explain that Effects have a synchronization lifecycle: start and stop, potentially multiple times as dependencies change."
+      },
+      {
+        "id": 45,
+        "question": "Why do Effect dependency lists matter?",
+        "options": [
+          "They tell React which DOM nodes to preserve",
+          "They describe which reactive values the Effect reads, so React can re-synchronize when those values change",
+          "They replace list keys when rendering arrays",
+          "They prevent event bubbling"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say dependencies should include every reactive value read by the Effect so it stays synchronized with the latest values."
+      },
+      {
+        "id": 46,
+        "question": "What is a correct way to remove an unnecessary object dependency from an Effect?",
+        "options": [
+          "Delete it from the dependency array while keeping the code the same",
+          "Move object creation inside the Effect so the dependency becomes unnecessary",
+          "Convert the object into a ref and mutate it directly",
+          "Use dangerouslySetInnerHTML to bypass the linter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say to change the surrounding code so the dependency is no longer needed, rather than lying to the dependency array."
+      },
+      {
+        "id": 47,
+        "question": "What is useEffectEvent for in the current docs?",
+        "options": [
+          "Creating non-reactive logic that can be called from an Effect without re-triggering the Effect for every value it reads",
+          "Replacing useState for all event handlers",
+          "Registering DOM listeners outside React",
+          "Memoizing JSX trees during commit"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs use useEffectEvent to separate non-reactive logic from an Effect so values like theme do not unnecessarily cause reconnection."
+      },
+      {
+        "id": 48,
+        "question": "What problem does preserving and resetting state help you control?",
+        "options": [
+          "How React loads CSS files",
+          "Whether a component's state is kept or recreated when its position or identity changes",
+          "Whether Hooks can run in loops",
+          "Whether refs point to DOM nodes or components"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that React normally preserves matching parts of the tree, but you can control reset behavior when identity changes."
+      },
+      {
+        "id": 49,
+        "question": "How can you force React to reset a component's state when switching between two logical entities?",
+        "options": [
+          "Call useEffect with an empty dependency array",
+          "Give the component a different key",
+          "Wrap the component in a fragment",
+          "Convert all props into refs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs show that changing a component's key tells React to treat it as a different component and recreate its state."
+      },
+      {
+        "id": 50,
+        "question": "What does 'reacting to input with state' emphasize?",
+        "options": [
+          "Directly enabling and disabling DOM nodes imperatively",
+          "Describing UI for each visual state and triggering state changes from input",
+          "Storing all form values in refs only",
+          "Using effects for every button click"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs encourage describing UI in terms of states and updating those states in response to user input instead of issuing imperative UI commands."
+      },
+      {
+        "id": 51,
+        "question": "What is the main idea behind choosing a good state structure?",
+        "options": [
+          "State should contain as much duplicated data as possible for speed",
+          "State should avoid redundant or duplicated information to reduce bugs",
+          "All state should live in one root component",
+          "State should only contain primitive values"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The state structure docs say redundant or duplicated state is a common source of bugs and should be avoided."
+      },
+      {
+        "id": 52,
+        "question": "What is a common signal that state should be lifted or shared differently?",
+        "options": [
+          "Two components need to stay in sync from a shared source of truth",
+          "A component uses more than one button",
+          "A list has more than five items",
+          "An effect returns a cleanup function"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs discuss lifting state when multiple components need to change together based on the same source of truth."
+      },
+      {
+        "id": 53,
+        "question": "What do the docs say about event handlers on your own components?",
+        "options": [
+          "You must name them exactly like browser events",
+          "You can give event handler props application-specific names and pass them down to built-in elements",
+          "They only work if declared in context providers",
+          "They are replaced by useEffect automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs show custom components receiving handler props like onPlayMovie and passing them to buttons internally."
+      },
+      {
+        "id": 54,
+        "question": "What is true about onClick={handleClick} in JSX?",
+        "options": [
+          "It calls handleClick immediately during rendering",
+          "It passes the function so React can call it later when the user clicks",
+          "It only works with class methods",
+          "It is equivalent to onClick={handleClick()} in React"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs warn not to call the handler in JSX; you pass the function reference so React can invoke it later."
+      },
+      {
+        "id": 55,
+        "question": "How do React focus events differ from native browser focus events according to the docs?",
+        "options": [
+          "In React, onFocus and onBlur bubble",
+          "React focus events only work on inputs",
+          "React focus events cannot access relatedTarget",
+          "React turns focus events into keyboard events"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The React DOM docs note that onFocus and onBlur bubble in React, unlike the built-in browser focus and blur events."
+      },
+      {
+        "id": 56,
+        "question": "What is a React event object sometimes called?",
+        "options": [
+          "A diff event",
+          "A synthetic event",
+          "A hydration event",
+          "A render token"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The React DOM docs say your handlers receive a React event object, also sometimes called a synthetic event."
+      },
+      {
+        "id": 57,
+        "question": "What should you be careful about with dangerouslySetInnerHTML?",
+        "options": [
+          "It prevents children from rendering only in production",
+          "Passing untrusted HTML can create XSS vulnerabilities",
+          "It only works with server components",
+          "It automatically sanitizes user input"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explicitly warn that dangerouslySetInnerHTML must only be used with trusted and sanitized HTML because of XSS risks."
+      },
+      {
+        "id": 58,
+        "question": "What is the recommended place to create the { __html: ... } object for dangerouslySetInnerHTML?",
+        "options": [
+          "Inline in JSX for brevity",
+          "As close as possible to where the raw HTML is generated",
+          "Inside a global config file",
+          "Inside useReducer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs recommend creating the __html object close to the code that generates the HTML so raw HTML usage is explicit and easier to audit."
+      },
+      {
+        "id": 59,
+        "question": "What does React say about understanding your UI as trees?",
+        "options": [
+          "Trees are only useful for styling nested elements",
+          "Render trees and module dependency trees help explain relationships, data flow, and performance",
+          "Tree thinking is only relevant to server rendering",
+          "React does not model components as trees internally"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain both render trees and module dependency trees as useful mental models for data flow and performance."
+      },
+      {
+        "id": 60,
+        "question": "Which statement best matches the current React docs on day-to-day development?",
+        "options": [
+          "Most application logic should rely heavily on escape hatches and DOM manipulation",
+          "Most React code should stay in the declarative model, with refs and Effects used only when needed for external systems or imperative escape hatches",
+          "Refs are the primary replacement for state in modern React",
+          "Every state change should be mirrored in a separate Effect"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Across the Learn docs, React emphasizes declarative UI first. Refs and Effects are escape hatches for cases that require imperative behavior or synchronization with systems outside React."
+      }
+    ]
+  }
+]

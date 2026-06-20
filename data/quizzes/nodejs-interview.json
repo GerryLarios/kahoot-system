@@ -1,0 +1,699 @@
+[
+  {
+    "id": "nodejs-interview",
+    "title": "Node.js Interview",
+    "description": "Official Node.js fundamentals interview quiz",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is Node.js according to the official introduction?",
+        "options": [
+          "An open-source, cross-platform JavaScript runtime environment",
+          "A browser-only JavaScript framework for building UIs",
+          "A database engine for document storage",
+          "A package manager that replaces npm"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Node.js is described in the official introduction as an open-source and cross-platform JavaScript runtime environment."
+      },
+      {
+        "id": 2,
+        "question": "Which JavaScript engine does Node.js run?",
+        "options": ["SpiderMonkey", "JavaScriptCore", "V8", "Hermes"],
+        "correctAnswer": 2,
+        "explanation": "The official Node.js introduction states that Node.js runs the V8 JavaScript engine, which is also used by Google Chrome."
+      },
+      {
+        "id": 3,
+        "question": "Why can Node.js handle many concurrent connections with a single process?",
+        "options": [
+          "Because it starts a dedicated Java thread per request",
+          "Because it uses asynchronous I/O primitives and avoids blocking by default",
+          "Because every callback runs on a separate CPU core automatically",
+          "Because the event loop executes all work in parallel JavaScript threads"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The introduction explains that Node.js provides asynchronous I/O primitives so JavaScript code does not block while waiting for network, filesystem, or database work."
+      },
+      {
+        "id": 4,
+        "question": "Which statement best matches the official description of a Node.js app?",
+        "options": [
+          "It creates a new thread for every incoming request",
+          "It runs in a single process without creating a new thread for every request",
+          "It can only process one connection at a time",
+          "It requires worker threads for any I/O"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The official introduction says a Node.js app runs in a single process, without creating a new thread for every request."
+      },
+      {
+        "id": 5,
+        "question": "In the official Hello World example, which built-in module is imported to create the server?",
+        "options": ["node:net", "node:http", "node:stream", "node:process"],
+        "correctAnswer": 1,
+        "explanation": "The introductory example imports createServer from node:http to build a simple HTTP server."
+      },
+      {
+        "id": 6,
+        "question": "What does http.createServer() return in the official example?",
+        "options": [
+          "A Promise that resolves to a port number",
+          "A new HTTP server instance",
+          "A readable stream containing the request body",
+          "A string URL that can be opened in the browser"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The introduction states that createServer() creates a new HTTP server and returns it."
+      },
+      {
+        "id": 7,
+        "question": "Which two objects are passed to the request handler of the Hello World server?",
+        "options": [
+          "A path string and a status code",
+          "A request object and a response object",
+          "A socket object and a callback",
+          "A Buffer and an EventEmitter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs explain that the request event provides a request object and a response object to handle the HTTP call."
+      },
+      {
+        "id": 8,
+        "question": "What is res.end() used for in the basic HTTP server example?",
+        "options": [
+          "To close the response and optionally send the response body",
+          "To restart the event loop after a request finishes",
+          "To flush Node.js module cache",
+          "To terminate the entire process after one request"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In the introduction, res.end('Hello World') closes the response and sends the content back to the client."
+      },
+      {
+        "id": 9,
+        "question": "What is the event loop in Node.js?",
+        "options": [
+          "A background compiler that transforms JavaScript into bytecode",
+          "A scheduling mechanism that lets Node.js perform non-blocking I/O",
+          "A cache for already executed callbacks",
+          "A queue that stores only timer callbacks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The event loop guide defines it as the mechanism that allows Node.js to perform non-blocking I/O by offloading work when possible and processing callbacks later."
+      },
+      {
+        "id": 10,
+        "question": "Which event loop phase runs setImmediate() callbacks?",
+        "options": ["timers", "poll", "check", "close callbacks"],
+        "correctAnswer": 2,
+        "explanation": "The event loop guide says that setImmediate() callbacks are invoked in the check phase."
+      },
+      {
+        "id": 11,
+        "question": "Which event loop phase handles callbacks scheduled by setTimeout() and setInterval()?",
+        "options": ["timers", "pending callbacks", "check", "close callbacks"],
+        "correctAnswer": 0,
+        "explanation": "The event loop guide lists timers as the phase that executes callbacks scheduled by setTimeout() and setInterval()."
+      },
+      {
+        "id": 12,
+        "question": "How does the official guide describe process.nextTick() relative to the event loop?",
+        "options": [
+          "It is technically not part of the event loop and runs before the loop continues",
+          "It runs only after the close callbacks phase",
+          "It is the same API as setImmediate() with an older name",
+          "It always waits until at least 1 ms has passed"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The guide explicitly notes that process.nextTick() is not technically part of the event loop. Its queue is drained after the current operation completes and before the event loop continues."
+      },
+      {
+        "id": 13,
+        "question": "What is a known risk of recursively calling process.nextTick()?",
+        "options": [
+          "It can starve I/O by preventing the loop from reaching the poll phase",
+          "It disables all timers for the lifetime of the process",
+          "It converts synchronous code into worker threads",
+          "It clears the microtask queue automatically"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The official guide warns that recursive process.nextTick() usage can starve I/O because Node keeps draining the next tick queue before continuing the event loop."
+      },
+      {
+        "id": 14,
+        "question": "What does the guide generally recommend using in most cases because it is easier to reason about?",
+        "options": [
+          "process.nextTick()",
+          "setImmediate()",
+          "setInterval()",
+          "process.exit()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The event loop guide says developers should generally use setImmediate() because it is easier to reason about than process.nextTick()."
+      },
+      {
+        "id": 15,
+        "question": "Inside an I/O cycle, which is guaranteed to run first according to the event loop guide?",
+        "options": [
+          "setTimeout(fn, 0)",
+          "setImmediate(fn)",
+          "Neither one can ever run first",
+          "The one registered second"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The guide explains that when both are scheduled inside an I/O callback, setImmediate() runs before timers such as setTimeout(..., 0)."
+      },
+      {
+        "id": 16,
+        "question": "What class is exposed by the node:events module for working with event emitters?",
+        "options": ["EventTarget", "EventEmitter", "AsyncResource", "Readable"],
+        "correctAnswer": 1,
+        "explanation": "The events documentation states that the EventEmitter class is defined and exposed by the node:events module."
+      },
+      {
+        "id": 17,
+        "question": "How are EventEmitter listeners invoked when an event is emitted?",
+        "options": [
+          "Asynchronously and in random order",
+          "Synchronously and in registration order",
+          "Only after the next timers phase",
+          "On a worker thread pool managed by libuv"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The events docs say EventEmitter calls all listeners synchronously in the order in which they were registered."
+      },
+      {
+        "id": 18,
+        "question": "What happens if an EventEmitter emits an 'error' event without an error listener?",
+        "options": [
+          "The event is ignored",
+          "The error is thrown, a stack trace is printed, and the process exits",
+          "Node.js retries the event once automatically",
+          "The error is always converted into a warning"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs treat 'error' as a special event. If no listener is registered, the error is thrown and the process exits."
+      },
+      {
+        "id": 19,
+        "question": "What does emitter.once(eventName, listener) do?",
+        "options": [
+          "Registers a listener that runs only the first time the event occurs",
+          "Registers a listener that runs once per event loop phase",
+          "Registers a listener that runs only after emitter.emit() returns false",
+          "Registers a listener that blocks other listeners"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The events module documents once() as adding a listener that is removed automatically after its first invocation."
+      },
+      {
+        "id": 20,
+        "question": "What default warning threshold do EventEmitter instances use for listeners on a single event?",
+        "options": ["1", "5", "10", "100"],
+        "correctAnswer": 2,
+        "explanation": "By default, EventEmitter warns when more than 10 listeners are added for a single event, helping surface possible memory leaks."
+      },
+      {
+        "id": 21,
+        "question": "Which list correctly names the four fundamental stream types in Node.js?",
+        "options": [
+          "Readable, Writable, Duplex, Transform",
+          "Input, Output, Buffered, Reactive",
+          "Request, Response, File, Socket",
+          "Queue, Pipe, Event, Chunk"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The stream docs list four fundamental types: Readable, Writable, Duplex, and Transform."
+      },
+      {
+        "id": 22,
+        "question": "What mode do Readable streams begin in by default?",
+        "options": [
+          "Flowing mode",
+          "Paused mode",
+          "Object mode",
+          "Closed mode"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The stream docs say all Readable streams begin in paused mode."
+      },
+      {
+        "id": 23,
+        "question": "Which action switches a Readable stream into flowing mode?",
+        "options": [
+          "Calling stream.pause()",
+          "Adding a 'data' listener",
+          "Reading require.cache",
+          "Calling clearTimeout()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A Readable switches into flowing mode when you add a 'data' listener, call resume(), or pipe it to a Writable stream."
+      },
+      {
+        "id": 24,
+        "question": "What does objectMode mean for a stream?",
+        "options": [
+          "The stream can carry arbitrary JavaScript values instead of only strings or binary chunks",
+          "The stream automatically serializes objects to JSON strings",
+          "The stream is limited to plain objects and rejects arrays",
+          "The stream can only be used with HTTP requests"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In object mode, streams can work with JavaScript values other than the usual string, Buffer, TypedArray, or DataView chunks."
+      },
+      {
+        "id": 25,
+        "question": "What is stream.pipeline() primarily used for?",
+        "options": [
+          "To connect streams and handle completion or failure as one operation",
+          "To convert any event emitter into a child process",
+          "To persist the require() cache to disk",
+          "To replace setImmediate() with Promises"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The stream documentation presents pipeline() as the utility for composing streams together and getting a single completion or error signal."
+      },
+      {
+        "id": 26,
+        "question": "What does writable.write(chunk) return false mean?",
+        "options": [
+          "The chunk was rejected permanently",
+          "More writes should pause until the 'drain' event is emitted",
+          "The stream has already emitted 'finish'",
+          "The callback will never run"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The writable stream docs say that a false return value indicates backpressure and writes should pause until 'drain' fires."
+      },
+      {
+        "id": 27,
+        "question": "What is Buffer in Node.js?",
+        "options": [
+          "A fixed-length sequence of bytes used for binary data",
+          "A Promise-based wrapper around streams",
+          "A special timer queue for network operations",
+          "A replacement for Uint8Array"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The buffer docs define Buffer objects as fixed-length byte sequences used to represent binary data."
+      },
+      {
+        "id": 28,
+        "question": "How does the official documentation describe Buffer relative to TypedArray?",
+        "options": [
+          "Buffer is unrelated to TypedArray and uses a separate binary model",
+          "Buffer is a subclass of Uint8Array",
+          "Buffer can only wrap strings, not bytes",
+          "Buffer is deprecated in favor of Array"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs say Buffer extends JavaScript's Uint8Array and adds Node-specific binary data methods."
+      },
+      {
+        "id": 29,
+        "question": "Which API creates a zero-filled buffer and is the safer default?",
+        "options": [
+          "Buffer.alloc(size)",
+          "Buffer.allocUnsafe(size)",
+          "new Buffer(size)",
+          "Buffer.from(size)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Buffer.alloc() returns an initialized buffer. Buffer.allocUnsafe() is faster but may expose old memory until overwritten."
+      },
+      {
+        "id": 30,
+        "question": "What is important about Buffer.from(arrayBuffer)?",
+        "options": [
+          "It always converts the data to UTF-8 text",
+          "It creates a copy and never shares memory",
+          "It can share the same underlying memory as the ArrayBuffer",
+          "It only works for zero-length ArrayBuffers"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The docs explain that Buffer.from(arrayBuffer) creates a Buffer view over the ArrayBuffer, sharing the same underlying memory."
+      },
+      {
+        "id": 31,
+        "question": "What does Buffer.byteLength(string, encoding) measure?",
+        "options": [
+          "The number of JavaScript characters only",
+          "The number of bytes required for the value in the given encoding",
+          "The number of Unicode code points after normalization",
+          "The size of the V8 heap currently used by the string"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The buffer docs use Buffer.byteLength() to show that the byte length of a string can differ from its character count depending on encoding."
+      },
+      {
+        "id": 32,
+        "question": "Which two module systems does Node.js support?",
+        "options": [
+          "CommonJS and ECMAScript modules",
+          "AMD and UMD only",
+          "RequireJS and SystemJS",
+          "JSON modules and CSS modules only"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The modules docs say Node.js supports both CommonJS modules and ECMAScript modules."
+      },
+      {
+        "id": 33,
+        "question": "What is true about require() and import() in Node.js?",
+        "options": [
+          "Both always use the ECMAScript module loader",
+          "require() uses the CommonJS loader and import() uses the ECMAScript module loader",
+          "require() works only for built-in modules, not local files",
+          "import() can only load JSON files"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The official modules docs state that require() uses the CommonJS loader, while import() uses the ECMAScript module loader."
+      },
+      {
+        "id": 34,
+        "question": "In CommonJS, what does require.main === module usually indicate?",
+        "options": [
+          "The file was loaded from node_modules",
+          "The file is running directly as the entry script",
+          "The file exports an EventEmitter",
+          "The file is using ECMAScript module syntax"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The modules docs explain that require.main is set to the module of the file run directly by Node.js, so require.main === module is a common direct-execution check."
+      },
+      {
+        "id": 35,
+        "question": "What does __filename contain in a CommonJS module?",
+        "options": [
+          "Only the base file name without a path",
+          "The absolute path of the current module file, with symlinks resolved",
+          "The path to the nearest package.json",
+          "The name of the main entry file, even from dependencies"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The modules docs define __filename as the current module file's absolute path with symlinks resolved."
+      },
+      {
+        "id": 36,
+        "question": "What does __dirname contain in a CommonJS module?",
+        "options": [
+          "The process working directory",
+          "The path.dirname(__filename) of the current module",
+          "The directory of the main entry script only",
+          "The nearest node_modules folder"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The modules docs say __dirname is the directory name of the current module and matches path.dirname(__filename)."
+      },
+      {
+        "id": 37,
+        "question": "How does CommonJS module caching work in Node.js?",
+        "options": [
+          "Modules are re-executed on every require() call",
+          "Modules are cached after the first load based on resolved filename",
+          "Only built-in modules are cached",
+          "Caching works only for JSON files"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The caching section states that modules are cached after the first time they are loaded, keyed by their resolved filename."
+      },
+      {
+        "id": 38,
+        "question": "Why might require('node:fs') be preferred over require('fs') in some cases?",
+        "options": [
+          "It bypasses userland cache shadowing and always refers to the built-in module",
+          "It enables streaming mode automatically",
+          "It loads the module asynchronously",
+          "It switches the file system API to promise-only behavior"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The modules docs note that the node: prefix refers directly to the built-in module and bypasses require.cache shadowing."
+      },
+      {
+        "id": 39,
+        "question": "What can happen during circular CommonJS dependencies?",
+        "options": [
+          "Node.js throws immediately on the first cycle",
+          "A module can receive an unfinished copy of another module's exports",
+          "The second module always replaces the first module's exports permanently",
+          "Circular imports work only for .json files"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The cycles section explains that to avoid infinite recursion, Node.js may return a partially initialized exports object during a circular require()."
+      },
+      {
+        "id": 40,
+        "question": "What does require.resolve(request) do?",
+        "options": [
+          "Loads the module and returns its exports",
+          "Returns the resolved filename without loading the module",
+          "Clears the module from the cache",
+          "Converts CommonJS to ECMAScript module syntax"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The modules docs describe require.resolve() as using Node's module resolution machinery to find the filename without loading the module."
+      },
+      {
+        "id": 41,
+        "question": "What is the main characteristic of child_process.spawn()?",
+        "options": [
+          "It always runs the command in a shell and buffers all output",
+          "It spawns a process asynchronously without blocking the event loop",
+          "It only works for Node.js scripts",
+          "It is the synchronous child-process API"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The child_process docs say spawn() creates subprocesses asynchronously, without blocking the Node.js event loop."
+      },
+      {
+        "id": 42,
+        "question": "Which statement about child_process.exec() is correct?",
+        "options": [
+          "It runs without a shell by default and streams output directly",
+          "It spawns a shell and buffers stdout and stderr",
+          "It is only available in worker threads",
+          "It cannot be aborted with AbortSignal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The exec() docs explain that it spawns a shell, executes the command inside it, and buffers the output."
+      },
+      {
+        "id": 43,
+        "question": "Why might child_process.execFile() be preferable to exec() for running a known executable?",
+        "options": [
+          "It does not spawn a shell by default and is typically more efficient",
+          "It automatically enables IPC between processes",
+          "It returns a Readable stream instead of a ChildProcess",
+          "It runs synchronously, so error handling is simpler"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs say execFile() runs the executable directly without spawning a shell by default, making it more efficient in many cases."
+      },
+      {
+        "id": 44,
+        "question": "What is special about child_process.fork()?",
+        "options": [
+          "It clones the current V8 heap into a worker thread",
+          "It is a special case of spawn() for new Node.js processes with IPC",
+          "It can only execute shell built-ins",
+          "It always shares memory with the parent process"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The fork() docs describe it as a special case of spawn() used to launch a new Node.js process with an IPC communication channel."
+      },
+      {
+        "id": 45,
+        "question": "What is true about execSync(), execFileSync(), and spawnSync()?",
+        "options": [
+          "They are promise-based and non-blocking",
+          "They block the Node.js event loop until the subprocess exits",
+          "They can only be used during process startup",
+          "They are aliases for process.nextTick()"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The synchronous child_process methods block the event loop until the child process completes, which can be useful for scripts but costly in servers."
+      },
+      {
+        "id": 46,
+        "question": "What is the difference between the ChildProcess 'exit' and 'close' events?",
+        "options": [
+          "'close' always happens before 'exit'",
+          "'exit' reports process end, while 'close' waits until stdio streams are closed",
+          "They are exact aliases and always fire together",
+          "'exit' is only for Windows and 'close' is only for Unix"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The docs distinguish them: 'exit' fires when the process ends, while 'close' fires after the process ends and its stdio streams have also closed."
+      },
+      {
+        "id": 47,
+        "question": "When does a ChildProcess emit an 'error' event?",
+        "options": [
+          "Only when stderr receives text",
+          "When spawning fails, killing fails, sending a message fails, or an abort signal aborts the process",
+          "Only when exit code is 0",
+          "Only after the 'close' event"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The child_process docs list several cases for 'error', including spawn failures, kill failures, send failures, and aborts."
+      },
+      {
+        "id": 48,
+        "question": "What does process.argv contain?",
+        "options": [
+          "Only environment variables used by the process",
+          "An array of command-line arguments, including the Node executable path and entry script",
+          "Only flags passed after --inspect",
+          "A map of parsed named options"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The process docs state that process.argv returns an array of command-line arguments, beginning with process.execPath and usually the entry script path."
+      },
+      {
+        "id": 49,
+        "question": "What does process.cwd() return?",
+        "options": [
+          "The absolute path of the current working directory",
+          "The directory of the current module",
+          "The location of the Node.js executable",
+          "The user's home directory"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The process documentation defines process.cwd() as the current working directory of the process."
+      },
+      {
+        "id": 50,
+        "question": "What is process.env?",
+        "options": [
+          "A read-only snapshot of V8 flags",
+          "An object containing the user environment variables",
+          "A list of loaded native add-ons",
+          "A buffer of process warnings"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The process docs describe process.env as the object containing the user environment."
+      },
+      {
+        "id": 51,
+        "question": "What is the official guidance around process.exit() in most applications?",
+        "options": [
+          "Call it after every console.log() to flush output",
+          "Avoid calling it unless necessary; prefer setting process.exitCode and letting the process exit naturally",
+          "Use it inside every catch block",
+          "It is required to end a Node.js HTTP server"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The process docs warn that process.exit() can terminate too quickly and truncate pending I/O. In many cases, setting process.exitCode is safer."
+      },
+      {
+        "id": 52,
+        "question": "What limitation applies to work done inside a process 'exit' event handler?",
+        "options": [
+          "Only synchronous work will run reliably",
+          "Only Promise-based code is allowed",
+          "Only writes to stderr are allowed",
+          "The handler may start new timers that finish before shutdown"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The docs state that once 'exit' runs, the process is about to terminate, so only synchronous operations should be performed."
+      },
+      {
+        "id": 53,
+        "question": "What makes the 'beforeExit' event different from 'exit'?",
+        "options": [
+          "beforeExit can schedule more asynchronous work and keep the process alive",
+          "beforeExit always fires after process.exit()",
+          "beforeExit is emitted only in worker threads",
+          "beforeExit cannot read process.exitCode"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The process docs explain that 'beforeExit' is emitted when the event loop becomes empty, and a listener can schedule more async work, causing the process to continue."
+      },
+      {
+        "id": 54,
+        "question": "What is Node.js default behavior for an uncaught exception if you do not override it?",
+        "options": [
+          "Retry the failing callback once",
+          "Print the stack trace to stderr and exit with code 1",
+          "Convert the exception into an 'error' event on process.stdout",
+          "Ignore it if a warning handler exists"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The process docs say uncaught exceptions are printed to stderr and cause the process to exit with code 1 by default."
+      },
+      {
+        "id": 55,
+        "question": "What does process.memoryUsage() report?",
+        "options": [
+          "Only V8 heap usage in megabytes",
+          "A detailed memory usage object including rss, heapTotal, heapUsed, external, and arrayBuffers",
+          "Only the memory consumed by Buffers",
+          "Only memory used by child processes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The process docs show process.memoryUsage() returning an object with rss, heapTotal, heapUsed, external, and arrayBuffers."
+      },
+      {
+        "id": 56,
+        "question": "What happens when you add a listener for SIGINT or SIGTERM on non-Windows platforms?",
+        "options": [
+          "Node.js keeps the default exit behavior unchanged",
+          "The default behavior is removed, so Node.js no longer exits automatically for that signal",
+          "The process ignores the signal completely and cannot observe it",
+          "All uncaught exceptions are converted into that signal"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The signal docs explain that installing listeners for SIGINT or SIGTERM removes Node.js's default behavior for those signals."
+      },
+      {
+        "id": 57,
+        "question": "What does setTimeout(callback, delay) guarantee?",
+        "options": [
+          "The callback runs at exactly delay milliseconds",
+          "The callback runs no earlier than the delay, but actual timing can be later",
+          "The callback always runs before any I/O callback",
+          "The callback is scheduled in the check phase"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The timers docs say Node.js makes no guarantee of exact timing. The callback is invoked as close as possible after the threshold has passed."
+      },
+      {
+        "id": 58,
+        "question": "What does timeout.unref() do for a scheduled timer?",
+        "options": [
+          "It cancels the timer immediately",
+          "It prevents the timer from keeping the event loop alive",
+          "It converts the timer into a Promise",
+          "It moves the timer into the microtask queue"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The timers docs say unref() means the timer will not require the event loop to remain active; the process may exit before it fires if nothing else is pending."
+      },
+      {
+        "id": 59,
+        "question": "What does the timers/promises API provide?",
+        "options": [
+          "Browser-only timer shims for frontend code",
+          "Promise-based alternatives to timer functions like setTimeout() and setImmediate()",
+          "A replacement for child_process timers",
+          "A scheduler that works only in ECMAScript modules"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The timers/promises docs present promise-returning alternatives such as setTimeout(), setImmediate(), and setInterval()."
+      },
+      {
+        "id": 60,
+        "question": "How can promise-based timers like timersPromises.setTimeout() be canceled?",
+        "options": [
+          "By deleting require.cache entries",
+          "By passing an AbortSignal and aborting it",
+          "By emitting an 'error' event on process",
+          "By calling process.exitCode = 1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The timers docs show that the promise-based timer APIs accept an AbortSignal, and aborting it rejects the promise with an AbortError."
+      }
+    ]
+  }
+]
