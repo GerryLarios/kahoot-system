@@ -6,698 +6,723 @@
     "questions": [
       {
         "id": 1,
-        "question": "What is Next.js?",
+        "question": "In a senior architecture discussion, how would you describe Next.js in the App Router era?",
         "options": [
-          "A React framework for building full-stack web applications.",
-          "A CSS framework built for server-side styling only.",
-          "A database ORM maintained by Vercel.",
-          "A browser extension for debugging React apps."
+          "A React framework for full-stack web apps combining UI, server logic, routing, rendering strategies, and deployment optimizations.",
+          "A React-only CSS preprocessor with optional server rendering plugins.",
+          "A Node.js ORM that happens to include file-based routing.",
+          "A replacement for React that does not support Server Components."
         ],
         "correctAnswer": 0,
-        "explanation": "The official docs describe Next.js as a React framework for building full-stack web applications with features such as routing, rendering, and tooling built in."
+        "explanation": "At a senior level, Next.js is best framed as a full-stack React framework with integrated primitives for rendering, routing, caching, server execution, and production deployment concerns."
       },
       {
         "id": 2,
-        "question": "What is the quickest way to create a new Next.js app?",
+        "question": "What is the most important conceptual difference between the App Router and the legacy Pages Router?",
         "options": [
-          "Install React manually and then add Next.js later.",
-          "Use create-next-app.",
-          "Copy the Next.js source code into a local folder.",
-          "Create an app directory and skip package installation."
+          "The App Router is built around React Server Components, nested layouts, and segment-level conventions.",
+          "The App Router only changes file naming from .js to .tsx.",
+          "The App Router removes support for dynamic routes.",
+          "The App Router cannot perform static generation."
         ],
-        "correctAnswer": 1,
-        "explanation": "The installation page recommends create-next-app as the fastest way to scaffold a new Next.js project with sensible defaults."
+        "correctAnswer": 0,
+        "explanation": "The App Router introduces a component-and-segment model with Server Components by default, nested layouts, streaming support, and route-level conventions for loading and errors."
       },
       {
         "id": 3,
-        "question": "In the official quick start, what do you do right after creating the app?",
+        "question": "Why are components in the App Router server components by default?",
         "options": [
-          "Run a production build immediately.",
-          "Open the database dashboard.",
-          "Change the bundler to Webpack first.",
-          "Change into the project directory and start the dev server."
+          "To reduce client-side JavaScript by default and keep data fetching close to the server.",
+          "Because client components are deprecated in React.",
+          "Because Next.js cannot serialize props for client rendering.",
+          "Because server components are required only for static pages."
         ],
-        "correctAnswer": 3,
-        "explanation": "The quick start flow is: create the app, cd into it, run the development server, and visit the local URL in your browser."
+        "correctAnswer": 0,
+        "explanation": "Server Components help improve performance by reducing shipped JS and enabling direct server-side data access for initial render paths."
       },
       {
         "id": 4,
-        "question": "What local URL is used in the official quick start to view a Next.js app?",
+        "question": "What does adding use client at the top of a file do?",
         "options": [
-          "http://localhost:8000",
-          "http://localhost:3000",
-          "http://127.0.0.1:5000",
-          "http://localhost:8080"
+          "It marks the module boundary as a Client Component entry point, allowing hooks and browser APIs there.",
+          "It forces all nested imports to run only on the server.",
+          "It enables ISR for that route automatically.",
+          "It disables tree-shaking for the module."
         ],
-        "correctAnswer": 1,
-        "explanation": "The official quick start instructs you to visit http://localhost:3000 after starting the development server."
+        "correctAnswer": 0,
+        "explanation": "use client defines a client boundary. Components in that subtree can use client-only capabilities such as state hooks and browser APIs."
       },
       {
         "id": 5,
-        "question": "What is the minimum Node.js version listed in the system requirements?",
-        "options": ["18.0", "19.5", "20.9", "22.0"],
-        "correctAnswer": 2,
-        "explanation": "The installation page lists Node.js 20.9 as the minimum supported version for the development environment."
+        "question": "What senior-level tradeoff should you evaluate before converting a Server Component to a Client Component?",
+        "options": [
+          "Increased client bundle size, hydration cost, and potentially slower initial load.",
+          "Loss of all caching capabilities in Next.js.",
+          "Inability to navigate with next/link.",
+          "Automatic switch to Edge Runtime."
+        ],
+        "correctAnswer": 0,
+        "explanation": "Moving logic to the client can increase JS payload and hydration work. Senior decisions balance interactivity needs against performance budgets."
       },
       {
         "id": 6,
-        "question": "Which operating systems are explicitly listed as supported development environments?",
+        "question": "How should you fetch backend data for initial render in a Server Component?",
         "options": [
-          "macOS, Windows including WSL, and Linux.",
-          "Only macOS and Linux.",
-          "Only Windows and ChromeOS.",
-          "Any mobile operating system with Node installed."
+          "Fetch directly in the Server Component using async and await.",
+          "Always fetch in useEffect and pass data upward.",
+          "Only fetch through getServerSideProps in the App Router.",
+          "Use localStorage as a first step and sync later."
         ],
         "correctAnswer": 0,
-        "explanation": "The system requirements section names macOS, Windows including WSL, and Linux as supported environments."
+        "explanation": "In App Router, Server Components can perform async fetching directly, reducing client waterfalls and centralizing initial data dependencies on the server."
       },
       {
         "id": 7,
-        "question": "How does the documentation describe browser support for Next.js?",
+        "question": "What does cache: no-store on fetch communicate in Next.js?",
         "options": [
-          "It supports modern browsers with zero configuration.",
-          "It requires manual polyfill setup for all browsers.",
-          "It only supports Chromium-based browsers.",
-          "It works only when JavaScript is disabled."
+          "The request should always be dynamic and bypass cached response reuse.",
+          "The response must be permanently cached at build time.",
+          "The route can only run in middleware.",
+          "The fetch call can run only in the browser."
         ],
         "correctAnswer": 0,
-        "explanation": "The supported browsers section says Next.js supports modern browsers with zero configuration."
+        "explanation": "cache: no-store indicates dynamic data requirements and disables static caching behavior for that fetch path."
       },
       {
         "id": 8,
-        "question": "Which scaffold command behavior does the `--yes` flag enable when using create-next-app?",
+        "question": "What is the purpose of next: { revalidate: 60 } on a fetch request?",
         "options": [
-          "It forces Webpack instead of Turbopack.",
-          "It skips prompts by using saved preferences or defaults.",
-          "It disables TypeScript support.",
-          "It creates the project without installing dependencies."
+          "It enables time-based cache revalidation, allowing data to refresh after the specified interval.",
+          "It retries failed requests up to 60 times.",
+          "It limits route execution to 60ms.",
+          "It forces the route into client-side rendering."
         ],
-        "correctAnswer": 1,
-        "explanation": "The docs explain that `--yes` skips interactive prompts and applies saved preferences or the recommended defaults."
+        "correctAnswer": 0,
+        "explanation": "Revalidation intervals provide a balance between freshness and performance by letting cached content be updated periodically."
       },
       {
         "id": 9,
-        "question": "Which features are enabled by the recommended defaults in create-next-app according to the docs?",
+        "question": "When should a senior engineer choose fully dynamic rendering over static generation?",
         "options": [
-          "Only JavaScript and Webpack.",
-          "TypeScript, Tailwind CSS, ESLint, App Router, Turbopack, import alias `@/*`, and AGENTS.md.",
-          "Redux, GraphQL, Prisma, and Docker.",
-          "Pages Router, Babel, Sass, and Cypress."
+          "When output depends on per-request state like auth headers, cookies, or highly volatile personalized data.",
+          "Only when the page contains images.",
+          "When build times are short.",
+          "Whenever route groups are used."
         ],
-        "correctAnswer": 1,
-        "explanation": "The installation page explicitly lists the recommended defaults, including TypeScript, Tailwind CSS, ESLint, App Router, Turbopack, the `@/*` alias, and AGENTS.md."
+        "correctAnswer": 0,
+        "explanation": "Dynamic rendering is appropriate when response content truly depends on request-time context or rapidly changing data that cannot be precomputed safely."
       },
       {
         "id": 10,
-        "question": "If you choose to customize settings in create-next-app, which routing option can you choose?",
+        "question": "What is generateStaticParams used for in dynamic App Router segments?",
         "options": [
-          "Only Pages Router is available.",
-          "App Router can be enabled or disabled.",
-          "You must configure routing manually after scaffolding.",
-          "You can only choose hash-based routing."
+          "Predefining route params at build time for static generation of selected paths.",
+          "Declaring runtime middleware conditions.",
+          "Registering API route method handlers.",
+          "Generating TypeScript types for params automatically."
         ],
-        "correctAnswer": 1,
-        "explanation": "One of the prompts asks whether you want to use the App Router, which is the recommended routing system in the docs."
+        "correctAnswer": 0,
+        "explanation": "generateStaticParams allows known dynamic paths to be pre-rendered, improving performance and reducing runtime work."
       },
       {
         "id": 11,
-        "question": "Which linter choices are offered in the installation prompts?",
+        "question": "How does loading.tsx improve perceived performance in nested routes?",
         "options": [
-          "TSLint, ESLint, or StandardJS.",
-          "ESLint, Biome, or None.",
-          "Prettier, ESLint, or Rome only.",
-          "Biome only."
+          "It provides segment-level loading UI while data or components stream in.",
+          "It disables suspense boundaries to avoid flicker.",
+          "It precompiles all CSS globally.",
+          "It replaces the need for error boundaries."
         ],
-        "correctAnswer": 1,
-        "explanation": "The create-next-app customization flow includes a linter prompt with ESLint, Biome, or None as the options."
+        "correctAnswer": 0,
+        "explanation": "loading.tsx acts as a route-segment fallback, enabling progressive rendering and better perceived responsiveness during async work."
       },
       {
         "id": 12,
-        "question": "What optional compiler-related prompt appears in the create-next-app customization flow?",
+        "question": "What is the role of error.tsx in App Router segments?",
         "options": [
-          "Whether to use the React Compiler.",
-          "Whether to use the Rust TypeScript compiler.",
-          "Whether to compile with SWC or Babel only.",
-          "Whether to use the Edge compiler for all code."
+          "It defines a segment-scoped error boundary UI and recovery flow.",
+          "It globally replaces all HTTP error codes.",
+          "It validates API inputs before route handlers run.",
+          "It configures ESLint severity levels."
         ],
         "correctAnswer": 0,
-        "explanation": "The prompt list shown in the installation docs includes an option asking whether you would like to use React Compiler."
+        "explanation": "error.tsx handles rendering fallback UI for runtime errors within a segment boundary, isolating failures from the rest of the app."
       },
       {
         "id": 13,
-        "question": "What does the `src/` directory prompt let you decide during project creation?",
+        "question": "What does not-found.tsx primarily provide?",
         "options": [
-          "Whether to keep all dependencies in src.",
-          "Whether to place your application code inside a `src/` directory.",
-          "Whether static assets must live in src/public.",
-          "Whether routes are generated from the src root automatically only in production."
+          "A route segment UI for not found states triggered by notFound() or unmatched paths.",
+          "A static file served at /404 only in production.",
+          "An API handler for 404 JSON responses.",
+          "A middleware-only fallback for missing assets."
         ],
-        "correctAnswer": 1,
-        "explanation": "The docs show a prompt asking if you want your code inside a `src/` directory, which is an organizational preference."
+        "correctAnswer": 0,
+        "explanation": "not-found.tsx provides an idiomatic segment-level 404 experience that integrates with App Router control flow."
       },
       {
         "id": 14,
-        "question": "What does the import alias prompt configure by default?",
+        "question": "In App Router, what is route.ts typically used for?",
         "options": [
-          "A default alias of `~/`.",
-          "A default alias of `src/*`.",
-          "A default alias of `@/*`.",
-          "A default alias of `#app/*`."
+          "Defining HTTP method handlers like GET and POST for endpoint logic.",
+          "Configuring client-only route transitions.",
+          "Declaring image optimization settings globally.",
+          "Replacing next.config.ts per segment."
         ],
-        "correctAnswer": 2,
-        "explanation": "The installation flow shows that the default import alias is `@/*`, and you can customize it if you want."
+        "correctAnswer": 0,
+        "explanation": "route.ts allows colocated API endpoint behavior in the App Router by exporting method-specific handlers using the Web Request and Response model."
       },
       {
         "id": 15,
-        "question": "Why might create-next-app include AGENTS.md according to the docs?",
+        "question": "What is a strong reason to choose the Edge Runtime for a route?",
         "options": [
-          "To store production secrets.",
-          "To document database migrations.",
-          "To guide coding agents to write up-to-date Next.js code.",
-          "To replace the README file."
+          "Lower-latency execution near users for lightweight request processing.",
+          "Full Node.js core module compatibility without constraints.",
+          "Guaranteed lower cost for every workload type.",
+          "Automatic SQL connection pooling with no configuration."
         ],
-        "correctAnswer": 2,
-        "explanation": "The recommended defaults mention AGENTS.md specifically as guidance for coding agents so they follow current Next.js practices."
+        "correctAnswer": 0,
+        "explanation": "Edge Runtime is useful for latency-sensitive, lightweight logic distributed geographically, but it has different runtime constraints than Node.js."
       },
       {
         "id": 16,
-        "question": "What is the main idea behind file-system routing in Next.js?",
+        "question": "What is a common limitation when moving Node-centric code to Edge Runtime?",
         "options": [
-          "Routes must be registered in a central router file.",
-          "Routes are generated from the folder and file structure of the app.",
-          "Only JSON files can become routes.",
-          "Routing is configured only through next.config.js."
+          "Some Node.js APIs and native modules are unavailable or incompatible.",
+          "React hooks stop working in client components.",
+          "Static generation is disabled globally.",
+          "next/link prefetch cannot be used."
         ],
-        "correctAnswer": 1,
-        "explanation": "The installation page explains that Next.js uses file-system routing, so the route structure is determined by how you organize files and folders."
+        "correctAnswer": 0,
+        "explanation": "Edge uses a web-standard runtime model, so Node-specific libraries may fail if they depend on unsupported Node APIs."
       },
       {
         "id": 17,
-        "question": "Which directory is required when manually setting up an App Router project?",
-        "options": ["pages", "routes", "app", "views"],
-        "correctAnswer": 2,
-        "explanation": "In the manual installation steps, the docs tell you to create an `app` directory because the App Router uses it for routes and layouts."
+        "question": "When is middleware the right tool in Next.js architecture?",
+        "options": [
+          "For lightweight request-time concerns such as redirects, rewrites, and coarse auth gating before route handling.",
+          "For heavy database joins and report generation.",
+          "For rendering server components.",
+          "For replacing route handlers entirely."
+        ],
+        "correctAnswer": 0,
+        "explanation": "Middleware runs early in the request lifecycle and should stay fast and focused on cross-cutting request routing concerns."
       },
       {
         "id": 18,
-        "question": "What is the purpose of `app/layout.tsx` in a manually created App Router project?",
+        "question": "What is a key anti-pattern for middleware in production systems?",
         "options": [
-          "It is the root layout file for the application.",
-          "It defines ESLint rules for the app.",
-          "It is used only for API routes.",
-          "It configures image optimization."
+          "Performing heavy, latency-sensitive business logic on every request.",
+          "Using redirects for locale detection.",
+          "Reading request headers.",
+          "Conditionally skipping middleware with matchers."
         ],
         "correctAnswer": 0,
-        "explanation": "The manual setup instructions identify `app/layout.tsx` as the root layout, which is required in the App Router."
+        "explanation": "Because middleware can run frequently and early, expensive logic there can degrade system-wide latency and scalability."
       },
       {
         "id": 19,
-        "question": "Which HTML tags must the root layout contain?",
+        "question": "What do Server Actions primarily improve compared to traditional client-submitted API calls?",
         "options": [
-          "Only a `<main>` tag.",
-          "Only a `<head>` tag.",
-          "`<html>` and `<body>` tags.",
-          "`<section>` and `<article>` tags."
+          "They allow direct server mutations from form and action flows with reduced client boilerplate.",
+          "They remove the need for authentication entirely.",
+          "They force all pages to be statically generated.",
+          "They replace route handlers for read-only requests."
         ],
-        "correctAnswer": 2,
-        "explanation": "The docs explicitly state that the root layout must contain the `<html>` and `<body>` tags."
+        "correctAnswer": 0,
+        "explanation": "Server Actions streamline mutation paths by letting forms and components call server-side code directly through framework-managed boundaries."
       },
       {
         "id": 20,
-        "question": "What is the role of `app/page.tsx` in the App Router?",
+        "question": "From a security perspective, how should Server Actions be treated?",
         "options": [
-          "It defines the home page for the route segment.",
-          "It stores project-wide environment variables.",
-          "It replaces package.json scripts.",
-          "It is required only when using the Pages Router."
+          "As public server entry points that still require validation, authorization, and safe data handling.",
+          "As private-only code that never needs auth checks.",
+          "As compile-time utilities with no runtime exposure.",
+          "As client-side helpers that cannot mutate server state."
         ],
         "correctAnswer": 0,
-        "explanation": "The installation guide has you create `app/page.tsx` as the home page content for the root route (`/`)."
+        "explanation": "Even when framework ergonomics are improved, mutation endpoints must still enforce authorization, input validation, and business constraints."
       },
       {
         "id": 21,
-        "question": "When a user visits `/`, which files are rendered in the manual App Router example?",
+        "question": "What is the purpose of revalidatePath after a successful mutation?",
         "options": [
-          "Only `app/layout.tsx`.",
-          "Only `app/page.tsx`.",
-          "`app/layout.tsx` and `app/page.tsx` together.",
-          "Only `public/index.html`."
+          "To invalidate cached content associated with a specific path so users see fresh data.",
+          "To refresh browser localStorage entries only.",
+          "To restart the Next.js server process.",
+          "To force webpack recompilation in production."
         ],
-        "correctAnswer": 2,
-        "explanation": "The documentation states that both `layout.tsx` and `page.tsx` are rendered when visiting the root route."
+        "correctAnswer": 0,
+        "explanation": "Path invalidation is a core cache consistency strategy after writes that affect page output."
       },
       {
         "id": 22,
-        "question": "What happens if you forget to create the root layout and then run `next dev`?",
+        "question": "When is revalidateTag preferable to revalidatePath?",
         "options": [
-          "Next.js automatically creates the file.",
-          "The build always fails until you add Babel.",
-          "The app switches to the Pages Router.",
-          "Routing is disabled until you restart the machine."
+          "When multiple pages share data and you want semantic cache invalidation by data domain.",
+          "When you need to rotate JWT secrets.",
+          "When invalidating only CSS assets.",
+          "When route parameters are unknown at build time."
         ],
         "correctAnswer": 0,
-        "explanation": "The docs note that if the root layout is missing, Next.js will automatically create it when you run the development server."
+        "explanation": "Tag-based invalidation scales better when many routes depend on shared datasets such as products, posts, or account records."
       },
       {
         "id": 23,
-        "question": "Why might you choose to use a `src` folder in a Next.js project?",
+        "question": "How do fetch cache tags support large applications?",
         "options": [
-          "It is required for TypeScript to work.",
-          "It separates application code from root-level config files.",
-          "It is the only place where components are allowed.",
-          "It disables absolute imports by default."
+          "They decouple cache invalidation from URL structures by grouping related data under domain-level tags.",
+          "They replace database indexes.",
+          "They work only in client components.",
+          "They disable route segment caching."
         ],
-        "correctAnswer": 1,
-        "explanation": "The installation guide says a `src` folder is optional and can be used to keep application code separate from configuration files in the project root."
+        "correctAnswer": 0,
+        "explanation": "Tags let teams map invalidation to business entities rather than brittle path trees, improving maintainability as systems grow."
       },
       {
         "id": 24,
-        "question": "What is the purpose of the `public` folder in Next.js?",
+        "question": "What is the recommended use of generateMetadata in App Router?",
         "options": [
-          "It stores private environment files.",
-          "It stores static assets such as images and fonts.",
-          "It contains route handlers only.",
-          "It replaces the app directory in production."
+          "Producing route-specific SEO and social metadata, often from server-fetched content.",
+          "Declaring middleware matchers.",
+          "Configuring transpilation plugins.",
+          "Replacing static robots.txt files."
         ],
-        "correctAnswer": 1,
-        "explanation": "The docs describe `public` as an optional folder for static assets like images and fonts that can be served from the base URL."
+        "correctAnswer": 0,
+        "explanation": "generateMetadata lets metadata be data-driven per route, which is important for dynamic content SEO and shareability."
       },
       {
         "id": 25,
-        "question": "How do you reference a file named `public/profile.png` from your application code?",
+        "question": "What is a common senior concern when generating metadata from remote APIs?",
         "options": [
-          "`/public/profile.png`",
-          "`./public/profile.png`",
-          "`assets/profile.png`",
-          "`/profile.png`"
+          "Controlling latency and failure behavior so metadata generation does not degrade page reliability.",
+          "Ensuring metadata runs only in client components.",
+          "Avoiding all caching for metadata requests.",
+          "Running metadata only in middleware."
         ],
-        "correctAnswer": 3,
-        "explanation": "Files inside `public` are referenced from the base URL. The docs use `/profile.png` as the example path."
+        "correctAnswer": 0,
+        "explanation": "Metadata generation is on the critical path for document output. Engineers should design for timeouts, fallbacks, and consistent caching policy."
       },
       {
         "id": 26,
-        "question": "Which package installation command is shown for manually creating a Next.js app?",
+        "question": "Why does next/image matter in production beyond convenience?",
         "options": [
-          "Install only `next` because React is bundled automatically.",
-          "Install `next`, `react`, and `react-dom`.",
-          "Install `next`, `vite`, and `react-router`.",
-          "Install `next`, `express`, and `webpack` only."
+          "It provides optimized image delivery features such as resizing and modern format handling for better performance.",
+          "It is required to use any image in React.",
+          "It inlines all images into HTML for speed.",
+          "It replaces CDN usage entirely."
         ],
-        "correctAnswer": 1,
-        "explanation": "In the manual installation section, the docs instruct you to install `next@latest`, `react@latest`, and `react-dom@latest`."
+        "correctAnswer": 0,
+        "explanation": "Image optimization reduces transfer size and improves Core Web Vitals when configured correctly, especially at scale."
       },
       {
         "id": 27,
-        "question": "Why do the docs still tell you to declare `react` and `react-dom` in `package.json` when using the App Router?",
+        "question": "Why must remote image hosts be explicitly configured?",
         "options": [
-          "Because the App Router cannot run without installing Vue.",
-          "Because they are needed for tooling and ecosystem compatibility.",
-          "Because Next.js does not include React at all.",
-          "Because they are only used for linting."
+          "To enforce an allowlist and prevent arbitrary remote image optimization abuse.",
+          "Because Next.js cannot load local images.",
+          "To enable client-side hydration.",
+          "Because SVG is unsupported otherwise."
         ],
-        "correctAnswer": 1,
-        "explanation": "The docs explain that the App Router uses React canary releases internally, but `react` and `react-dom` should still be declared for tooling and ecosystem compatibility."
+        "correctAnswer": 0,
+        "explanation": "Explicit remote patterns are a safety and control mechanism for external image sources."
       },
       {
         "id": 28,
-        "question": "Which script starts the development server in a manually configured project?",
-        "options": ["`next build`", "`next start`", "`next dev`", "`eslint`"],
-        "correctAnswer": 2,
-        "explanation": "The package.json example on the installation page uses `next dev` for the `dev` script."
+        "question": "What advantage does next/font provide in senior performance tuning?",
+        "options": [
+          "It self-hosts and optimizes fonts to reduce layout shift and external dependency overhead.",
+          "It compiles font files into JavaScript bundles only.",
+          "It disables browser font fallback.",
+          "It is used only for PDF generation."
+        ],
+        "correctAnswer": 0,
+        "explanation": "Font optimization impacts CLS and first render quality. next/font helps control loading and reduces external request risk."
       },
       {
         "id": 29,
-        "question": "Which script builds the application for production?",
+        "question": "What is the core purpose of next/link prefetching in App Router navigation?",
         "options": [
-          "`next dev`",
-          "`next build`",
-          "`next start`",
-          "`next lint`"
+          "To improve transition speed by preparing route assets and data ahead of navigation.",
+          "To permanently cache every visited page in the browser.",
+          "To bypass middleware for internal links.",
+          "To force full page reloads."
         ],
-        "correctAnswer": 1,
-        "explanation": "The docs describe `next build` as the command that builds the application for production."
+        "correctAnswer": 0,
+        "explanation": "Prefetching can reduce perceived navigation latency, especially for likely next-click routes."
       },
       {
         "id": 30,
-        "question": "Which script starts the production server after a build?",
+        "question": "What does router.refresh do in App Router clients?",
         "options": [
-          "`next start`",
-          "`next dev`",
-          "`next serve`",
-          "`node server.js`"
+          "It requests a fresh server render for the current route while preserving client-side state where applicable.",
+          "It clears browser cookies and session storage.",
+          "It rebuilds the app with Turbopack.",
+          "It restarts middleware execution in dev tools only."
         ],
         "correctAnswer": 0,
-        "explanation": "The package.json example uses `next start` to run the production server after building the app."
+        "explanation": "router.refresh is useful after mutations when you need updated server-rendered data without a full hard reload."
       },
       {
         "id": 31,
-        "question": "What does the `eslint` script do in the package.json example?",
+        "question": "When are parallel routes strategically useful?",
         "options": [
-          "It starts Turbopack.",
-          "It runs ESLint.",
-          "It compiles TypeScript to JavaScript.",
-          "It generates the app directory automatically."
+          "When you need multiple independently rendered UI slots, such as dashboards with concurrent panels.",
+          "Only for static export projects.",
+          "When replacing all nested layouts.",
+          "Only when using Pages Router fallback mode."
         ],
-        "correctAnswer": 1,
-        "explanation": "The installation docs show `eslint` as the lint script for projects using ESLint."
+        "correctAnswer": 0,
+        "explanation": "Parallel routes enable sophisticated compositions where different UI regions can load and update independently."
       },
       {
         "id": 32,
-        "question": "Which bundler is the default for `next dev` according to the installation docs?",
-        "options": ["Webpack", "Parcel", "Turbopack", "Rollup"],
-        "correctAnswer": 2,
-        "explanation": "The docs state that Turbopack is now the default bundler for the development server."
+        "question": "What interview-worthy use case best fits intercepting routes?",
+        "options": [
+          "Opening contextual overlays like login or item detail modals without losing background route context.",
+          "Replacing route handlers for webhook verification.",
+          "Compiling SVG assets at request time.",
+          "Bypassing Suspense boundaries globally."
+        ],
+        "correctAnswer": 0,
+        "explanation": "Intercepting routes are often used for modal UX patterns where navigation context should be preserved."
       },
       {
         "id": 33,
-        "question": "How can you explicitly use Webpack instead of Turbopack for development?",
+        "question": "How do layouts differ from templates in App Router behavior?",
         "options": [
-          "Run `next dev --webpack`.",
-          "Run `webpack next dev`.",
-          "Set `bundler=webpack` in `.env.local`.",
-          "Delete the app directory."
+          "Layouts persist across navigation in their segment scope, while templates remount and re-run on navigation.",
+          "Templates are persistent and layouts always remount.",
+          "They are aliases for the same file behavior.",
+          "Templates are only valid in client components."
         ],
         "correctAnswer": 0,
-        "explanation": "The installation page says you can switch to Webpack by running `next dev --webpack` or `next build --webpack`."
+        "explanation": "This distinction is important for state retention and side-effect behavior in complex route trees."
       },
       {
         "id": 34,
-        "question": "After starting the dev server, what does the documentation suggest you edit to see live updates in the browser?",
+        "question": "Why might a senior engineer intentionally choose template.tsx over layout.tsx?",
         "options": [
-          "`package.json`",
-          "`app/page.tsx`",
-          "`next.config.js`",
-          "`public/robots.txt`"
+          "To force remounting behavior for analytics, transitions, or state reset requirements on navigation.",
+          "To enable server actions.",
+          "To disable route-level error handling.",
+          "To replace loading.tsx functionality."
         ],
-        "correctAnswer": 1,
-        "explanation": "The run-the-development-server section says to edit `app/page.tsx` and save the file to see the changes reflected in the browser."
+        "correctAnswer": 0,
+        "explanation": "Templates are useful when per-navigation re-initialization is desired instead of persistent layout state."
       },
       {
         "id": 35,
-        "question": "How does Next.js add TypeScript support to a project according to the official docs?",
+        "question": "What is an effective pattern for preventing data-fetch waterfalls in Server Components?",
         "options": [
-          "You must install a third-party TypeScript plugin before the app will run.",
-          "Rename a file to `.ts` or `.tsx` and run `next dev`.",
-          "TypeScript only works if you create the app with Babel disabled.",
-          "You must manually write all Next.js type declarations yourself."
+          "Start independent fetches in parallel and await them together.",
+          "Nest all fetches sequentially in child components.",
+          "Move every fetch into useEffect on the client.",
+          "Disable caching globally."
         ],
-        "correctAnswer": 1,
-        "explanation": "The installation page says TypeScript support is built in. Renaming a file to `.ts` or `.tsx` and running `next dev` will trigger dependency installation and config generation."
+        "correctAnswer": 0,
+        "explanation": "Parallelizing independent async work reduces total request critical path time and improves TTFB."
       },
       {
         "id": 36,
-        "question": "What file will Next.js automatically add when TypeScript is enabled in a project?",
+        "question": "What is a senior-safe strategy when mixing personalized and cacheable data on one page?",
         "options": [
-          "`babel.config.ts`",
-          "`vite.config.ts`",
-          "`tsconfig.json`",
-          "`types.env.json`"
+          "Separate personalized dynamic sections from cache-friendly shared content with clear boundaries.",
+          "Force the whole page to no-store always.",
+          "Render everything in client components to avoid cache rules.",
+          "Disable revalidation and rely on manual restarts."
         ],
-        "correctAnswer": 2,
-        "explanation": "The docs state that when you enable TypeScript, Next.js adds a `tsconfig.json` file with recommended settings."
+        "correctAnswer": 0,
+        "explanation": "Good architecture avoids making entire pages dynamic when only a small personalized fragment requires request-time rendering."
       },
       {
         "id": 37,
-        "question": "What minimum TypeScript version is listed on the installation page?",
-        "options": ["4.8.0", "5.0.0", "5.1.0", "5.5.0"],
-        "correctAnswer": 2,
-        "explanation": "The TypeScript setup section lists version 5.1.0 as the minimum supported TypeScript version."
+        "question": "What is Draft Mode used for in content-heavy Next.js systems?",
+        "options": [
+          "Previewing unpublished or draft content with request-time rendering workflows.",
+          "Compiling markdown to static HTML at build only.",
+          "Disabling caching for all users permanently.",
+          "Switching from App Router to Pages Router during runtime."
+        ],
+        "correctAnswer": 0,
+        "explanation": "Draft Mode enables secure preview pipelines for editors without exposing unpublished data to all visitors."
       },
       {
         "id": 38,
-        "question": "What extra editor support does Next.js include for TypeScript users?",
+        "question": "What is the best high-level auth pattern in modern App Router apps?",
         "options": [
-          "A custom TypeScript plugin and type checker.",
-          "A built-in GraphQL schema generator.",
-          "A browser extension for compiling TS in Chrome.",
-          "An automatic Prisma client generator."
+          "Use middleware for coarse access control and enforce fine-grained authorization in server logic.",
+          "Do all auth checks only in client components.",
+          "Store role permissions only in localStorage.",
+          "Rely on hidden routes instead of authorization checks."
         ],
         "correctAnswer": 0,
-        "explanation": "The docs mention that Next.js includes a custom TypeScript plugin and type checker that editors such as VS Code can use."
+        "explanation": "Middleware can gate broad access quickly, but authoritative authorization decisions should still happen at the server and business logic boundary."
       },
       {
         "id": 39,
-        "question": "How do the docs suggest enabling the Next.js TypeScript plugin in VS Code?",
+        "question": "In App Router, where should cookie mutation generally happen?",
         "options": [
-          "Install a separate Vercel extension and restart the editor.",
-          "Choose “Use Workspace Version” from “TypeScript: Select TypeScript Version”.",
-          "Set `typescript.nextPlugin=true` in package.json.",
-          "Run `next ts-plugin enable` in the terminal."
+          "In server contexts such as Server Actions or route handlers where response headers can be controlled.",
+          "Inside any random client component render.",
+          "Inside next/link prefetch callbacks.",
+          "Only during build."
         ],
-        "correctAnswer": 1,
-        "explanation": "The installation guide tells VS Code users to open the command palette, choose “TypeScript: Select TypeScript Version”, and then select “Use Workspace Version”."
+        "correctAnswer": 0,
+        "explanation": "Cookie writes are an HTTP response concern and should be performed in server-capable execution contexts."
       },
       {
         "id": 40,
-        "question": "Which linting choices does the installation page recommend at a high level?",
+        "question": "Why is environment variable strategy a senior-level Next.js topic?",
         "options": [
-          "Only ESLint is supported.",
-          "Only Biome is supported.",
-          "You can use either ESLint or Biome.",
-          "Linting is discouraged in Next.js 16 and later."
+          "Because separating server-only and client-exposed variables prevents accidental secret leakage.",
+          "Because all variables are always safe to expose in client bundles.",
+          "Because env vars are ignored when deploying Next.js.",
+          "Because only middleware can read env vars."
         ],
-        "correctAnswer": 2,
-        "explanation": "The linting section says Next.js supports linting with either ESLint or Biome, and you can run the chosen tool through package.json scripts."
+        "correctAnswer": 0,
+        "explanation": "Engineers must carefully control what is bundled to clients and what remains server-only to protect credentials and internal endpoints."
       },
       {
         "id": 41,
-        "question": "What is the recommended explicit ESLint config file mentioned in the docs?",
+        "question": "What is a key production benefit of output: standalone for containerized deployments?",
         "options": [
-          "`eslint.config.mjs`",
-          "`.nextlintrc`",
-          "`lint.config.ts`",
-          "`vercel-eslint.json`"
+          "It creates a minimal deployable server output with required dependencies for leaner runtime images.",
+          "It converts the app to a static-only site.",
+          "It disables source maps and logs by default.",
+          "It removes the need for Node.js in production."
         ],
         "correctAnswer": 0,
-        "explanation": "The docs recommend creating an explicit ESLint configuration, and `eslint.config.mjs` is the suggested modern format."
+        "explanation": "Standalone output helps reduce container size and simplify deployment artifacts in CI and cloud environments."
       },
       {
         "id": 42,
-        "question": "Starting with Next.js 16, what changed about linting during `next build`?",
+        "question": "How does instrumentation.js help senior teams?",
         "options": [
-          "The build always runs both ESLint and Biome automatically.",
-          "Linting was removed entirely from Next.js.",
-          "`next build` no longer runs the linter automatically.",
-          "Linting now requires the Pages Router only."
+          "It provides a place to initialize observability and runtime instrumentation hooks early in app lifecycle.",
+          "It replaces route handlers for telemetry endpoints.",
+          "It enables CSS modules globally.",
+          "It disables server component rendering overhead."
         ],
-        "correctAnswer": 2,
-        "explanation": "The installation page notes that beginning with Next.js 16, `next build` does not run the linter automatically, so linting should be done via explicit scripts."
+        "correctAnswer": 0,
+        "explanation": "Instrumentation entry points support consistent tracing and monitoring setup, which is critical for production diagnostics."
       },
       {
         "id": 43,
-        "question": "If a project still uses `next lint`, what migration path does the docs provide?",
+        "question": "What is the main value of route groups like (marketing) and (app)?",
         "options": [
-          "Delete the lint script and rely on build errors only.",
-          "Use the `next-lint-to-eslint-cli` codemod.",
-          "Rename `next lint` to `next style`.",
-          "Switch the entire project to Babel."
+          "They organize segments and layout boundaries without affecting URL path structure.",
+          "They create private routes inaccessible from browsers.",
+          "They force static generation for grouped pages.",
+          "They are only valid in middleware folders."
         ],
-        "correctAnswer": 1,
-        "explanation": "The linting section recommends a codemod named `next-lint-to-eslint-cli` to migrate existing `next lint` scripts."
+        "correctAnswer": 0,
+        "explanation": "Route groups improve maintainability of large route trees by separating concerns while preserving URL design."
       },
       {
         "id": 44,
-        "question": "What built-in TypeScript and JavaScript configuration features does Next.js support for cleaner imports?",
+        "question": "How should a senior engineer decide between Route Handlers and Server Actions for mutations?",
         "options": [
-          "Only package exports.",
-          "Only import maps from HTML.",
-          "`baseUrl` and `paths` in `tsconfig.json` or `jsconfig.json`.",
-          "Only webpack aliases in `next.config.js`."
+          "Use Server Actions for UI-coupled mutations and Route Handlers for API-style integration surfaces.",
+          "Always prefer Route Handlers because Server Actions are for reads only.",
+          "Always prefer Server Actions even for third-party webhooks.",
+          "Avoid both and mutate only in middleware."
         ],
-        "correctAnswer": 2,
-        "explanation": "The absolute imports section explains that Next.js supports the `baseUrl` and `paths` options in `tsconfig.json` and `jsconfig.json`."
+        "correctAnswer": 0,
+        "explanation": "The decision is about interface boundaries: internal UI interactions versus external or API-oriented contracts."
       },
       {
         "id": 45,
-        "question": "What does the `baseUrl` option help you do in a Next.js project?",
+        "question": "What is a robust pattern for webhook endpoints in App Router?",
         "options": [
-          "Set the deployment URL for Vercel.",
-          "Choose the browser support matrix.",
-          "Resolve imports relative to a project directory such as `src/`.",
-          "Force all imports to remain deeply relative."
+          "Implement them in route handlers with signature verification and idempotency safeguards.",
+          "Handle them in client components after hydration.",
+          "Process them in loading.tsx.",
+          "Use next/link prefetch to trigger webhook processing."
         ],
-        "correctAnswer": 2,
-        "explanation": "The docs show `baseUrl` being used to make imports cleaner by resolving them from a root like `src/` instead of long relative paths."
+        "correctAnswer": 0,
+        "explanation": "Webhooks are external server-to-server calls and belong in secure server handlers with verification and retry-safe logic."
       },
       {
         "id": 46,
-        "question": "What is the purpose of the `paths` option in `tsconfig.json` or `jsconfig.json`?",
+        "question": "What does next/dynamic primarily help with in senior frontend performance work?",
         "options": [
-          "To map module aliases such as `@/components/*` to actual directories.",
-          "To define HTTP redirects.",
-          "To configure static asset caching headers.",
-          "To create route handlers automatically."
+          "Splitting heavy client-only modules so they load only when needed.",
+          "Converting all server components to client components.",
+          "Caching API responses on the server.",
+          "Generating TypeScript declarations for routes."
         ],
         "correctAnswer": 0,
-        "explanation": "The installation page uses `paths` to create aliases like `@/components/*`, which improves readability and avoids deep relative import chains."
+        "explanation": "Dynamic imports can defer expensive client bundles, reducing initial payload and improving interaction readiness."
       },
       {
         "id": 47,
-        "question": "In the docs example, what does an import like `@/components/button` represent?",
+        "question": "Why should server-only code be kept out of client component trees?",
         "options": [
-          "A dynamic API route.",
-          "An absolute import alias pointing to a project directory.",
-          "A browser-only package provided by Chrome.",
-          "A required package from npm named `@/components`."
+          "To avoid bundling sensitive logic or incompatible dependencies into browser code.",
+          "Because client components cannot import any modules.",
+          "Because Next.js disables TypeScript in server files.",
+          "Because server-only code always increases SEO rank."
         ],
-        "correctAnswer": 1,
-        "explanation": "The alias example shows `@/components/button` as a cleaner replacement for long relative import paths."
+        "correctAnswer": 0,
+        "explanation": "Boundary discipline protects secrets, prevents runtime errors, and keeps client bundles clean."
       },
       {
         "id": 48,
-        "question": "How are `paths` mappings interpreted relative to configuration?",
+        "question": "How does ISR-style revalidation influence scaling strategy?",
         "options": [
-          "They are always relative to the public directory.",
-          "They are relative to the `baseUrl` location.",
-          "They are relative to `node_modules`.",
-          "They are relative to the OS home directory."
+          "It reduces full rebuild pressure by refreshing affected content incrementally after deployment.",
+          "It disables CDN caching entirely.",
+          "It requires every page to be dynamic.",
+          "It only works for API routes, not pages."
         ],
-        "correctAnswer": 1,
-        "explanation": "The docs explicitly state that each `paths` mapping is resolved relative to the configured `baseUrl`."
+        "correctAnswer": 0,
+        "explanation": "Incremental revalidation helps large sites update content without expensive global rebuilds for every data change."
       },
       {
         "id": 49,
-        "question": "Which statement about `jsconfig.json` is correct in the context of Next.js aliases?",
+        "question": "What is the goal of on-demand revalidation endpoints in enterprise workflows?",
         "options": [
-          "It can be used instead of `tsconfig.json` in JavaScript projects.",
-          "It is only valid in the Pages Router.",
-          "It is required even when using TypeScript.",
-          "It replaces package.json completely."
+          "Trigger precise cache invalidation from CMS or back-office events when content changes.",
+          "Restart the Node process after every content edit.",
+          "Disable static rendering in all routes.",
+          "Rotate encryption keys hourly."
         ],
         "correctAnswer": 0,
-        "explanation": "The absolute imports section says that both `tsconfig.json` and `jsconfig.json` can be used for alias setup, depending on whether your project uses TypeScript or plain JavaScript."
+        "explanation": "On-demand revalidation aligns cache freshness with real content events rather than waiting only for time-based intervals."
       },
       {
         "id": 50,
-        "question": "Which root layout signature shown in the docs is correct for an App Router TypeScript project?",
+        "question": "What is a practical difference between rewrites and redirects in Next.js?",
         "options": [
-          "A function that receives `{ children }: { children: React.ReactNode }`.",
-          "A function that must receive `(req, res)`.",
-          "A class component extending `NextLayout`.",
-          "A function that returns only a `<head>` element."
+          "Redirects change the visible URL for the client, while rewrites map request handling without changing displayed URL.",
+          "Rewrites always return 301 status codes.",
+          "Redirects are available only in middleware.",
+          "Rewrites can only target static assets."
         ],
         "correctAnswer": 0,
-        "explanation": "The manual installation example uses a root layout function that accepts `children` typed as `React.ReactNode`."
+        "explanation": "Understanding this difference is critical for SEO behavior, analytics interpretation, and migration strategies."
       },
       {
         "id": 51,
-        "question": "What is the simplest page content used in the manual installation example?",
+        "question": "When discussing SEO in App Router, what is a key senior-level practice?",
         "options": [
-          "A dashboard with nested layouts and data fetching.",
-          "An API route returning JSON.",
-          "An `<h1>Hello, Next.js!</h1>` home page.",
-          "A login form with server actions."
+          "Ensure metadata strategy, canonical URLs, and dynamic content indexing behavior are explicitly designed per route type.",
+          "Rely only on client-side meta tag updates.",
+          "Disable server rendering for crawlable pages.",
+          "Use one global title for the whole application."
         ],
-        "correctAnswer": 2,
-        "explanation": "The manual setup example creates a minimal home page that returns `<h1>Hello, Next.js!</h1>`."
+        "correctAnswer": 0,
+        "explanation": "Serious SEO work in Next.js requires route-aware metadata design and consistent canonicalization decisions."
       },
       {
         "id": 52,
-        "question": "Which built-in component does the installation page use when demonstrating how to render an image from `public`?",
+        "question": "How should Core Web Vitals optimization be approached in mature Next.js apps?",
         "options": [
-          "`next/script`",
-          "`next/font`",
-          "`next/link`",
-          "`next/image`"
+          "Measure real-user metrics and optimize image, font, script, and hydration costs iteratively.",
+          "Only optimize Lighthouse scores in local dev once.",
+          "Disable streaming to simplify metrics collection.",
+          "Move all logic to client components."
         ],
-        "correctAnswer": 3,
-        "explanation": "The public folder example imports `Image` from `next/image` to show how a static asset such as `/profile.png` can be rendered."
+        "correctAnswer": 0,
+        "explanation": "Sustained performance requires telemetry-driven iteration and careful control of render and network costs."
       },
       {
         "id": 53,
-        "question": "If you manually configure scripts and want to lint with Biome, what kind of script do the docs suggest?",
+        "question": "What is a strong strategy for handling third-party SDKs in App Router projects?",
         "options": [
-          "A script such as `biome check`.",
-          "A script such as `next biome`.",
-          "A script such as `npm run next-lint`.",
-          "A script such as `next build --biome`."
+          "Isolate browser-only SDKs in client boundaries and keep server-side integrations on the server.",
+          "Import all SDKs at the root layout regardless of runtime.",
+          "Run third-party scripts only in middleware.",
+          "Embed all SDK code into route handlers."
         ],
         "correctAnswer": 0,
-        "explanation": "The linting section shows Biome scripts like `biome check` and `biome format --write` as examples."
+        "explanation": "Separating client and server integration paths avoids runtime mismatches and unnecessary client payload growth."
       },
       {
         "id": 54,
-        "question": "What is the main purpose of `next start` compared to `next dev`?",
+        "question": "Why is idempotency important for server mutations in distributed Next.js deployments?",
         "options": [
-          "`next start` runs the production server, while `next dev` runs the development server.",
-          "`next start` installs dependencies, while `next dev` removes them.",
-          "`next start` is only for API routes, while `next dev` is only for pages.",
-          "They are identical commands with different names."
+          "Retries can happen across networks and platforms, so duplicate-safe mutation handling prevents data corruption.",
+          "It removes the need for authentication.",
+          "It allows skipping database transactions.",
+          "It is only relevant for static pages."
         ],
         "correctAnswer": 0,
-        "explanation": "The package.json example distinguishes `next dev` for development and `next start` for serving the production build."
+        "explanation": "Reliable mutation design accounts for retries and duplicate delivery patterns common in modern distributed systems."
       },
       {
         "id": 55,
-        "question": "Which statement best matches the App Router note in the manual installation docs?",
+        "question": "What is a practical approach to multi-tenant routing in Next.js?",
         "options": [
-          "The App Router uses React canary releases built in.",
-          "The App Router requires React 17 exactly.",
-          "The App Router disables TypeScript support by default.",
-          "The App Router only works if you avoid layouts."
+          "Use host or path-based tenant resolution with clear authorization boundaries and cache partitioning strategy.",
+          "Create a separate React app per tenant in one browser tab.",
+          "Disable middleware and infer tenant in client localStorage.",
+          "Use query strings only and ignore server-side checks."
         ],
         "correctAnswer": 0,
-        "explanation": "The docs note that the App Router uses React canary releases built in, including stable React 19 changes and newer framework-validated features."
+        "explanation": "Multi-tenant systems require careful request resolution, secure data isolation, and cache correctness across tenants."
       },
       {
         "id": 56,
-        "question": "What is the purpose of the `lint:fix` script shown in the manual package.json example?",
+        "question": "How should feature flags be integrated in Next.js without harming performance?",
         "options": [
-          "To run the production server with auto-fixes.",
-          "To format HTML output in the browser.",
-          "To apply automatic lint fixes using ESLint.",
-          "To rebuild Turbopack caches."
+          "Evaluate flags close to rendering boundaries and cache appropriately to avoid excessive per-request overhead.",
+          "Fetch flags from the client on every component render.",
+          "Store all flags directly in global CSS.",
+          "Compile a separate framework build for each flag combination only."
         ],
-        "correctAnswer": 2,
-        "explanation": "The package.json example includes `lint:fix` as `eslint --fix`, which runs ESLint and applies any automatic fixes it can."
+        "correctAnswer": 0,
+        "explanation": "Feature-flag architecture must balance rollout control, latency, and cache behavior across routes and user segments."
       },
       {
         "id": 57,
-        "question": "If you want to create a Next.js app without create-next-app, which approach does the docs call this?",
+        "question": "What does a senior migration strategy from Pages Router to App Router usually prioritize?",
         "options": [
-          "Hybrid installation.",
-          "Manual installation.",
-          "Server bootstrap mode.",
-          "Runtime-only setup."
+          "Incremental route-by-route migration with clear compatibility and observability checkpoints.",
+          "A single big-bang rewrite with no dual-routing period.",
+          "Deleting all legacy routes before introducing App Router.",
+          "Converting everything to client components first."
         ],
-        "correctAnswer": 1,
-        "explanation": "The official installation page has a dedicated “Manual installation” section for setting up a project yourself without the scaffolding CLI."
+        "correctAnswer": 0,
+        "explanation": "Large teams reduce risk by migrating progressively, validating behavior and performance at each stage."
       },
       {
         "id": 58,
-        "question": "Which of the following is a correct reason to prefer create-next-app for beginners?",
+        "question": "How should errors be modeled in production-grade route handlers?",
         "options": [
-          "It automatically sets up routing, linting, and other project defaults for you.",
-          "It avoids installing dependencies entirely.",
-          "It removes the need for React.",
-          "It only works for static export projects."
+          "With explicit status codes, structured payloads, and logging correlation that supports debugging and incident response.",
+          "By always returning 200 with a message field.",
+          "By throwing raw stack traces to clients.",
+          "By swallowing all exceptions silently."
         ],
         "correctAnswer": 0,
-        "explanation": "The docs position create-next-app as the quickest path because it scaffolds a working project and installs the required dependencies automatically."
+        "explanation": "Consistent error contracts and observability are essential for reliability and maintainability in API-facing systems."
       },
       {
         "id": 59,
-        "question": "What is the key difference between a relative import like `../../../components/button` and an alias import like `@/components/button`?",
+        "question": "What is the most important reason to define cache policy explicitly in senior Next.js systems?",
         "options": [
-          "The alias version is cleaner and relies on configured absolute import settings.",
-          "The relative version only works in production.",
-          "The alias version only works in CSS files.",
-          "There is no practical difference between them."
+          "To ensure freshness, correctness, and predictable behavior under scale rather than relying on accidental defaults.",
+          "To disable all CDN support.",
+          "To avoid using async and await.",
+          "To force all components to be client-rendered."
         ],
         "correctAnswer": 0,
-        "explanation": "The docs use this exact before-and-after example to show how aliases reduce deep relative paths and make imports easier to maintain."
+        "explanation": "Explicit cache decisions prevent subtle data staleness bugs and support predictable performance in complex workloads."
       },
       {
         "id": 60,
-        "question": "Which summary best reflects the official installation page's recommended path for getting started with Next.js today?",
+        "question": "Which statement best reflects senior-level Next.js interview expectations?",
         "options": [
-          "Start with the App Router and let create-next-app scaffold a project with recommended defaults.",
-          "Begin with a custom Express server and add Next.js later.",
-          "Use the Pages Router by default because the App Router is deprecated.",
-          "Skip the development server and write only production config first."
+          "You should reason about rendering strategy, cache invalidation, runtime boundaries, security, and operational reliability, not just scaffolding commands.",
+          "Memorizing create-next-app prompts is enough for senior roles.",
+          "Only CSS and animations matter at senior level.",
+          "Senior work in Next.js is mostly about choosing IDE themes."
         ],
         "correctAnswer": 0,
-        "explanation": "The official installation page centers the getting-started flow around create-next-app, the App Router, recommended defaults, and a fast local development loop."
+        "explanation": "Senior interviews emphasize system design judgment across performance, correctness, security, and maintainability in real production scenarios."
       }
     ]
   }
