@@ -1,0 +1,729 @@
+[
+  {
+    "id": "typescript-interview",
+    "title": "TypeScript Interview",
+    "description": "Senior-level TypeScript interview quiz focused on advanced type system and architecture decisions",
+    "questions": [
+      {
+        "id": 1,
+        "question": "In a strict TypeScript codebase, when is unknown a better API boundary type than any?",
+        "options": [
+          "When callers must explicitly narrow or validate before use",
+          "When you want all operations to type-check without guards",
+          "When you need implicit downcasts to concrete domain models",
+          "When you want the compiler to skip control-flow analysis"
+        ],
+        "correctAnswer": 0,
+        "explanation": "unknown preserves type safety at boundaries by requiring narrowing before property access, calls, or arithmetic. any bypasses the checker and can silently propagate unsound assumptions."
+      },
+      {
+        "id": 2,
+        "question": "Which statement best describes never in advanced TypeScript design?",
+        "options": [
+          "It represents impossible values and supports exhaustiveness checks",
+          "It is a top type assignable from every type",
+          "It is equivalent to undefined in strict mode",
+          "It should be used as a replacement for void in async functions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "never is the bottom type. It appears when no value can exist, such as a function that always throws, and it enables exhaustive switch assertions in discriminated unions."
+      },
+      {
+        "id": 3,
+        "question": "Why do senior teams favor discriminated unions over broad optional-property object shapes?",
+        "options": [
+          "They encode valid state transitions explicitly and improve exhaustiveness",
+          "They reduce emitted JavaScript bundle size directly",
+          "They disable the need for runtime validation",
+          "They allow structural typing to become nominal automatically"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Discriminated unions model finite state machines clearly and force callers to handle all cases. Optional-property bags often permit invalid intermediate states that the compiler cannot prevent."
+      },
+      {
+        "id": 4,
+        "question": "What is the key behavior of distributive conditional types?",
+        "options": [
+          "They apply the conditional to each member of a union when the checked type is a naked type parameter",
+          "They only work for tuple types and never for unions",
+          "They are evaluated at runtime for each union member",
+          "They are disabled under strictNullChecks"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A conditional like T extends U ? X : Y distributes across union members when T is naked. Wrapping T in a tuple, such as [T] extends [U], disables distribution."
+      },
+      {
+        "id": 5,
+        "question": "In conditional types, what is a practical use of infer?",
+        "options": [
+          "Extracting inner types, such as function return types or tuple elements",
+          "Forcing runtime reflection metadata emission",
+          "Overriding JavaScript closure scope inference",
+          "Declaring nominal classes without constructors"
+        ],
+        "correctAnswer": 0,
+        "explanation": "infer introduces a type variable within conditional type branches so you can capture and reuse parts of another type, for example ReturnType<T> style patterns."
+      },
+      {
+        "id": 6,
+        "question": "Why might a senior engineer choose satisfies instead of as for config objects?",
+        "options": [
+          "satisfies checks shape compatibility while preserving precise inferred literal types",
+          "satisfies erases keys not present on the target type at runtime",
+          "satisfies permits incompatible values that as would reject",
+          "satisfies is only for class inheritance constraints"
+        ],
+        "correctAnswer": 0,
+        "explanation": "satisfies validates that a value conforms to a target type without widening away useful literal information. as is an assertion that can hide mismatches and weaken safety."
+      },
+      {
+        "id": 7,
+        "question": "What problem does exactOptionalPropertyTypes solve?",
+        "options": [
+          "It distinguishes omitted properties from properties explicitly set to undefined",
+          "It makes all optional properties required in interfaces",
+          "It disables strictNullChecks for optional members",
+          "It converts optional properties into readonly members"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Without exactOptionalPropertyTypes, optional often behaves like value | undefined. Enabling the flag models omission more precisely and catches accidental undefined assignments."
+      },
+      {
+        "id": 8,
+        "question": "What does noUncheckedIndexedAccess change in day-to-day coding?",
+        "options": [
+          "Index access results include undefined unless proven present",
+          "It bans use of arrays and records in strict mode",
+          "It rewrites index operations to throw runtime errors",
+          "It enables numeric index signatures on all interfaces"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The flag forces you to acknowledge missing keys and out-of-range indices by typing indexed access as possibly undefined, reducing a common class of production bugs."
+      },
+      {
+        "id": 9,
+        "question": "How should assertion functions (asserts value is T) be used in robust systems?",
+        "options": [
+          "To centralize runtime checks that also narrow types for callers",
+          "To replace unit tests by relying on compile-time checks only",
+          "To convert unknown into any without validation",
+          "To force emitted JavaScript to inline branch prediction hints"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Assertion functions bridge runtime validation and static narrowing. They are especially valuable at I/O boundaries, deserialization, and unsafe external integrations."
+      },
+      {
+        "id": 10,
+        "question": "What is a major risk of overusing function overload signatures in public APIs?",
+        "options": [
+          "Call-site complexity and brittle maintenance when behavior could be modeled by unions or generics",
+          "Overloads always generate extra runtime wrappers",
+          "Overloads cannot be used with exported functions",
+          "Overloads disable IntelliSense for all parameters"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Overloads are powerful but can become difficult to evolve and reason about. Well-designed unions, parameter objects, or generics often provide clearer and more maintainable APIs."
+      },
+      {
+        "id": 11,
+        "question": "When modeling finite domain values, why are string literal unions often preferred over enums?",
+        "options": [
+          "They avoid runtime emit and integrate naturally with JSON payloads",
+          "They support inheritance while enums do not",
+          "They are nominal and prevent structural assignment",
+          "They are required for switch statements"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Literal unions are type-only and map directly to serialized strings. Enums emit runtime objects, which can be useful but may add bundle and interop complexity."
+      },
+      {
+        "id": 12,
+        "question": "What is a practical downside of const enum in shared libraries?",
+        "options": [
+          "Inlining can break consumers across compilation boundaries and toolchains",
+          "const enum values are allocated dynamically at runtime",
+          "const enum cannot represent numeric values",
+          "const enum disables dead-code elimination"
+        ],
+        "correctAnswer": 0,
+        "explanation": "const enum is erased and inlined, which can create versioning and transpiler compatibility issues for distributed packages unless all consumers compile with compatible settings."
+      },
+      {
+        "id": 13,
+        "question": "How does noImplicitOverride help in large OO TypeScript codebases?",
+        "options": [
+          "It ensures subclass methods intentionally override base members",
+          "It allows private methods to be overridden without errors",
+          "It forces all methods to be abstract",
+          "It changes runtime prototype lookup behavior"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The override keyword plus noImplicitOverride catches accidental shadowing when base class members are renamed or signatures change, improving refactor safety."
+      },
+      {
+        "id": 14,
+        "question": "What is the senior-level rationale for useUnknownInCatchVariables?",
+        "options": [
+          "Thrown values are not guaranteed to be Error objects, so narrowing is required",
+          "It guarantees stack traces for all caught values",
+          "It converts all thrown strings into Error automatically",
+          "It removes need for custom error classes"
+        ],
+        "correctAnswer": 0,
+        "explanation": "JavaScript permits throwing any value. Typing catch bindings as unknown forces explicit normalization and avoids unsafe assumptions like direct err.message access."
+      },
+      {
+        "id": 15,
+        "question": "Why are branded types used in critical domain modeling?",
+        "options": [
+          "To simulate nominal distinctions between structurally identical primitives",
+          "To create runtime validation without code",
+          "To speed up object allocation in V8",
+          "To enable automatic JSON schema generation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Branding allows differentiation of types like UserId and OrderId even if both are strings, preventing accidental mixing in APIs that rely on structural typing."
+      },
+      {
+        "id": 16,
+        "question": "Which statement correctly describes variance pressure in callback-heavy APIs?",
+        "options": [
+          "Parameter positions are contravariant in sound systems, so narrower callbacks are unsafe substitutes",
+          "Return positions are always contravariant",
+          "Variance does not matter in TypeScript due to structural typing",
+          "All generic types are invariant by default"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A callback expecting a more specific parameter cannot safely replace one expecting a broader parameter. Understanding variance avoids subtle assignment bugs in framework and library APIs."
+      },
+      {
+        "id": 17,
+        "question": "What does the built-in Awaited<T> utility model accurately?",
+        "options": [
+          "The recursively unwrapped resolved type of Promise-like values",
+          "Only the first level of Promise<T> without nested unwrapping",
+          "The runtime value after await executes",
+          "A union of pending and fulfilled states"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Awaited<T> mirrors await behavior by recursively unwrapping Promise-like types, which helps model async API composition more precisely."
+      },
+      {
+        "id": 18,
+        "question": "When should a senior developer reach for template literal types?",
+        "options": [
+          "When encoding structured string contracts such as event names, route keys, or cache IDs",
+          "When needing faster runtime string concatenation",
+          "When replacing all union types in a codebase",
+          "Only when generating declaration files"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Template literal types can encode naming patterns and catch invalid string construction at compile time, especially in event-driven and API-heavy systems."
+      },
+      {
+        "id": 19,
+        "question": "What is a common anti-pattern with as const in application code?",
+        "options": [
+          "Using it to silence type errors instead of modeling intent with proper types",
+          "Using it on readonly tuple literals",
+          "Using it for discriminant fields",
+          "Using it in lookup tables for narrow key inference"
+        ],
+        "correctAnswer": 0,
+        "explanation": "as const is useful for literal inference and immutability intent. Misusing it as a blanket fix can mask design issues and create inflexible types where widening is appropriate."
+      },
+      {
+        "id": 20,
+        "question": "Why might a library expose unknown instead of generic defaults like any in parse functions?",
+        "options": [
+          "To force consumers to provide validators or explicit narrowing before use",
+          "To improve runtime parse throughput",
+          "To avoid emitting declaration files",
+          "To make JSON parsing nominally typed"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Returning unknown communicates that data shape is untrusted until validated. This promotes safer integration patterns, especially with external or versioned payloads."
+      },
+      {
+        "id": 21,
+        "question": "What is a key benefit of project references in monorepos?",
+        "options": [
+          "Incremental, dependency-aware builds with clear package boundaries",
+          "Automatic runtime isolation between packages",
+          "Elimination of all path alias configuration",
+          "Guaranteed zero-cost cross-package imports"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Project references enable tsc to understand package dependency graphs and reuse build artifacts, improving large-repo build performance and architecture discipline."
+      },
+      {
+        "id": 22,
+        "question": "Why is isolatedModules important when using transpilers like SWC or Babel?",
+        "options": [
+          "It enforces patterns that can be compiled safely one file at a time",
+          "It enables runtime module federation",
+          "It disables declaration file generation",
+          "It guarantees tree-shaking of unused exports"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Single-file transpilers cannot use whole-program type information. isolatedModules catches constructs that require cross-file analysis and could miscompile otherwise."
+      },
+      {
+        "id": 23,
+        "question": "What does verbatimModuleSyntax primarily protect against?",
+        "options": [
+          "Unexpected import/export rewriting that can blur type-only versus value semantics",
+          "All circular dependencies at runtime",
+          "Duplicate symbol declarations across packages",
+          "Invalid JSX pragma configuration"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Keeping module syntax verbatim helps align TypeScript output with modern bundlers and ESM expectations, reducing surprises around elided or transformed imports."
+      },
+      {
+        "id": 24,
+        "question": "Which choice best captures declaration merging tradeoffs?",
+        "options": [
+          "Useful for ecosystem augmentation but dangerous if overused due to hidden global coupling",
+          "It is runtime inheritance for classes across packages",
+          "It can only merge interfaces declared in one file",
+          "It replaces module augmentation completely"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Declaration merging powers patterns like extending framework types, but it can obscure ownership boundaries and cause surprising global effects if not tightly controlled."
+      },
+      {
+        "id": 25,
+        "question": "When augmenting third-party module types, what practice is most robust?",
+        "options": [
+          "Keep augmentations minimal, version-aware, and colocated with integration tests",
+          "Overwrite all exported types to match local preferences",
+          "Place augmentations in random feature files for convenience",
+          "Rely on skipLibCheck to avoid maintenance"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Module augmentation should be explicit and test-backed because upstream type changes can break assumptions. Minimal surface area reduces upgrade risk."
+      },
+      {
+        "id": 26,
+        "question": "Why are user-defined type guards preferable to repeated inline casts?",
+        "options": [
+          "They centralize validation logic and provide reusable, trustworthy narrowing",
+          "They execute faster than plain JavaScript conditionals",
+          "They remove the need for runtime checks",
+          "They are required for generic functions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Type guards encode domain checks once and allow safe narrowing everywhere they are used, improving consistency and reducing assertion-driven unsoundness."
+      },
+      {
+        "id": 27,
+        "question": "What does keyof on a union type represent?",
+        "options": [
+          "The union of property keys from each member",
+          "Only keys common to all members",
+          "The intersection of value types across members",
+          "A runtime array of enumerable keys"
+        ],
+        "correctAnswer": 0,
+        "explanation": "keyof (A | B) yields keys from both members. Property access still requires narrowing because not every key is safe on every member at a given control-flow point."
+      },
+      {
+        "id": 28,
+        "question": "What is the safest interpretation of Record<string, T> in API contracts?",
+        "options": [
+          "A potentially sparse dictionary where any key lookup may be absent",
+          "A map guaranteed to contain all possible string keys",
+          "An object with numeric-only keys",
+          "A sealed object with exact key set known at compile time"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Record<string, T> describes key and value domains, not key presence guarantees. In strict code, missing entries should be considered and handled explicitly."
+      },
+      {
+        "id": 29,
+        "question": "Why can DeepPartial-style utilities be risky in write APIs?",
+        "options": [
+          "They can permit semantically invalid partial states that violate invariants",
+          "They always increase runtime memory usage",
+          "They prevent usage of optional chaining",
+          "They are incompatible with mapped types"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Deep partial updates are convenient but can erode domain guarantees. Mature systems pair them with explicit patch schemas and validation rules to preserve invariants."
+      },
+      {
+        "id": 30,
+        "question": "In advanced generics, why is constraining T extends object sometimes insufficient?",
+        "options": [
+          "Because object includes arrays/functions and may be too broad for intended key/value operations",
+          "Because object excludes interfaces",
+          "Because object guarantees index signatures",
+          "Because object forces nominal typing"
+        ],
+        "correctAnswer": 0,
+        "explanation": "object is often broader than desired. Senior APIs usually constrain using Record constraints, keyof relations, or callable signatures that match actual requirements."
+      },
+      {
+        "id": 31,
+        "question": "What is a robust pattern for exhaustive handling in reducers or state machines?",
+        "options": [
+          "Switch on discriminant and route default to a never-typed assertion",
+          "Use default branch returning null for unknown cases",
+          "Cast action to any in each case branch",
+          "Rely on runtime logs to detect missing branches"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A never assertion in the default branch forces compile-time errors when new union members are added but not handled, making refactors safer."
+      },
+      {
+        "id": 32,
+        "question": "How should Promise.all be typed mentally in production code reviews?",
+        "options": [
+          "As preserving tuple positions and resolved element types for const tuples",
+          "As always returning Promise<any[]>",
+          "As flattening nested arrays recursively at runtime and type level",
+          "As rejecting only after all promises settle"
+        ],
+        "correctAnswer": 0,
+        "explanation": "With tuple inputs, Promise.all preserves positional typing, enabling strongly typed destructuring of heterogeneous async dependencies."
+      },
+      {
+        "id": 33,
+        "question": "What is a maintainable way to expose polymorphic APIs without overload explosion?",
+        "options": [
+          "Use discriminated parameter objects plus generics for result coupling",
+          "Create one overload per possible runtime value",
+          "Return any and document behavior in comments only",
+          "Use conditional runtime eval to infer static types"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Parameter objects with discriminants scale better than many overloads and make backward-compatible evolution easier while preserving strong inference."
+      },
+      {
+        "id": 34,
+        "question": "Why is preserving literal inference in domain constants important?",
+        "options": [
+          "It enables tighter unions and prevents invalid values across boundaries",
+          "It reduces runtime memory by deduplicating strings",
+          "It forces JavaScript engines to intern objects",
+          "It disables module side effects"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Literal inference turns constants into usable type sources for contracts, routing, and event names, reducing drift between values and type definitions."
+      },
+      {
+        "id": 35,
+        "question": "What is a correct senior perspective on skipLibCheck?",
+        "options": [
+          "It can speed builds but may hide type conflicts in dependencies",
+          "It guarantees third-party type correctness",
+          "It should always be enabled in libraries",
+          "It removes the need for lockfile management"
+        ],
+        "correctAnswer": 0,
+        "explanation": "skipLibCheck is a performance tradeoff. It can reduce friction, but unresolved declaration mismatches may surface later as runtime or integration issues."
+      },
+      {
+        "id": 36,
+        "question": "What does declaration: true primarily provide for package maintainers?",
+        "options": [
+          "Generated .d.ts files that define the public type contract for consumers",
+          "Runtime schema validation in production",
+          "Automatic semantic versioning enforcement",
+          "Inlining of generic types into emitted JavaScript"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Declaration emit is essential for typed package consumption. It formalizes the API surface and helps consumers get accurate IntelliSense and compile-time checks."
+      },
+      {
+        "id": 37,
+        "question": "In library design, what is a danger of exporting overly complex conditional types directly?",
+        "options": [
+          "Consumer compile performance and error readability can degrade significantly",
+          "They are ignored by the TypeScript compiler in declaration files",
+          "They cannot interoperate with unions",
+          "They force transpilation to CommonJS"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Type-level complexity has a real cost. Deeply nested conditionals can slow editor tooling and produce opaque errors, harming developer experience at scale."
+      },
+      {
+        "id": 38,
+        "question": "Why should runtime validation still exist in strongly typed TypeScript systems?",
+        "options": [
+          "TypeScript types are erased at runtime and cannot verify external inputs",
+          "TypeScript automatically validates only primitive values",
+          "Runtime validation is needed only in development builds",
+          "Compilation emits guards for every interface by default"
+        ],
+        "correctAnswer": 0,
+        "explanation": "TypeScript improves static correctness but does not enforce data shape at runtime. External data sources must still be validated to ensure system safety."
+      },
+      {
+        "id": 39,
+        "question": "What is a practical reason to prefer unknown over generic T in untrusted parse helpers?",
+        "options": [
+          "T can imply false certainty when no runtime evidence exists for that shape",
+          "unknown prevents all future type narrowing",
+          "Generic T runs faster than unknown at runtime",
+          "T forces declaration merging in consumers"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Returning arbitrary T from unvalidated parsing is unsound because callers can choose any type argument. unknown correctly communicates uncertainty until validated."
+      },
+      {
+        "id": 40,
+        "question": "How should optional chaining be viewed in code review for nullability-heavy logic?",
+        "options": [
+          "As a readability aid, not a substitute for explicit domain-level null handling",
+          "As proof that values are always non-null",
+          "As equivalent to runtime schema validation",
+          "As a way to silence strictNullChecks errors safely"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Optional chaining avoids crashes on access but can also hide missing-state bugs. Senior code distinguishes benign absence from invariant violations explicitly."
+      },
+      {
+        "id": 41,
+        "question": "What does this parameter typing in functions primarily enable?",
+        "options": [
+          "Explicit control of call-site this context without affecting runtime parameters",
+          "Automatic binding of methods to instances",
+          "Runtime validation of this shape by emitted code",
+          "Inheritance of private fields across modules"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A fake first parameter named this is type-only. It lets APIs model expected invocation context, especially in callback and utility function design."
+      },
+      {
+        "id": 42,
+        "question": "What is a safe way to migrate legacy any-heavy modules incrementally?",
+        "options": [
+          "Replace broad any with unknown at boundaries, then add focused guards and assertions",
+          "Enable all strict flags and rewrite everything in one commit",
+          "Cast all exports to never to force compiler success",
+          "Disable noImplicitAny permanently"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Incremental migration works best by shrinking unsafe surfaces gradually. Boundary hardening plus targeted narrowing yields steady risk reduction without stopping delivery."
+      },
+      {
+        "id": 43,
+        "question": "Why are path aliases alone not a substitute for package boundaries in monorepos?",
+        "options": [
+          "They improve import ergonomics but do not enforce architectural ownership or API contracts",
+          "They force circular dependencies to fail at compile time",
+          "They guarantee independent package versioning",
+          "They generate declaration maps automatically"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Aliases are syntactic convenience. Strong boundaries come from package structure, references, lint rules, and explicit public entry points."
+      },
+      {
+        "id": 44,
+        "question": "What is the primary value of declarationMap in published libraries?",
+        "options": [
+          "It improves editor navigation from .d.ts back to source definitions",
+          "It compiles source maps for production runtime errors only",
+          "It removes need for source maps in JavaScript output",
+          "It enforces API compatibility across versions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Declaration maps enhance developer experience by allowing go-to-definition and debugging workflows to trace type declarations back to original source."
+      },
+      {
+        "id": 45,
+        "question": "In typed event bus design, what is a robust approach?",
+        "options": [
+          "Map event names to payload types via indexed access and generic constraints",
+          "Use string keys with any payload for flexibility",
+          "Represent all payloads as unknown[] tuples",
+          "Generate event types from runtime logs"
+        ],
+        "correctAnswer": 0,
+        "explanation": "An EventMap pattern ties each event key to a payload contract, enabling compile-time safety for emit and subscribe operations with minimal runtime overhead."
+      },
+      {
+        "id": 46,
+        "question": "Why can widening literal types too early hurt API ergonomics?",
+        "options": [
+          "It loses precise information needed for inference and discriminated unions",
+          "It increases runtime object allocation",
+          "It disables control-flow analysis entirely",
+          "It prevents tree-shaking of unused code"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Premature widening turns specific contracts into generic strings or numbers, reducing compiler assistance and making invalid states harder to catch."
+      },
+      {
+        "id": 47,
+        "question": "What is a strong reason to avoid pervasive non-null assertions (!) in mature codebases?",
+        "options": [
+          "They bypass null safety and can hide real invariant violations",
+          "They slow TypeScript compilation significantly",
+          "They always throw at runtime when value is null",
+          "They prevent strict mode from being enabled"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Non-null assertions are escape hatches. Overuse erodes strictness guarantees and often signals missing control-flow modeling or boundary validation."
+      },
+      {
+        "id": 48,
+        "question": "When designing generic repositories or services, what is a key constraint strategy?",
+        "options": [
+          "Constrain type parameters to required capabilities rather than broad placeholder types",
+          "Leave all type parameters unconstrained for maximum flexibility",
+          "Replace generics with any in implementation files",
+          "Use extends never to defer errors to runtime"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Meaningful constraints encode assumptions explicitly and improve error messages. Overly loose generics reduce safety and make misuse easier."
+      },
+      {
+        "id": 49,
+        "question": "What is the primary difference between interface extension and intersection in conflict scenarios?",
+        "options": [
+          "Intersections can produce impossible property types, while interface extension surfaces conflicts earlier",
+          "Interfaces always create runtime wrappers",
+          "Intersections cannot include function members",
+          "Interface extension is limited to classes"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Intersecting incompatible property types can yield never-like impossible fields. Interface extension generally reports incompatible redeclarations more directly."
+      },
+      {
+        "id": 50,
+        "question": "What does noPropertyAccessFromIndexSignature encourage?",
+        "options": [
+          "Explicit indexed access for dictionary-like shapes to reflect uncertainty",
+          "Automatic key existence checks for dot access",
+          "Replacement of index signatures with enums",
+          "Runtime proxy validation for all object reads"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The flag makes dictionary access intent explicit and reduces accidental dot-access assumptions on loosely keyed objects."
+      },
+      {
+        "id": 51,
+        "question": "Why should tslib and emit strategy be considered in large TypeScript apps?",
+        "options": [
+          "Helper emit choices affect bundle size, duplication, and compatibility",
+          "They only impact type-check speed and nothing else",
+          "tslib is required only for Node.js and not browsers",
+          "Helper emit has no effect when using modern bundlers"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Downlevel helper strategy influences generated output characteristics. Centralizing helpers can reduce duplication and improve consistency across packages."
+      },
+      {
+        "id": 52,
+        "question": "What is a senior-level benefit of separating domain types from transport DTO types?",
+        "options": [
+          "It prevents external schema drift from leaking directly into core business invariants",
+          "It eliminates need for data mappers",
+          "It guarantees zero runtime transformation cost",
+          "It allows TypeScript to validate database constraints"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Transport and domain have different stability and semantics. Explicit mapping preserves domain integrity and localizes changes from external contracts."
+      },
+      {
+        "id": 53,
+        "question": "Why are recursive conditional types sometimes constrained with depth parameters?",
+        "options": [
+          "To avoid excessive instantiation complexity and compiler performance issues",
+          "To enable runtime tail-call optimization",
+          "To preserve nominal typing under unions",
+          "To prevent declaration file generation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Deep recursive types can hit instantiation limits and slow tooling. Depth-limited patterns provide practical safety while preserving useful expressiveness."
+      },
+      {
+        "id": 54,
+        "question": "What is an appropriate use of Extract<T, U>?",
+        "options": [
+          "Selecting union members assignable to U for precise subtyping",
+          "Removing keys from object types by name",
+          "Converting tuple types into arrays",
+          "Inferring runtime values from interfaces"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Extract filters union constituents by assignability, making it useful for deriving sub-unions by shape or discriminant."
+      },
+      {
+        "id": 55,
+        "question": "What is an appropriate use of Exclude<T, U>?",
+        "options": [
+          "Removing union members assignable to U to model remaining possibilities",
+          "Removing object properties with optional modifiers",
+          "Deleting runtime fields before serialization",
+          "Converting unions into intersections"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Exclude is the counterpart to Extract and is commonly used to model unhandled cases or prune broad unions into allowed subsets."
+      },
+      {
+        "id": 56,
+        "question": "In strongly typed API clients, why couple endpoint keys to response types via mapped types?",
+        "options": [
+          "It enables compile-time correctness across request construction and response handling",
+          "It removes the need for HTTP error handling",
+          "It guarantees backend schema compatibility forever",
+          "It compiles endpoints into runtime routers automatically"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Typed endpoint maps reduce mismatch errors and improve refactorability by connecting each operation to its precise request and response contracts."
+      },
+      {
+        "id": 57,
+        "question": "What is a robust strategy for modeling versioned message contracts in TypeScript?",
+        "options": [
+          "Use discriminated unions with explicit version tags and migration boundaries",
+          "Keep one interface and append optional fields indefinitely",
+          "Represent every version as any for backward compatibility",
+          "Depend on JSON.parse to infer the newest schema"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Version tags make evolution explicit and allow safe branching, validation, and migration logic while preserving backward compatibility guarantees."
+      },
+      {
+        "id": 58,
+        "question": "Why should senior developers review type-level API error messages as a design signal?",
+        "options": [
+          "Because unreadable errors often indicate overcomplex abstractions that hurt adoption",
+          "Because compiler errors do not affect maintainability",
+          "Because complex errors always mean stronger type safety",
+          "Because error clarity is only an IDE concern"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Type safety and developer experience are both product concerns. If consumers cannot interpret errors quickly, APIs become costly to use and maintain."
+      },
+      {
+        "id": 59,
+        "question": "What is a key governance practice for shared TypeScript utility types in large organizations?",
+        "options": [
+          "Curate a small, documented utility surface with ownership and deprecation policy",
+          "Allow each team to publish overlapping utilities without review",
+          "Use internal any-based helpers to avoid breaking changes",
+          "Freeze all utility types to prevent evolution"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A governed utility layer prevents duplication and inconsistency. Ownership, docs, and lifecycle policy keep abstractions useful rather than accidental complexity."
+      },
+      {
+        "id": 60,
+        "question": "When evaluating a senior TypeScript candidate, which signal is strongest?",
+        "options": [
+          "They balance type-system power with runtime realities, maintainability, and team ergonomics",
+          "They can write the most deeply nested conditional types possible",
+          "They avoid runtime validation because TypeScript is enough",
+          "They prefer type assertions over modeling constraints"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Senior TypeScript skill is not just advanced syntax. It is making architecture decisions that improve correctness, delivery speed, and long-term system maintainability."
+      }
+    ]
+  }
+]
