@@ -1,0 +1,489 @@
+[
+  {
+    "id": "graphql-interview",
+    "title": "GraphQL Interview",
+    "description": "Senior-level GraphQL interview quiz covering schema design, Apollo Server, Node.js integration, performance, security, and evolution",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the strongest reason teams adopt GraphQL over many REST endpoints?",
+        "options": [
+          "It eliminates the need for server-side authorization",
+          "It lets clients request exactly the data they need through a typed contract",
+          "It automatically makes every request faster than REST",
+          "It removes the need for schema design"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GraphQL is most valuable when clients have diverse data needs. The explicit schema and field selection reduce over-fetching and under-fetching while preserving a typed contract."
+      },
+      {
+        "id": 2,
+        "question": "Why is a GraphQL schema more than just documentation?",
+        "options": [
+          "It serves as an executable contract for validation, tooling, and client queries",
+          "It only matters for code generation",
+          "It replaces runtime resolvers entirely",
+          "It is only useful in development"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The schema defines the API surface that clients can query and tools can inspect. It drives validation, autocomplete, introspection, and type generation."
+      },
+      {
+        "id": 3,
+        "question": "What is the main architectural risk of exposing too many nested fields in a GraphQL schema?",
+        "options": [
+          "Clients can no longer use fragments",
+          "Queries can become expensive and hard to control without complexity limits and good resolver design",
+          "Subscriptions stop working",
+          "The schema becomes impossible to introspect"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GraphQL’s flexibility can create expensive query shapes. Senior teams protect the server with depth, complexity, and performance controls."
+      },
+      {
+        "id": 4,
+        "question": "What is the N+1 problem in GraphQL?",
+        "options": [
+          "A single query returning one extra field",
+          "A pattern where resolving nested fields triggers many repeated downstream fetches",
+          "A subscription that never reconnects",
+          "A schema validation error caused by duplicate types"
+        ],
+        "correctAnswer": 1,
+        "explanation": "N+1 happens when a parent list causes one query, and each child field resolution triggers additional data loads. This can be severe without batching or joins."
+      },
+      {
+        "id": 5,
+        "question": "Why is DataLoader commonly used in Apollo GraphQL servers?",
+        "options": [
+          "To batch and cache data fetches during a request, reducing duplicate backend calls",
+          "To replace the GraphQL schema",
+          "To encrypt response payloads",
+          "To generate client queries automatically"
+        ],
+        "correctAnswer": 0,
+        "explanation": "DataLoader is a request-scoped batching and caching utility. It helps collapse repeated resolver lookups into fewer backend calls."
+      },
+      {
+        "id": 6,
+        "question": "What is the safest place to instantiate DataLoader in a Node GraphQL app?",
+        "options": [
+          "Once globally for the entire process",
+          "Per request, usually in the context object",
+          "Only inside the database layer",
+          "Only in client code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DataLoader should be request-scoped so cache entries do not leak between users or requests and batching stays isolated to a single operation."
+      },
+      {
+        "id": 7,
+        "question": "Why are GraphQL resolvers ideally thin?",
+        "options": [
+          "They should focus on orchestration while domain logic stays in services or data layers",
+          "They must contain all validation and persistence code",
+          "They cannot call other internal services",
+          "They should always return cached data only"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Thin resolvers are easier to test and evolve. Senior architectures keep business logic in dedicated layers rather than embedding it in field resolvers."
+      },
+      {
+        "id": 8,
+        "question": "What is a key advantage of GraphQL fragments?",
+        "options": [
+          "They allow reuse of field selections and improve consistency across queries",
+          "They eliminate the need for variables",
+          "They make introspection impossible",
+          "They replace mutation inputs"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Fragments help clients reuse common field groups and keep query documents maintainable as schema usage grows."
+      },
+      {
+        "id": 9,
+        "question": "What is the role of variables in a GraphQL operation?",
+        "options": [
+          "They hardcode values into the query document",
+          "They separate dynamic input from the query text and improve safety and cacheability",
+          "They are only used in subscriptions",
+          "They replace GraphQL types"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Variables keep the operation reusable and reduce the need to interpolate values into query text, improving hygiene and operational safety."
+      },
+      {
+        "id": 10,
+        "question": "What is a practical benefit of persisted queries in production GraphQL systems?",
+        "options": [
+          "They let the client send a query hash instead of the full document, reducing payload size and limiting arbitrary query execution",
+          "They remove the need for authorization",
+          "They disable schema validation",
+          "They guarantee no N+1 problems"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Persisted queries reduce transport overhead and allow servers to control the set of accepted operations, which helps performance and security."
+      },
+      {
+        "id": 11,
+        "question": "Why do production GraphQL servers often enforce query depth or complexity limits?",
+        "options": [
+          "To prevent expensive or abusive queries from overloading resolvers and backing services",
+          "To make fragments illegal",
+          "To stop introspection on the client",
+          "To force every request to use GET"
+        ],
+        "correctAnswer": 0,
+        "explanation": "GraphQL’s expressive query language can be abused accidentally or intentionally. Limits help protect availability and latency."
+      },
+      {
+        "id": 12,
+        "question": "What is the most accurate statement about GraphQL caching?",
+        "options": [
+          "GraphQL cannot be cached at all",
+          "Caching is possible, but the strategy often shifts from endpoint-level caching to field, entity, persisted-query, or CDN-aware approaches",
+          "Only mutations can be cached",
+          "Apollo Server disables all HTTP caching by design"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GraphQL responses are query-shape dependent, so caching needs more nuance than traditional REST endpoint caching. Entity and persisted-query strategies are common."
+      },
+      {
+        "id": 13,
+        "question": "Why does GraphQL make client-side caching more complicated than REST in many apps?",
+        "options": [
+          "Responses are normalized by object identity and query shape, not only by URL",
+          "GraphQL responses cannot contain nested data",
+          "Apollo Client only caches mutations",
+          "GraphQL has no notion of IDs"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Clients usually normalize by typename plus id and merge results from many queries. That flexibility is powerful, but it also requires good cache identity design."
+      },
+      {
+        "id": 14,
+        "question": "What is the best reason to include stable IDs on object types in GraphQL?",
+        "options": [
+          "To support normalization, refetching, and entity consistency across queries",
+          "To make all fields required",
+          "To prevent schema introspection",
+          "To avoid using fragments"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Stable IDs are foundational for normalized caching and client-side entity reuse, especially in Apollo Client."
+      },
+      {
+        "id": 15,
+        "question": "What is a senior-level concern when designing GraphQL mutations?",
+        "options": [
+          "Mutations should model clear side effects, validation, and idempotency where appropriate",
+          "Mutations should always return only a boolean",
+          "Mutations should never include input types",
+          "Mutations are only for admin users"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Well-designed mutations express intent clearly, validate inputs, and consider retry behavior and consistency guarantees."
+      },
+      {
+        "id": 16,
+        "question": "Why are input types recommended for GraphQL mutations?",
+        "options": [
+          "They group related fields, improve validation, and make APIs easier to evolve",
+          "They eliminate resolver code",
+          "They are required for subscriptions",
+          "They only exist for code generation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Input objects create clearer mutation contracts and keep inputs evolvable as requirements change."
+      },
+      {
+        "id": 17,
+        "question": "What does GraphQL nullability communicate to clients?",
+        "options": [
+          "Only runtime defaults",
+          "Whether a field may legitimately be absent or unresolved, which affects client error handling and UI logic",
+          "That the field will always be returned with a default value",
+          "That the schema is optional"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Nullability is a contract. It tells clients what they must guard for and how failures can propagate through nested selections."
+      },
+      {
+        "id": 18,
+        "question": "Why is overly aggressive non-null usage risky in GraphQL schemas?",
+        "options": [
+          "It can cause failure propagation that nulls out larger parts of the response",
+          "It makes the schema impossible to validate",
+          "It disables fragments",
+          "It prevents batching"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Non-null fields are strict. If one cannot be resolved, GraphQL may propagate the error upward and affect more of the payload than expected."
+      },
+      {
+        "id": 19,
+        "question": "What is the main advantage of schema stitching or federation in larger organizations?",
+        "options": [
+          "It allows teams to compose subgraphs or schemas while preserving service ownership boundaries",
+          "It removes the need for any gateway",
+          "It forces all data into one database",
+          "It eliminates the need for versioning"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Composition lets teams own separate domains while presenting a unified graph to clients. Governance and cross-service contracts still matter a lot."
+      },
+      {
+        "id": 20,
+        "question": "What is the role of Apollo Router or a GraphQL gateway in federated setups?",
+        "options": [
+          "To compose and route queries across subgraphs while enforcing cross-cutting policies",
+          "To replace all backend services",
+          "To execute database joins directly",
+          "To store user sessions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A gateway or router orchestrates query planning and policy enforcement across composed schemas, but domain logic remains in subgraphs or services."
+      },
+      {
+        "id": 21,
+        "question": "Why is GraphQL federation operationally harder than a single monolith schema?",
+        "options": [
+          "It introduces cross-team schema ownership, composition validation, and routing complexity",
+          "It cannot use TypeScript",
+          "It disables query validation",
+          "It only works over WebSocket"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Distributed ownership increases coordination needs. Composition errors, version drift, and query planning complexity are the tradeoffs for autonomy."
+      },
+      {
+        "id": 22,
+        "question": "What is a good reason to keep GraphQL resolvers side-effect free when possible?",
+        "options": [
+          "Pure resolvers are easier to cache, test, and reason about",
+          "GraphQL forbids side effects in all cases",
+          "It makes subscriptions impossible",
+          "It removes the need for authentication"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Query resolvers should ideally be deterministic. Side effects belong in mutations or explicit workflows, not in data fetching."
+      },
+      {
+        "id": 23,
+        "question": "How should errors be modeled in GraphQL for mature clients?",
+        "options": [
+          "Use a consistent error contract and understand partial data plus errors can coexist in one response",
+          "Throw away all field errors and always return HTTP 500",
+          "Hide errors inside random string fields",
+          "Never return any errors to clients"
+        ],
+        "correctAnswer": 0,
+        "explanation": "GraphQL can return data and errors together. Senior designs document how business failures, auth failures, and partial resolution should behave."
+      },
+      {
+        "id": 24,
+        "question": "What is the value of GraphQL unions and interfaces?",
+        "options": [
+          "They model polymorphic result sets with explicit runtime type resolution",
+          "They replace input types",
+          "They are only for client code generation",
+          "They prevent fragment usage"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Unions and interfaces let a schema represent variants in a typed way, which is useful for search results, feeds, and heterogeneous domain objects."
+      },
+      {
+        "id": 25,
+        "question": "Why are __typename fields useful in Apollo Client workflows?",
+        "options": [
+          "They help normalize cached entities and discriminate between union/interface members",
+          "They are only decorative and can be ignored",
+          "They replace IDs",
+          "They disable query planning"
+        ],
+        "correctAnswer": 0,
+        "explanation": "__typename gives the client a stable type discriminator, which is essential for cache normalization and fragment resolution."
+      },
+      {
+        "id": 26,
+        "question": "What is the senior-level stance on GraphQL subscriptions?",
+        "options": [
+          "Use them for real-time needs with careful attention to transport, scaling, and auth semantics",
+          "Use them as a general replacement for queries",
+          "They always work identically over HTTP GET",
+          "They eliminate the need for event streams"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Subscriptions are valuable for push-based updates, but transport choice, fan-out, reconnection, and authorization are major design concerns."
+      },
+      {
+        "id": 27,
+        "question": "What is a practical challenge of scaling GraphQL subscriptions horizontally?",
+        "options": [
+          "Keeping connected clients, event fan-out, and stateful session handling consistent across nodes",
+          "Making queries valid",
+          "Generating schemas",
+          "Parsing variables"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Subscription servers often need shared pub/sub infrastructure and sticky-session or external state strategies to scale reliably."
+      },
+      {
+        "id": 28,
+        "question": "What is a good production reason to use GraphQL over HTTP POST rather than GET for many queries?",
+        "options": [
+          "POST avoids URL length issues and is often simpler for complex variable payloads",
+          "GET cannot be cached by any CDN",
+          "POST is required by the GraphQL spec for all operations",
+          "POST automatically batches multiple operations"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Complex query documents and variables often exceed practical URL limits. POST is the common choice, though GET can still be useful for persisted queries."
+      },
+      {
+        "id": 29,
+        "question": "What is the main purpose of introspection in GraphQL?",
+        "options": [
+          "It enables schema discovery for tooling, codegen, and client development",
+          "It encrypts queries in transit",
+          "It replaces authorization rules",
+          "It is only used by Apollo Studio"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Introspection is foundational to developer tooling and schema exploration, though some production systems limit it selectively for security or governance reasons."
+      },
+      {
+        "id": 30,
+        "question": "Why might production systems disable or restrict introspection in certain environments?",
+        "options": [
+          "To reduce schema exposure and limit information available to unauthenticated clients",
+          "Because GraphQL cannot function otherwise",
+          "To improve resolver performance by 50 percent automatically",
+          "To make queries smaller on the wire"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Restricting introspection can be a security and governance measure, especially for public or sensitive APIs, but it must be balanced against developer experience."
+      },
+      {
+        "id": 31,
+        "question": "What is a key benefit of schema-first development with Apollo?",
+        "options": [
+          "It aligns backend and frontend teams around an explicit contract before implementation details solidify",
+          "It removes the need for server code",
+          "It guarantees performance improvements",
+          "It eliminates schema governance"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Schema-first helps teams design the contract, generate types, and iterate on the API surface with less ambiguity."
+      },
+      {
+        "id": 32,
+        "question": "Why should GraphQL server logging include operation names?",
+        "options": [
+          "They improve tracing, incident triage, and query usage analysis",
+          "They replace request IDs",
+          "They are required for subscriptions only",
+          "They are used to compute schema hashes"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Operation names make it easier to understand client behavior, detect hotspots, and correlate traffic patterns with performance issues."
+      },
+      {
+        "id": 33,
+        "question": "What should a senior engineer watch for when enabling caching in Apollo Server?",
+        "options": [
+          "Different query shapes, user-specific data, and authorization-sensitive fields that should not be shared blindly",
+          "Only the number of resolver files",
+          "Whether the schema uses enums",
+          "Whether introspection is enabled"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Caching must respect identity and authorization boundaries. Shared caches can leak data if user context and cache keys are not designed carefully."
+      },
+      {
+        "id": 34,
+        "question": "What is the most accurate statement about GraphQL and authorization?",
+        "options": [
+          "Authorization should be enforced at the field and business-rule level, not only at the transport layer",
+          "The schema itself provides authorization automatically",
+          "Only mutations need auth",
+          "Authentication and authorization are the same thing"
+        ],
+        "correctAnswer": 0,
+        "explanation": "GraphQL’s flexibility means sensitive fields can appear anywhere. Auth checks should be applied in resolvers or domain services where context is available."
+      },
+      {
+        "id": 35,
+        "question": "Why is field-level authorization often preferable to only top-level operation checks?",
+        "options": [
+          "Because access control can vary by object and field even within the same query",
+          "Because it is always faster",
+          "Because top-level checks are invalid in GraphQL",
+          "Because clients cannot request nested fields otherwise"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Different users may be allowed to see different slices of the same object. Fine-grained authorization matches the graph model better."
+      },
+      {
+        "id": 36,
+        "question": "What is one reason GraphQL can be a poor fit for highly cacheable, static content delivery?",
+        "options": [
+          "The response shape is client-defined and may vary widely, making generic caching less straightforward",
+          "GraphQL cannot serve static pages",
+          "Apollo Server cannot run on Node",
+          "GraphQL responses are always uncacheable"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Client-defined shape is powerful, but it reduces the simplicity of standard HTTP caching compared with fixed REST resources."
+      },
+      {
+        "id": 37,
+        "question": "What is a good use case for GraphQL in a Node backend with Apollo?",
+        "options": [
+          "Aggregating multiple backend systems into one client-facing contract with tailored field selection",
+          "Replacing all databases",
+          "Serving raw TCP streams",
+          "Avoiding any service composition"
+        ],
+        "correctAnswer": 0,
+        "explanation": "GraphQL is strongest when it acts as an aggregation and composition layer over multiple data sources and services."
+      },
+      {
+        "id": 38,
+        "question": "What is the strongest reason to keep GraphQL business logic out of Apollo-specific glue as much as possible?",
+        "options": [
+          "It makes the domain easier to test, reuse, and migrate if transport changes later",
+          "Apollo resolvers cannot call services",
+          "It reduces schema size automatically",
+          "It disables code generation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Transport-specific code should stay thin. Keeping business logic in shared services or domain modules preserves architecture flexibility."
+      },
+      {
+        "id": 39,
+        "question": "Why are GraphQL batch requests not a complete substitute for resolver batching?",
+        "options": [
+          "They group operations at the HTTP layer but do not automatically solve repeated backend lookups inside a single operation",
+          "They only work with mutations",
+          "They eliminate the need for query planning",
+          "They require WebSocket transport"
+        ],
+        "correctAnswer": 0,
+        "explanation": "HTTP-level batching can reduce request overhead, but N+1 problems still happen inside an individual operation unless resolver-level batching is also used."
+      },
+      {
+        "id": 40,
+        "question": "What distinguishes a senior GraphQL engineer from a junior one most clearly?",
+        "options": [
+          "They balance schema design, performance, caching, authorization, and operational governance instead of treating GraphQL as only a query syntax",
+          "They can write the longest query document",
+          "They avoid Apollo tools entirely",
+          "They assume GraphQL removes the need for backend architecture"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Senior GraphQL work is about operating a contract-driven distributed system responsibly, including performance, security, and evolution concerns."
+      }
+    ]
+  }
+]

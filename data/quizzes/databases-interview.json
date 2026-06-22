@@ -1,0 +1,489 @@
+[
+  {
+    "id": "databases-interview",
+    "title": "Databases Interview",
+    "description": "Senior-level database interview quiz covering modeling, transactions, indexing, scaling, and operations",
+    "questions": [
+      {
+        "id": 1,
+        "question": "When deciding between OLTP and OLAP systems, what is the primary architectural distinction?",
+        "options": [
+          "OLTP optimizes high-concurrency transactional writes; OLAP optimizes analytical scans and aggregations",
+          "OLTP is always columnar and OLAP is always row-based",
+          "OLTP guarantees stronger consistency than OLAP by definition",
+          "OLAP cannot support SQL"
+        ],
+        "correctAnswer": 0,
+        "explanation": "OLTP systems are tuned for low-latency, concurrent transactions, while OLAP systems prioritize large scans, aggregations, and historical analysis."
+      },
+      {
+        "id": 2,
+        "question": "Which normalization tradeoff is most accurate in high-read systems?",
+        "options": [
+          "Full normalization always minimizes total latency",
+          "Denormalization can reduce join cost at read time but increases write complexity and consistency burden",
+          "Denormalization removes the need for indexes",
+          "Normalization is unrelated to data integrity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Denormalization can improve read performance by reducing joins, but writes become harder because duplicated data must be kept consistent."
+      },
+      {
+        "id": 3,
+        "question": "What problem do covering indexes solve most directly?",
+        "options": [
+          "Reducing lock contention on write-ahead logs",
+          "Enabling query plans to satisfy lookups from the index without table/heap access",
+          "Providing automatic multi-region replication",
+          "Replacing transaction isolation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A covering index includes all columns needed for a query, which can avoid additional table lookups and lower I/O."
+      },
+      {
+        "id": 4,
+        "question": "In B-tree indexes, why does low-cardinality leading column order often hurt selectivity?",
+        "options": [
+          "It causes index corruption under concurrent writes",
+          "It forces full table locks",
+          "Many rows share the same prefix, making scans broader before filtering later columns",
+          "It disables range scans"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Composite index order matters. If the first column has low cardinality, many rows match early, increasing scanned index pages."
+      },
+      {
+        "id": 5,
+        "question": "What is the main risk of using UUID v4 as clustered primary keys in some storage engines?",
+        "options": [
+          "They cannot be indexed",
+          "Random insertion order can cause page splits and write amplification",
+          "They are not unique enough",
+          "They break ACID guarantees"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Random keys reduce locality, increasing page splits and fragmentation in clustered/index-organized storage structures."
+      },
+      {
+        "id": 6,
+        "question": "Which anomaly is prevented by REPEATABLE READ but not necessarily by READ COMMITTED in many RDBMS implementations?",
+        "options": [
+          "Dirty reads",
+          "Lost writes at application level",
+          "Non-repeatable reads",
+          "Write skew in all engines"
+        ],
+        "correctAnswer": 2,
+        "explanation": "READ COMMITTED allows re-reading changed committed data within a transaction. REPEATABLE READ prevents this anomaly in common implementations."
+      },
+      {
+        "id": 7,
+        "question": "Serializable isolation is often avoided in hot paths mainly because:",
+        "options": [
+          "It is unsupported by major relational databases",
+          "It can increase abort rates/locking overhead and reduce throughput under contention",
+          "It allows phantom reads",
+          "It disables secondary indexes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Serializable provides strongest isolation but can reduce concurrency through stricter locking or transaction retries."
+      },
+      {
+        "id": 8,
+        "question": "What is a practical use of optimistic concurrency control with version columns?",
+        "options": [
+          "Preventing all deadlocks",
+          "Ensuring updates only succeed if the row version has not changed since read",
+          "Replacing transactions entirely",
+          "Guaranteeing linearizability across shards"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Version checks detect conflicting updates without holding long locks, a common pattern in high-concurrency application services."
+      },
+      {
+        "id": 9,
+        "question": "In distributed SQL deployments, what does synchronous replication primarily trade for stronger durability/consistency?",
+        "options": [
+          "Lower write latency",
+          "Higher write latency",
+          "Lower storage costs",
+          "Fewer network hops"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Waiting for remote acknowledgments strengthens consistency/durability but typically increases write latency."
+      },
+      {
+        "id": 10,
+        "question": "Which strategy best mitigates N+1 query problems in service backends?",
+        "options": [
+          "Increasing connection pool size only",
+          "Batching/prefetching data or rewriting to set-based queries",
+          "Using SERIALIZABLE isolation",
+          "Turning off foreign keys"
+        ],
+        "correctAnswer": 1,
+        "explanation": "N+1 is a data access pattern issue. Set-based retrieval and batching reduce repeated round trips and query overhead."
+      },
+      {
+        "id": 11,
+        "question": "When should you choose a document database over a relational model?",
+        "options": [
+          "When relationships are deep and require many cross-entity joins",
+          "When schema flexibility and aggregate-centric access patterns dominate",
+          "When strict multi-row ACID transactions across many entities are core",
+          "When SQL analytics is the primary workload"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Document stores excel with evolving schema and aggregate reads/writes, especially when cross-document joins are not central."
+      },
+      {
+        "id": 12,
+        "question": "What is a key limitation of eventual consistency most teams underestimate?",
+        "options": [
+          "It prevents all read scaling",
+          "It can expose stale reads requiring business-level conflict handling",
+          "It removes need for idempotency",
+          "It always causes data loss"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Eventual consistency can be acceptable, but product flows must account for stale reads and reconcile conflicting updates safely."
+      },
+      {
+        "id": 13,
+        "question": "Why are secondary indexes expensive in write-heavy systems?",
+        "options": [
+          "Each write may require maintaining multiple additional data structures",
+          "They disable query planners",
+          "They are stored only in memory",
+          "They prevent sharding"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Every index adds write-path work and storage overhead. Index design should follow real query patterns, not speculative needs."
+      },
+      {
+        "id": 14,
+        "question": "What does sharding by customer ID optimize for most directly?",
+        "options": [
+          "Cross-customer aggregate queries",
+          "Entity locality for tenant-scoped workloads",
+          "Eliminating rebalancing forever",
+          "Global secondary index simplicity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tenant-key sharding keeps related tenant data together, improving locality for tenant-scoped reads/writes."
+      },
+      {
+        "id": 15,
+        "question": "Which anti-pattern commonly creates hot shards?",
+        "options": [
+          "Hash-based partition keys",
+          "Monotonically increasing shard keys tied to time without bucketing",
+          "Even key cardinality",
+          "Adaptive rebalancing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Time-ordered or sequential keys can concentrate writes on a subset of partitions, creating throughput bottlenecks."
+      },
+      {
+        "id": 16,
+        "question": "What is the most reliable role of a read replica in architecture discussions?",
+        "options": [
+          "Serving read traffic with acceptable replication lag",
+          "Guaranteeing zero-lag linearizable reads",
+          "Acting as a write node under strict leader-only systems",
+          "Replacing backups"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Read replicas improve read scale and isolation from primaries, but lag must be understood and handled at the product level."
+      },
+      {
+        "id": 17,
+        "question": "In PostgreSQL-style MVCC systems, long-running transactions can be harmful because they:",
+        "options": [
+          "Disable WAL archiving",
+          "Delay vacuum cleanup and increase table/index bloat",
+          "Force full table rewrites for updates",
+          "Turn off indexes for affected tables"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Old snapshots can prevent reclaiming dead tuples, leading to bloat and degraded performance."
+      },
+      {
+        "id": 18,
+        "question": "What is the main objective of a write-ahead log (WAL)?",
+        "options": [
+          "To cache query results",
+          "To ensure durability and crash recovery by logging changes before data pages",
+          "To partition data across regions",
+          "To replace point-in-time backups"
+        ],
+        "correctAnswer": 1,
+        "explanation": "WAL records intent before data page flushes, enabling recovery after crashes and supporting replication/log shipping patterns."
+      },
+      {
+        "id": 19,
+        "question": "Why is point-in-time recovery (PITR) superior to nightly full backups alone?",
+        "options": [
+          "It allows restoration to a precise moment, reducing data loss windows",
+          "It eliminates need for backup verification",
+          "It guarantees zero downtime during restore",
+          "It prevents operator mistakes"
+        ],
+        "correctAnswer": 0,
+        "explanation": "PITR combines base backups with log replay to restore near a target timestamp, minimizing RPO compared with coarse backup intervals."
+      },
+      {
+        "id": 20,
+        "question": "What does RPO primarily measure in disaster recovery planning?",
+        "options": [
+          "Maximum acceptable downtime",
+          "Maximum acceptable data loss window",
+          "Maximum acceptable query latency",
+          "Replication throughput capacity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RPO (Recovery Point Objective) defines tolerated data loss; RTO defines tolerated downtime."
+      },
+      {
+        "id": 21,
+        "question": "A query is slow despite index usage. Which next step is most senior-level?",
+        "options": [
+          "Blindly add more indexes",
+          "Inspect execution plan, row estimates, and actual I/O to identify misestimation or bad join strategy",
+          "Set global cache TTL",
+          "Disable autovacuum"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Execution plans with actual metrics reveal root causes such as poor cardinality estimates, suboptimal joins, or missing selective predicates."
+      },
+      {
+        "id": 22,
+        "question": "What issue can stale statistics create in cost-based optimizers?",
+        "options": [
+          "Fewer deadlocks",
+          "Suboptimal execution plans due to inaccurate cardinality estimates",
+          "Automatic schema drift correction",
+          "Replication lag"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Optimizers depend on statistics to estimate row counts/selectivity. Stale stats often lead to bad join orders and scan choices."
+      },
+      {
+        "id": 23,
+        "question": "Why is idempotency critical for database writes behind retried APIs?",
+        "options": [
+          "To ensure repeated requests do not apply duplicate side effects",
+          "To force serializable isolation",
+          "To avoid indexes",
+          "To eliminate deadlocks"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Network retries and at-least-once delivery require write operations that can be safely retried without duplicating business actions."
+      },
+      {
+        "id": 24,
+        "question": "What is the outbox pattern solving in distributed data systems?",
+        "options": [
+          "Read replica lag",
+          "Atomicity gap between database commit and event publication",
+          "Shard key skew",
+          "Foreign key enforcement"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The outbox pattern records events in the same transaction as state changes, then publishes asynchronously to avoid dual-write inconsistency."
+      },
+      {
+        "id": 25,
+        "question": "For a globally distributed product, which consistency model is often chosen for user profile reads?",
+        "options": [
+          "Strong consistency for every read regardless latency",
+          "Session or read-your-writes consistency to balance UX and latency",
+          "No consistency model",
+          "Write-only consistency"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Session-level guarantees frequently provide sufficient UX correctness without the full latency cost of globally strong reads."
+      },
+      {
+        "id": 26,
+        "question": "Which metric best signals connection pool exhaustion risk?",
+        "options": [
+          "Disk free space",
+          "Queue/wait time for acquiring database connections",
+          "Replica count",
+          "Row count per table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rising wait times for connection acquisition usually indicate application concurrency exceeds available DB connections."
+      },
+      {
+        "id": 27,
+        "question": "What is a practical downside of very large transactions?",
+        "options": [
+          "They reduce lock duration",
+          "They increase contention, log pressure, and failure blast radius",
+          "They guarantee faster commits",
+          "They bypass deadlocks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Large transactions hold resources longer, generate more log data, and can cause heavier rollback/retry costs if they fail."
+      },
+      {
+        "id": 28,
+        "question": "When introducing CQRS, what is the most common operational challenge?",
+        "options": [
+          "Read models become eventually consistent with writes",
+          "SQL cannot be used anymore",
+          "It eliminates caching",
+          "It prevents horizontal scaling"
+        ],
+        "correctAnswer": 0,
+        "explanation": "CQRS improves scaling and flexibility but adds synchronization complexity between command and query models."
+      },
+      {
+        "id": 29,
+        "question": "Why is schema migration design a senior-level concern in high-availability systems?",
+        "options": [
+          "Migrations are always instantaneous",
+          "Unsafe migrations can lock hot tables and cause outages",
+          "Schema changes are only a CI concern",
+          "Backward compatibility is optional"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Production-safe migrations often require phased, backward-compatible rollout to avoid long locks and deployment coupling failures."
+      },
+      {
+        "id": 30,
+        "question": "What is the safest pattern for dropping a heavily used column?",
+        "options": [
+          "Drop it immediately after merging code",
+          "Dual-read/write migration, deploy readers first, then stop writes, then drop later",
+          "Rely on replica-only tests",
+          "Disable constraints then drop"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Phased migrations reduce risk by ensuring all producers/consumers stop depending on the column before destructive change."
+      },
+      {
+        "id": 31,
+        "question": "Which NoSQL design principle is most important for partitioned key-value stores?",
+        "options": [
+          "Model data to match query access paths and partition keys",
+          "Normalize to third normal form",
+          "Use cross-partition joins heavily",
+          "Avoid denormalization always"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In partitioned NoSQL systems, good key design and access-path modeling are central to performance and scalability."
+      },
+      {
+        "id": 32,
+        "question": "What does quorum-based replication (R/W/N) aim to achieve?",
+        "options": [
+          "Guaranteed serializability in all cases",
+          "A tunable balance of consistency, availability, and latency",
+          "Elimination of replication conflicts",
+          "Automatic schema synchronization"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Quorum settings tune read/write acknowledgment behavior; they can improve consistency characteristics but do not magically solve all anomalies."
+      },
+      {
+        "id": 33,
+        "question": "What is a practical indicator that a table may need partitioning?",
+        "options": [
+          "Small table with tiny index footprint",
+          "Maintenance operations and scans degrade significantly as table size grows",
+          "The table has a primary key",
+          "The workload is read-only and static"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Partitioning helps manage very large tables by pruning data ranges and improving maintenance ergonomics, when access patterns support it."
+      },
+      {
+        "id": 34,
+        "question": "Why can cross-shard transactions become expensive?",
+        "options": [
+          "They increase coordination overhead and can require distributed commit protocols",
+          "They disable encryption at rest",
+          "They are always eventually consistent",
+          "They remove need for retries"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Cross-shard operations require distributed coordination, raising latency and failure complexity versus single-shard transactional boundaries."
+      },
+      {
+        "id": 35,
+        "question": "In high-QPS systems, why is prepared statement usage often recommended?",
+        "options": [
+          "It removes all SQL injection risk without parameter binding",
+          "It can reduce parse/plan overhead and enforce parameterization",
+          "It replaces indexes",
+          "It guarantees identical execution plans forever"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Prepared statements can improve efficiency and safety when combined with bound parameters, though plan behavior still depends on engine specifics."
+      },
+      {
+        "id": 36,
+        "question": "What is the main function of a dead-letter queue in data pipelines involving DB writes?",
+        "options": [
+          "Store failed messages for analysis/reprocessing without blocking primary flow",
+          "Speed up successful writes",
+          "Guarantee exactly-once semantics by itself",
+          "Replace retries entirely"
+        ],
+        "correctAnswer": 0,
+        "explanation": "DLQs isolate poison messages and preserve pipeline health while enabling targeted remediation workflows."
+      },
+      {
+        "id": 37,
+        "question": "What does write amplification mean in storage engine discussions?",
+        "options": [
+          "Single logical writes causing multiple physical writes due to engine internals",
+          "Increasing API payload size",
+          "Changing SQL statement text length",
+          "Replicating data to multiple apps"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Compactions, page splits, and index maintenance can cause one logical write to generate multiple physical operations."
+      },
+      {
+        "id": 38,
+        "question": "In LSM-tree-based systems, compaction is primarily for:",
+        "options": [
+          "Converting row stores to column stores",
+          "Merging sorted SSTables to control read amplification and reclaim obsolete entries",
+          "Performing ACID transaction commits",
+          "Encrypting WAL segments"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Compaction reorganizes immutable files, improving read performance and reclaiming space from overwritten/tombstoned keys."
+      },
+      {
+        "id": 39,
+        "question": "What is the strongest reason to test backup restore regularly instead of only verifying backup creation logs?",
+        "options": [
+          "Restore exercises validate that data can actually be recovered under operational constraints",
+          "Backup logs always guarantee recoverability",
+          "Restore tests reduce backup storage cost",
+          "It is only needed for compliance audits"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Backups are valuable only if restores succeed within required RTO/RPO. Regular drills uncover hidden dependency and process failures."
+      },
+      {
+        "id": 40,
+        "question": "For database incident response, which sequence is most mature?",
+        "options": [
+          "Scale infrastructure first, investigate later",
+          "Capture symptoms/metrics, stabilize blast radius, identify root cause, apply corrective actions, then postmortem",
+          "Restart all services immediately",
+          "Disable alerts during mitigation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Effective incident handling is structured: contain impact, use telemetry for diagnosis, remediate safely, and document preventive learnings."
+      }
+    ]
+  }
+]

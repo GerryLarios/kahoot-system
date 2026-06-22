@@ -1,0 +1,489 @@
+[
+  {
+    "id": "concurrency-interview",
+    "title": "Concurrency Interview",
+    "description": "Senior-level concurrency interview quiz covering contention, synchronization, memory models, and scalable coordination",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the core concurrency challenge in multi-threaded or distributed systems?",
+        "options": [
+          "Maximizing CPU usage only",
+          "Coordinating shared state safely while preserving throughput and latency",
+          "Avoiding all asynchronous operations",
+          "Using one lock for all resources"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Concurrency design balances correctness (safety/liveness) with performance under contention and failure."
+      },
+      {
+        "id": 2,
+        "question": "What is a race condition?",
+        "options": [
+          "A deterministic sequence of operations",
+          "Behavior depending on timing/interleaving of concurrent operations",
+          "A deadlock involving two locks only",
+          "A lock-free algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Race conditions arise when outcomes depend on non-deterministic scheduling and shared mutable state access ordering."
+      },
+      {
+        "id": 3,
+        "question": "Why can coarse-grained locking hurt scalability?",
+        "options": [
+          "It increases parallelism",
+          "It serializes unrelated work and raises contention",
+          "It eliminates context switching",
+          "It removes deadlocks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Large lock scopes reduce concurrency by forcing many operations to wait, even when they do not conflict semantically."
+      },
+      {
+        "id": 4,
+        "question": "What is lock convoys in concurrency performance tuning?",
+        "options": [
+          "A lock-free optimization",
+          "Threads queuing behind a lock holder, causing throughput collapse and latency spikes",
+          "A deadlock detection algorithm",
+          "CPU cache prefetching strategy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Convoys occur when lock contention and scheduling interactions create long waiting chains."
+      },
+      {
+        "id": 5,
+        "question": "Which condition is NOT required for deadlock (Coffman conditions)?",
+        "options": [
+          "Mutual exclusion",
+          "Preemption allowed",
+          "Hold and wait",
+          "Circular wait"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Classic deadlock requires mutual exclusion, hold-and-wait, no preemption, and circular wait. If preemption is possible, one condition is broken."
+      },
+      {
+        "id": 6,
+        "question": "What is a common strategy to prevent deadlocks in code with multiple locks?",
+        "options": [
+          "Acquire locks in globally consistent order",
+          "Random lock acquisition order",
+          "Infinite retries without timeout",
+          "Nested locks across layers"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Lock ordering prevents circular wait, a key deadlock condition."
+      },
+      {
+        "id": 7,
+        "question": "Why are immutable data structures useful for concurrency?",
+        "options": [
+          "They eliminate all memory overhead",
+          "They reduce need for synchronization by avoiding shared mutable state",
+          "They guarantee faster writes",
+          "They remove serialization costs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Immutability simplifies reasoning and reduces race conditions, though it may have allocation/copy tradeoffs."
+      },
+      {
+        "id": 8,
+        "question": "What does optimistic locking assume?",
+        "options": [
+          "Conflicts are frequent and locks should be held early",
+          "Conflicts are relatively infrequent and can be detected at commit/update time",
+          "Transactions are unnecessary",
+          "Shared state is immutable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Optimistic approaches avoid long lock holding and detect conflicts late using versions/checks."
+      },
+      {
+        "id": 9,
+        "question": "What is starvation in concurrent scheduling?",
+        "options": [
+          "A task permanently denied required resources/execution despite system progress",
+          "A deadlocked system",
+          "All tasks executing equally",
+          "A transient timeout"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Starvation is a liveness problem where some tasks never make progress due to unfair scheduling/locking."
+      },
+      {
+        "id": 10,
+        "question": "Why is fairness policy sometimes traded off in high-throughput lock implementations?",
+        "options": [
+          "Fairness always improves throughput",
+          "Strict fairness can increase context-switching and reduce throughput",
+          "Fairness prevents all races",
+          "Fairness disables lock contention"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fair scheduling can improve predictability but may lower throughput under heavy contention depending on workload."
+      },
+      {
+        "id": 11,
+        "question": "What is a compare-and-swap (CAS) primitive used for?",
+        "options": [
+          "Distributed transaction coordination",
+          "Atomic conditional updates in lock-free or low-lock algorithms",
+          "Kernel-level thread scheduling",
+          "Database query optimization"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CAS enables atomic state transitions if expected value matches current state, foundational in non-blocking algorithms."
+      },
+      {
+        "id": 12,
+        "question": "What is the ABA problem in lock-free algorithms?",
+        "options": [
+          "A value changes from A to B and back to A, fooling CAS-based checks",
+          "A deadlock between three locks",
+          "A memory leak in GC",
+          "A priority inversion event"
+        ],
+        "correctAnswer": 0,
+        "explanation": "CAS may see the same value and assume no change, missing intermediate modifications. Versioning/tagging can mitigate this."
+      },
+      {
+        "id": 13,
+        "question": "Why are memory barriers/fences important in concurrent programming?",
+        "options": [
+          "They reduce memory usage",
+          "They constrain instruction/visibility reordering for correctness across threads",
+          "They guarantee deadlock freedom",
+          "They replace mutexes universally"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CPUs/compilers reorder operations; memory ordering primitives ensure visibility and ordering guarantees required by algorithms."
+      },
+      {
+        "id": 14,
+        "question": "What is false sharing?",
+        "options": [
+          "Two threads accessing same variable safely",
+          "Independent variables on same cache line causing coherence contention",
+          "Shared-nothing architecture issue",
+          "A lock convoy pattern"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Even without logical sharing, cache-line granularity can cause costly invalidations when nearby data is updated by different cores."
+      },
+      {
+        "id": 15,
+        "question": "How can actor-model concurrency reduce common synchronization bugs?",
+        "options": [
+          "By shared mutable state and global locks",
+          "By isolating state per actor and communicating via message passing",
+          "By disabling asynchronous processing",
+          "By enforcing serializable transactions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Actor systems avoid direct shared mutable state, reducing race complexity through mailbox-based coordination."
+      },
+      {
+        "id": 16,
+        "question": "What is backpressure in concurrent pipelines?",
+        "options": [
+          "Increasing producer speed regardless consumer capacity",
+          "Mechanisms that prevent producers from overwhelming slower consumers",
+          "A cache invalidation strategy",
+          "A retry algorithm"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Backpressure stabilizes systems by matching production rate to processing capacity and avoiding queue explosion."
+      },
+      {
+        "id": 17,
+        "question": "Why are unbounded queues dangerous in high-load concurrent systems?",
+        "options": [
+          "They prevent deadlocks",
+          "They can hide overload until latency and memory collapse",
+          "They guarantee fairness",
+          "They reduce tail latency"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unbounded buffering converts immediate failures into delayed systemic failures with high memory and p99 latency."
+      },
+      {
+        "id": 18,
+        "question": "What is priority inversion?",
+        "options": [
+          "Low-priority task holding resource needed by high-priority task while medium-priority tasks run",
+          "Thread preemption disabled",
+          "A lock-free queue issue",
+          "A database deadlock"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Priority inversion can violate scheduling intent. Priority inheritance protocols can mitigate severe cases."
+      },
+      {
+        "id": 19,
+        "question": "What is a major tradeoff of lock-free algorithms versus lock-based ones?",
+        "options": [
+          "Lock-free is always simpler and faster",
+          "Lock-free can improve progress under contention but is harder to implement and verify",
+          "Lock-free eliminates memory ordering concerns",
+          "Lock-based cannot scale"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Non-blocking algorithms can reduce contention stalls, but correctness and maintainability complexity often increase."
+      },
+      {
+        "id": 20,
+        "question": "What does linearizability guarantee?",
+        "options": [
+          "Operations appear to occur atomically in real-time order",
+          "Eventual consistency across regions",
+          "No retries needed",
+          "Deterministic thread scheduling"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Linearizability is a strong consistency property where each operation appears instantaneous between invocation and response."
+      },
+      {
+        "id": 21,
+        "question": "How is sequential consistency different from linearizability?",
+        "options": [
+          "Sequential consistency enforces real-time ordering",
+          "Linearizability implies real-time order; sequential consistency preserves program order without strict real-time alignment",
+          "They are identical",
+          "Sequential consistency is stronger"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Linearizability includes real-time constraints, making it stronger than pure sequential consistency."
+      },
+      {
+        "id": 22,
+        "question": "Why are idempotent handlers valuable in concurrent message processing?",
+        "options": [
+          "They allow safe retries and duplicate deliveries without duplicate side effects",
+          "They guarantee exactly-once delivery",
+          "They remove ordering issues",
+          "They prevent all race conditions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "At-least-once systems may deliver duplicates; idempotency ensures repeat handling remains safe."
+      },
+      {
+        "id": 23,
+        "question": "What is a practical way to reduce contention on a shared counter?",
+        "options": [
+          "Single global mutex for all increments",
+          "Sharded/striped counters with periodic aggregation",
+          "Serializable transactions for each increment",
+          "Infinite lock timeout"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Striping spreads updates across partitions, reducing hotspot contention while maintaining approximate or aggregated totals."
+      },
+      {
+        "id": 24,
+        "question": "Why do concurrent systems often use bounded retries with jitter?",
+        "options": [
+          "To synchronize retries",
+          "To reduce collision probability and avoid coordinated retry spikes",
+          "To guarantee fairness",
+          "To maximize queue length"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Jitter randomizes retry timing, reducing herd behavior under contention or transient failures."
+      },
+      {
+        "id": 25,
+        "question": "What is livelock?",
+        "options": [
+          "Threads blocked forever waiting",
+          "Threads actively changing state/retrying but making no useful progress",
+          "Normal scheduling delay",
+          "A lock-free success path"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Unlike deadlock (blocked), livelock involves active but futile work, often due to over-eager conflict avoidance."
+      },
+      {
+        "id": 26,
+        "question": "Which practice improves confidence in concurrent algorithm correctness?",
+        "options": [
+          "Relying on unit tests with fixed ordering only",
+          "Using stress tests, randomized scheduling/fuzzing, and formal invariants where feasible",
+          "Disabling compiler optimizations",
+          "Avoiding code reviews"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Concurrency bugs are often timing-sensitive; diverse testing and invariant-based validation increase detection probability."
+      },
+      {
+        "id": 27,
+        "question": "What does a semaphore primarily control?",
+        "options": [
+          "Exact operation ordering",
+          "Maximum concurrent access to a limited resource",
+          "Atomic compare-and-swap",
+          "Message ordering across partitions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Semaphores gate concurrency level, useful for protecting constrained resources such as DB connections or worker slots."
+      },
+      {
+        "id": 28,
+        "question": "Why can synchronous blocking I/O inside event-loop systems be problematic?",
+        "options": [
+          "It improves tail latency",
+          "It stalls the loop, reducing concurrency and increasing response latency for unrelated requests",
+          "It guarantees fairness",
+          "It avoids backpressure needs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Event-loop architectures rely on non-blocking operations to multiplex many requests efficiently."
+      },
+      {
+        "id": 29,
+        "question": "What is work stealing in concurrent schedulers?",
+        "options": [
+          "Threads lock each other directly",
+          "Idle workers pull tasks from busy workers to improve utilization",
+          "A deadlock recovery method",
+          "A cache eviction policy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Work stealing improves load balancing across worker queues and can increase throughput in irregular workloads."
+      },
+      {
+        "id": 30,
+        "question": "When coordinating across services, why can distributed locks be dangerous if overused?",
+        "options": [
+          "They simplify all coordination",
+          "They add latency/failure modes and can become single points of contention",
+          "They guarantee exactly-once semantics",
+          "They eliminate split-brain risk"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Distributed locking is operationally complex and should be replaced with idempotency and partitioned ownership when possible."
+      },
+      {
+        "id": 31,
+        "question": "What is a robust alternative to global locks for high-scale task processing?",
+        "options": [
+          "Single coordinator for all tasks",
+          "Partitioned ownership with per-key serialization and idempotent retries",
+          "Infinite queue buffering",
+          "Global serial execution"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Partitioning by key can maintain ordering where needed while enabling broad parallelism and simpler failure handling."
+      },
+      {
+        "id": 32,
+        "question": "Why is commutativity valuable in concurrent/distributed updates?",
+        "options": [
+          "Commutative operations can be applied in varying orders with consistent outcomes",
+          "It removes network delays",
+          "It guarantees linearizability",
+          "It eliminates conflicts in all domains"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Designing operations that commute reduces ordering sensitivity and reconciliation complexity."
+      },
+      {
+        "id": 33,
+        "question": "What is the primary danger of assuming exactly-once processing in distributed pipelines?",
+        "options": [
+          "It simplifies architecture",
+          "It can hide real duplicate/retry behavior and lead to non-idempotent side effects",
+          "It improves reliability",
+          "It reduces observability needs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Most systems are effectively at-least-once at boundaries. Designs should be idempotent and replay-safe."
+      },
+      {
+        "id": 34,
+        "question": "How does queue length relate to latency under Little's Law intuition?",
+        "options": [
+          "Longer queues generally imply higher waiting time/latency if service rate is unchanged",
+          "Queue length is unrelated to latency",
+          "Long queues always increase throughput",
+          "Latency decreases with backlog"
+        ],
+        "correctAnswer": 0,
+        "explanation": "As backlog grows without proportional processing capacity, waiting time rises and tail latency worsens."
+      },
+      {
+        "id": 35,
+        "question": "What is the key reason to cap in-flight requests per dependency?",
+        "options": [
+          "To reduce fairness",
+          "To prevent overload propagation and protect local resource pools",
+          "To increase deadlock probability",
+          "To disable retries"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bounded concurrency limits blast radius and stabilizes systems during dependency slowdowns/outages."
+      },
+      {
+        "id": 36,
+        "question": "What is the strongest use case for read-write locks?",
+        "options": [
+          "Write-heavy workloads",
+          "Read-dominant workloads where concurrent reads can proceed safely",
+          "Single-threaded applications",
+          "Lock-free algorithms"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RW locks can improve throughput when reads dominate, but writer starvation and overhead must be considered."
+      },
+      {
+        "id": 37,
+        "question": "Why can over-threading reduce performance despite more parallel workers?",
+        "options": [
+          "More threads always improve cache locality",
+          "Context switching, synchronization overhead, and contention can dominate useful work",
+          "It eliminates lock contention",
+          "It guarantees lower p99"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Concurrency level should match workload and hardware characteristics; excessive parallelism can degrade throughput and latency."
+      },
+      {
+        "id": 38,
+        "question": "What is a key property of wait-free algorithms compared to lock-free?",
+        "options": [
+          "System-wide progress only",
+          "Per-thread progress bound in finite steps",
+          "Requires global locks",
+          "No memory fences needed"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Wait-free guarantees each thread completes operations in bounded steps, stronger than lock-free's system-wide progress guarantee."
+      },
+      {
+        "id": 39,
+        "question": "In incident analysis, what pattern often reveals concurrency bugs?",
+        "options": [
+          "Rare, non-deterministic failures under high contention or specific timing",
+          "Consistent syntax errors",
+          "Static type mismatches",
+          "Deterministic startup crashes"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Concurrency defects frequently surface intermittently and under load, requiring timeline and contention-aware debugging."
+      },
+      {
+        "id": 40,
+        "question": "What distinguishes mature concurrency design?",
+        "options": [
+          "Maximum parallelism at all times",
+          "Explicit progress guarantees, bounded resources, idempotent recovery, and measurable contention control",
+          "No synchronization primitives",
+          "Single global lock simplicity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mature systems balance safety, liveness, and performance with clear invariants and operationally testable behavior."
+      }
+    ]
+  }
+]

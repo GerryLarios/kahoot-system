@@ -1,0 +1,489 @@
+[
+  {
+    "id": "caching-interview",
+    "title": "Caching Interview",
+    "description": "Senior-level caching interview quiz covering cache patterns, consistency, invalidation, and operational tradeoffs",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Why is cache invalidation considered one of the hardest distributed systems problems?",
+        "options": [
+          "Caches are always strongly consistent",
+          "Data changes and access patterns are dynamic, making freshness and performance tradeoffs context-dependent",
+          "Invalidation APIs are missing in modern cache products",
+          "TTL values guarantee correctness"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Invalidation must balance staleness risk, update frequency, and latency/cost goals. There is no universal policy that fits all workloads."
+      },
+      {
+        "id": 2,
+        "question": "What is the main difference between cache-aside and read-through caching?",
+        "options": [
+          "Cache-aside pushes cache population to application logic; read-through delegates loading to cache layer",
+          "Read-through can never miss",
+          "Cache-aside requires distributed transactions",
+          "They are identical patterns"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In cache-aside, the app handles misses and writes to cache. In read-through, the cache provider handles loading from the backing store."
+      },
+      {
+        "id": 3,
+        "question": "When is write-through caching usually beneficial?",
+        "options": [
+          "When write latency must be minimized above all else",
+          "When cache and store should remain closely aligned on writes at the expense of write path overhead",
+          "When data is immutable forever",
+          "When no persistent store exists"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Write-through updates cache and source of truth together, improving read freshness consistency but adding write latency and complexity."
+      },
+      {
+        "id": 4,
+        "question": "What is a key risk of write-back (write-behind) caches?",
+        "options": [
+          "Higher durability risk if cache data is lost before backend flush",
+          "No performance gains on writes",
+          "Guaranteed strong consistency",
+          "Inability to batch writes"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Write-back improves write throughput/latency but introduces potential durability gaps unless carefully designed with persistence and replay."
+      },
+      {
+        "id": 5,
+        "question": "What problem does request coalescing solve in hot-key scenarios?",
+        "options": [
+          "It increases cache miss rate",
+          "It deduplicates concurrent misses so only one backend fetch occurs",
+          "It guarantees cache hits",
+          "It replaces TTL strategy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Coalescing (single-flight) prevents duplicate expensive backend calls when many requests miss the same key simultaneously."
+      },
+      {
+        "id": 6,
+        "question": "Cache stampede is best described as:",
+        "options": [
+          "Many clients concurrently recomputing/refetching expired data causing backend overload",
+          "A cache node running out of memory",
+          "A failed cache replication event",
+          "Write skew in databases"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Stampedes occur when a popular key expires and many requests miss at once, often overloading origin services."
+      },
+      {
+        "id": 7,
+        "question": "Which strategy most directly mitigates cache stampedes?",
+        "options": [
+          "Synchronized client retries",
+          "Jittered TTLs, request coalescing, and stale-while-revalidate",
+          "Disabling cache eviction",
+          "Using only LRU"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Combining staggered expirations and controlled regeneration reduces thundering-herd effects and origin spikes."
+      },
+      {
+        "id": 8,
+        "question": "What is stale-while-revalidate primarily optimizing for?",
+        "options": [
+          "Strict linearizable reads",
+          "Low read latency by serving stale data briefly while refreshing in background",
+          "Write amplification reduction",
+          "Permanent cache residency"
+        ],
+        "correctAnswer": 1,
+        "explanation": "This pattern accepts bounded staleness to protect latency and availability during refresh."
+      },
+      {
+        "id": 9,
+        "question": "Why is TTL-only invalidation often insufficient for critical correctness paths?",
+        "options": [
+          "TTL values are always too short",
+          "Data may remain stale until expiry unless proactive invalidation/versioning is used",
+          "TTL cannot be configured per key",
+          "TTL disables cache clustering"
+        ],
+        "correctAnswer": 1,
+        "explanation": "TTL alone gives eventual freshness, not immediate consistency. Important flows often require event-driven invalidation or version checks."
+      },
+      {
+        "id": 10,
+        "question": "What is the role of cache key versioning (e.g., user:42:v17)?",
+        "options": [
+          "Improve serialization speed",
+          "Support safe invalidation by changing key namespace when data version changes",
+          "Remove need for eviction policies",
+          "Guarantee global ordering"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Versioned keys let old entries age out naturally while new reads target fresh keys, reducing delete-race complexity."
+      },
+      {
+        "id": 11,
+        "question": "In multi-layer caching (CDN, edge, app, DB), what is a frequent pitfall?",
+        "options": [
+          "Too many cache hits",
+          "Inconsistent invalidation semantics and TTLs across layers causing hard-to-debug staleness",
+          "Lower observability cost",
+          "Guaranteed origin protection"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Layered caches are powerful but require coordinated invalidation and telemetry; otherwise stale data behavior becomes unpredictable."
+      },
+      {
+        "id": 12,
+        "question": "What metric best indicates cache effectiveness for backend protection?",
+        "options": [
+          "Hit ratio alone",
+          "Origin offload plus miss latency and miss volume by key cohort",
+          "CPU idle percentage",
+          "Number of cache nodes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hit rate can be misleading. You need miss behavior and origin offload metrics to understand real capacity impact."
+      },
+      {
+        "id": 13,
+        "question": "Which eviction policy is generally best for skewed workloads with recency locality?",
+        "options": [
+          "Random eviction",
+          "LRU or variants approximating recency-aware behavior",
+          "FIFO always",
+          "No eviction"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Recency-aware policies often perform well when recently accessed items are likely to be reused soon."
+      },
+      {
+        "id": 14,
+        "question": "What tradeoff does LFU-style eviction make relative to pure LRU?",
+        "options": [
+          "LFU tracks frequency, helping retain long-term hot items but can be less responsive to rapid trend shifts",
+          "LFU eliminates metadata overhead",
+          "LFU cannot handle skew",
+          "LFU guarantees higher hit ratio in all workloads"
+        ],
+        "correctAnswer": 0,
+        "explanation": "LFU is strong for persistent hot keys; LRU adapts faster to changing access recency. Hybrid policies often work best in practice."
+      },
+      {
+        "id": 15,
+        "question": "Why can very large cached objects reduce overall cache efficiency?",
+        "options": [
+          "They increase hit ratio by default",
+          "They consume disproportionate memory, causing churn and eviction of many smaller hot objects",
+          "They disable compression",
+          "They cannot be serialized"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Object size distribution matters; a few oversized entries can degrade cache utility for broader request patterns."
+      },
+      {
+        "id": 16,
+        "question": "What is the primary purpose of consistent hashing in distributed cache clusters?",
+        "options": [
+          "Guarantee strict consistency",
+          "Minimize key remapping when nodes are added or removed",
+          "Eliminate network hops",
+          "Enforce quorum writes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Consistent hashing improves rebalance stability and reduces mass cache invalidation during topology changes."
+      },
+      {
+        "id": 17,
+        "question": "Why should cache entries for permission/auth data be treated with stricter freshness controls?",
+        "options": [
+          "Auth data is immutable",
+          "Stale auth decisions can create security vulnerabilities",
+          "Short TTLs are never needed",
+          "Caching auth is always unsafe"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Authorization correctness has high security impact. Invalidations and bounded staleness windows must align with risk tolerance."
+      },
+      {
+        "id": 18,
+        "question": "What is negative caching?",
+        "options": [
+          "Caching failed lookups or not-found responses briefly to reduce repeated backend work",
+          "Caching only numeric values",
+          "Removing all missing keys from cache",
+          "Storing invalid JSON payloads"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Negative caching can protect origins from repeated misses on absent resources, but TTLs should be conservative."
+      },
+      {
+        "id": 19,
+        "question": "What is a common danger of overly long negative-cache TTLs?",
+        "options": [
+          "Higher cache memory efficiency",
+          "Serving stale not-found responses after data is created",
+          "Reduced cache coherence",
+          "Increased object compression time"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If missing-state is cached too long, newly created resources may appear absent until expiry."
+      },
+      {
+        "id": 20,
+        "question": "When using Redis as a cache, what is a production risk of mixing cache and durable queue/state workloads in one cluster?",
+        "options": [
+          "Guaranteed stronger durability",
+          "Resource contention and eviction behavior can affect critical non-cache data",
+          "Lower operational complexity always",
+          "Automatic workload isolation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Shared clusters can cause noisy-neighbor effects. Critical durable data should be isolated from volatile cache pressure."
+      },
+      {
+        "id": 21,
+        "question": "What is cache warming and when is it useful?",
+        "options": [
+          "Pre-populating likely hot keys before traffic surges or deployments",
+          "Reducing TLS handshake costs",
+          "Replacing lazy loading in all cases",
+          "Disabling eviction policies"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Warming reduces cold-start miss spikes, especially after restarts or known traffic events."
+      },
+      {
+        "id": 22,
+        "question": "Which scenario most justifies bypassing cache for a read request?",
+        "options": [
+          "All anonymous content",
+          "Consistency-critical operation requiring freshest state (e.g., post-payment confirmation)",
+          "Requests from mobile clients only",
+          "Any request over HTTPS"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Some business flows need strong freshness and should read directly from source-of-truth or use version checks."
+      },
+      {
+        "id": 23,
+        "question": "Why are cache tags or group invalidation keys valuable?",
+        "options": [
+          "They allow invalidating related sets of entries without enumerating every key",
+          "They guarantee higher compression",
+          "They remove need for TTL",
+          "They enforce transaction isolation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Group invalidation simplifies consistency management for derived content linked to shared entities."
+      },
+      {
+        "id": 24,
+        "question": "What is a key challenge with event-driven cache invalidation?",
+        "options": [
+          "Events are always exactly-once",
+          "Missed, delayed, or out-of-order events can leave stale cache state",
+          "It cannot work with message brokers",
+          "It requires serializable transactions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Event pipelines require idempotency, ordering strategy, and recovery mechanisms to keep cache state reliable."
+      },
+      {
+        "id": 25,
+        "question": "How does write-through plus read-through differ operationally from cache-aside?",
+        "options": [
+          "It centralizes cache logic but can reduce application flexibility",
+          "It removes all stale-read risk",
+          "It avoids cache misses completely",
+          "It cannot be scaled"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Managed cache patterns can reduce app complexity but may constrain custom behavior and require deeper cache infrastructure trust."
+      },
+      {
+        "id": 26,
+        "question": "What is the most likely effect of setting identical TTLs for all high-traffic keys?",
+        "options": [
+          "Perfectly balanced refresh load",
+          "Synchronized expirations causing bursty origin load",
+          "Lower p99 latency always",
+          "Automatic miss coalescing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Uniform expirations can align misses in time. TTL jitter spreads refresh load and reduces spikes."
+      },
+      {
+        "id": 27,
+        "question": "In edge/CDN caching, why is cache-key normalization important?",
+        "options": [
+          "It reduces key cardinality explosion from irrelevant query/header variations",
+          "It enforces strict authorization",
+          "It eliminates origin rate limiting",
+          "It guarantees no stale content"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Unnormalized keys fragment cache entries and reduce hit rates. Key design should include only variation dimensions that affect response content."
+      },
+      {
+        "id": 28,
+        "question": "What does a high cache hit ratio with high user latency often suggest?",
+        "options": [
+          "Cache is unhealthy by definition",
+          "Bottlenecks may exist elsewhere (network, app processing, downstream calls)",
+          "TTL is too short",
+          "The origin is overloaded"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cache metrics are one piece of performance. End-to-end latency can still be dominated by non-cache components."
+      },
+      {
+        "id": 29,
+        "question": "Why should cache invalidation paths be part of incident playbooks?",
+        "options": [
+          "Invalidation never impacts production behavior",
+          "Emergency purge and selective invalidation are common recovery actions for bad deploys/data",
+          "Playbooks should avoid cache operations",
+          "Purge operations are always risk-free"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Operational readiness includes safe invalidation procedures to recover quickly from corrupted or stale cached content."
+      },
+      {
+        "id": 30,
+        "question": "What is the purpose of soft TTL and hard TTL together?",
+        "options": [
+          "Soft TTL allows stale serving during refresh window; hard TTL caps maximum staleness",
+          "Both are redundant",
+          "Hard TTL is for writes only",
+          "Soft TTL guarantees freshness"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Two-tier expiry provides resilience under load while still enforcing absolute freshness boundaries."
+      },
+      {
+        "id": 31,
+        "question": "Which caching choice is best for highly personalized data with strict privacy boundaries?",
+        "options": [
+          "Global shared cache key per endpoint",
+          "Per-user scoped keys with careful authorization-aware variation",
+          "No key namespace",
+          "Long public CDN caching"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Personalized content must isolate cache entries by identity and relevant auth context to prevent data leaks."
+      },
+      {
+        "id": 32,
+        "question": "What is the strongest reason to include cache-related telemetry dimensions by key family?",
+        "options": [
+          "All keys behave similarly",
+          "Different key cohorts have different hit/miss/staleness behavior and business impact",
+          "It reduces metric cardinality",
+          "It removes need for logs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Per-key-family observability reveals where cache strategy works or fails, enabling targeted tuning."
+      },
+      {
+        "id": 33,
+        "question": "Why might cache-aside writes produce stale reads temporarily?",
+        "options": [
+          "Because writes to source and cache are not atomic unless explicitly coordinated",
+          "Because caches cannot be updated after writes",
+          "Because TTL disables writes",
+          "Because cache-aside enforces eventual deletion"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Typical write flow updates DB then invalidates cache, leaving a brief window for races unless protected by ordering/idempotent logic."
+      },
+      {
+        "id": 34,
+        "question": "When does local in-process caching become risky?",
+        "options": [
+          "When many app instances serve mutable data and coherence requirements are strict",
+          "When data is immutable configuration",
+          "When request rates are low",
+          "When GC is tuned"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Per-instance caches can diverge. Distributed invalidation or centralized cache layers may be required for consistency-sensitive data."
+      },
+      {
+        "id": 35,
+        "question": "What does cache poisoning refer to in API/platform security?",
+        "options": [
+          "Malicious or incorrect content being cached and served broadly",
+          "Expired TLS certificates",
+          "Cache node disk failure",
+          "Large object eviction"
+        ],
+        "correctAnswer": 0,
+        "explanation": "If untrusted input influences cache keys/variants incorrectly, attackers can inject or misdirect cached responses."
+      },
+      {
+        "id": 36,
+        "question": "Which control helps reduce cache poisoning risk in HTTP caching layers?",
+        "options": [
+          "Strict cache key construction and validated Vary/header handling",
+          "Longer TTLs",
+          "Disabling WAF",
+          "Ignoring content-type"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Security-aware key/variant rules and header sanitization prevent untrusted dimensions from polluting shared cache entries."
+      },
+      {
+        "id": 37,
+        "question": "Why is benchmarking cache changes with production-like key distributions important?",
+        "options": [
+          "Synthetic uniform traffic can hide hotspot and eviction behavior seen in real workloads",
+          "Any benchmark is sufficient",
+          "Cache hit ratio is independent of distribution",
+          "Only latency matters"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Real access skew shapes hit rates, memory pressure, and origin load. Representative distributions are necessary for reliable decisions."
+      },
+      {
+        "id": 38,
+        "question": "What is a common false assumption when scaling cache clusters horizontally?",
+        "options": [
+          "Adding nodes always improves hit ratio without rebalancing impact",
+          "Node changes can temporarily lower hit ratio due to key movement",
+          "More nodes can reduce memory",
+          "Consistent hashing is optional"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Scaling out may cause key redistribution and temporary coldness. Prewarming and controlled rollout mitigate this effect."
+      },
+      {
+        "id": 39,
+        "question": "For cache outages, what fallback pattern is most resilient?",
+        "options": [
+          "Fail closed for every read",
+          "Graceful degradation with bounded origin protection and circuit breakers",
+          "Retry cache indefinitely",
+          "Disable application timeouts"
+        ],
+        "correctAnswer": 1,
+        "explanation": "When cache is unavailable, systems should degrade predictably, protect origins, and avoid cascading failures."
+      },
+      {
+        "id": 40,
+        "question": "What is the strongest sign of mature caching architecture?",
+        "options": [
+          "High hit ratio alone",
+          "Clear consistency model, measured business impact, safe invalidation, and tested failure playbooks",
+          "Largest cache cluster size",
+          "No cache misses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mature caching is operational and product-aware: correctness, performance, observability, and resilience are all engineered intentionally."
+      }
+    ]
+  }
+]

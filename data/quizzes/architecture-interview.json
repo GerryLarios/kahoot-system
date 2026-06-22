@@ -1,0 +1,489 @@
+[
+  {
+    "id": "architecture-interview",
+    "title": "Software Architecture Interview",
+    "description": "Senior-level software architecture interview quiz covering tradeoffs, boundaries, quality attributes, and evolution",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the primary purpose of software architecture in large systems?",
+        "options": [
+          "Choosing frameworks only",
+          "Managing system-level tradeoffs to satisfy quality attributes and business constraints",
+          "Eliminating implementation complexity",
+          "Avoiding all technical debt"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Architecture is about intentional decisions across boundaries, quality goals, and constraints, not only technology selection."
+      },
+      {
+        "id": 2,
+        "question": "Which statement best reflects quality attribute tradeoffs?",
+        "options": [
+          "Maximizing one attribute is free and independent",
+          "Improving one attribute (e.g., consistency) can impact others (e.g., latency/availability)",
+          "Scalability and reliability are the same",
+          "Maintainability has no runtime impact"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Architecture is multi-objective optimization. Gains in one dimension often impose costs in another."
+      },
+      {
+        "id": 3,
+        "question": "Why is bounded context central in domain-driven architecture?",
+        "options": [
+          "It eliminates all integration needs",
+          "It defines explicit model boundaries where terms and rules remain consistent",
+          "It is only for database schemas",
+          "It replaces service contracts"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bounded contexts reduce conceptual coupling and ambiguity, enabling teams to evolve domain models with clearer ownership."
+      },
+      {
+        "id": 4,
+        "question": "What is the biggest risk of a distributed monolith?",
+        "options": [
+          "Too few network calls",
+          "Operational complexity of microservices without real autonomy or loose coupling",
+          "Excessive modularity",
+          "Perfect fault isolation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If services are tightly coupled in deploy and data, distribution adds failure modes without yielding independence benefits."
+      },
+      {
+        "id": 5,
+        "question": "When is modular monolith often a better first step than microservices?",
+        "options": [
+          "When team/system complexity is still manageable and domain boundaries are evolving",
+          "Only for prototypes under one month",
+          "Never in enterprise systems",
+          "When independent scaling is mandatory from day one"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A well-structured monolith can deliver faster with lower operational burden while preserving future extraction paths."
+      },
+      {
+        "id": 6,
+        "question": "What is the most accurate role of ADRs (Architecture Decision Records)?",
+        "options": [
+          "Replacing code comments",
+          "Capturing context, decision, alternatives, and consequences for major architectural choices",
+          "Documenting sprint tasks only",
+          "Enforcing runtime invariants"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ADRs preserve rationale and tradeoffs, making future evolution and onboarding more reliable."
+      },
+      {
+        "id": 7,
+        "question": "Why is coupling analysis essential before decomposing services?",
+        "options": [
+          "Because service count should be maximized",
+          "High temporal/data coupling can create costly cross-service chatter and coordination failures",
+          "It is only needed for frontend apps",
+          "Coupling decreases automatically after splitting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Poor decomposition causes chatty calls, consistency pain, and degraded reliability. Boundary quality matters more than service count."
+      },
+      {
+        "id": 8,
+        "question": "What is a key architectural benefit of event-driven integration?",
+        "options": [
+          "Guaranteed ordering across all topics and services",
+          "Temporal decoupling and asynchronous scalability between producers and consumers",
+          "Removal of idempotency requirements",
+          "Zero operational complexity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Events reduce synchronous coupling and can improve resilience/throughput, but require careful contract and delivery semantics."
+      },
+      {
+        "id": 9,
+        "question": "Why must architecture include failure-mode design, not just happy-path flow?",
+        "options": [
+          "Failures are rare and can be ignored",
+          "Distributed systems fail partially; resilience patterns must be first-class",
+          "Retries solve all outages",
+          "Testing handles failures without design"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Production reliability depends on timeout, fallback, retry, isolation, and degradation strategies built into architecture."
+      },
+      {
+        "id": 10,
+        "question": "What does bulkheading accomplish in service architecture?",
+        "options": [
+          "It increases code coupling",
+          "It isolates resource pools/failure domains to limit blast radius",
+          "It removes need for scaling",
+          "It guarantees zero incidents"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bulkheads prevent one overloaded dependency from consuming all shared resources and taking down unrelated features."
+      },
+      {
+        "id": 11,
+        "question": "How should architects evaluate introducing a new infrastructure technology?",
+        "options": [
+          "By popularity and trend alone",
+          "By fit to requirements, operational maturity, team capability, and migration cost",
+          "By benchmark latency only",
+          "By vendor branding"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Technology decisions are socio-technical. Operational and organizational readiness are as important as raw performance."
+      },
+      {
+        "id": 12,
+        "question": "What is a common anti-pattern in shared platform teams?",
+        "options": [
+          "Providing paved roads with opinionated defaults",
+          "Forcing one-size-fits-all abstractions that block domain-specific needs",
+          "Publishing clear SLAs",
+          "Treating platform as a product"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Effective platforms enable consistency while allowing controlled flexibility for varied domain constraints."
+      },
+      {
+        "id": 13,
+        "question": "Why is observability architecture a design concern, not an afterthought?",
+        "options": [
+          "Logs are enough for all systems",
+          "Without telemetry design, diagnosis and reliability improvement become slow and expensive",
+          "Only SRE teams need observability",
+          "Instrumentation can be added instantly later"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Traceability, metrics, and structured logs should be built into service contracts and operational workflows early."
+      },
+      {
+        "id": 14,
+        "question": "What does Conway's Law imply for architecture planning?",
+        "options": [
+          "Code structure is independent of team communication structure",
+          "System architecture tends to mirror organizational communication boundaries",
+          "Only startups are affected",
+          "It applies only to UI design"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Architecture and org design co-evolve; ignoring team topology often leads to brittle ownership and delivery bottlenecks."
+      },
+      {
+        "id": 15,
+        "question": "What is the strongest reason to define explicit service ownership boundaries?",
+        "options": [
+          "To reduce accountability",
+          "To align incident response, roadmap, and operational stewardship",
+          "To prevent code reuse",
+          "To avoid documentation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Clear ownership improves response times, decision velocity, and long-term system health."
+      },
+      {
+        "id": 16,
+        "question": "Why is backward compatibility a core architecture concern in distributed systems?",
+        "options": [
+          "All services deploy atomically",
+          "Independent deployability means mixed-version interactions are unavoidable",
+          "Versioning is only a client SDK issue",
+          "Compatibility reduces testing needs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Loose deployment coupling requires tolerant readers/writers and migration-safe contract evolution."
+      },
+      {
+        "id": 17,
+        "question": "What is a practical reason to avoid shared databases across many services?",
+        "options": [
+          "Shared DBs reduce consistency",
+          "They create tight coupling and make independent schema evolution difficult",
+          "They eliminate observability",
+          "They always improve autonomy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Data ownership is a key autonomy mechanism. Shared persistence often couples release cycles and data semantics."
+      },
+      {
+        "id": 18,
+        "question": "What architectural purpose do anti-corruption layers serve?",
+        "options": [
+          "Increase direct dependency on legacy models",
+          "Translate external/legacy models into local domain language and protect core boundaries",
+          "Replace all integration tests",
+          "Handle only authentication"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ACLs shield domain models from upstream inconsistencies and reduce semantic leakage across contexts."
+      },
+      {
+        "id": 19,
+        "question": "In reliability architecture, what is the role of circuit breakers?",
+        "options": [
+          "Increase synchronous retries",
+          "Fail fast on unhealthy dependencies to prevent cascading resource exhaustion",
+          "Guarantee request success",
+          "Replace monitoring"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Circuit breakers protect systems under dependency failure by short-circuiting calls and enabling controlled recovery."
+      },
+      {
+        "id": 20,
+        "question": "Why are retries without budgets/jitter dangerous at system level?",
+        "options": [
+          "They always reduce latency",
+          "They can amplify load and create retry storms during incidents",
+          "They improve consistency",
+          "They remove need for circuit breakers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Uncontrolled retries magnify pressure on degraded services. Budgets, backoff, and jitter are essential."
+      },
+      {
+        "id": 21,
+        "question": "What is the main purpose of architecture fitness functions?",
+        "options": [
+          "Automate checks that continuously validate architectural constraints",
+          "Replace code review",
+          "Auto-generate diagrams only",
+          "Enforce deployment schedules"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Fitness functions make architecture executable by testing dependency rules, latency budgets, and other constraints in CI/CD."
+      },
+      {
+        "id": 22,
+        "question": "Which scenario best justifies a strangler migration pattern?",
+        "options": [
+          "Need to rewrite entire legacy system in one release",
+          "Incrementally replacing legacy capabilities behind controlled routing",
+          "Avoiding all integration layers",
+          "Disabling feature flags"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Strangler allows gradual modernization with reduced risk, preserving continuity while replacing parts safely."
+      },
+      {
+        "id": 23,
+        "question": "What architectural risk does synchronous fan-out introduce?",
+        "options": [
+          "Lower tail latency",
+          "Higher tail latency and compounded failure probability across dependencies",
+          "Guaranteed fault isolation",
+          "Simpler observability"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fan-out increases critical path and failure surface. Even if each dependency is reliable, combined success probability drops."
+      },
+      {
+        "id": 24,
+        "question": "Why is p99 latency often more architecturally relevant than average latency?",
+        "options": [
+          "Average captures worst-case user experience",
+          "Tail latency dominates perceived reliability under load and dependency variance",
+          "p99 is easier to optimize",
+          "p99 ignores outliers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Users experience tail behavior in distributed systems; architecture must manage outlier latency and queueing effects."
+      },
+      {
+        "id": 25,
+        "question": "What is a key advantage of async messaging over direct synchronous calls for non-critical side effects?",
+        "options": [
+          "Stronger transactional guarantees automatically",
+          "Reduced coupling and improved resilience of primary user flows",
+          "No need for idempotency",
+          "No need for monitoring"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Asynchronous workflows can decouple side effects from user-critical paths, improving responsiveness and failure isolation."
+      },
+      {
+        "id": 26,
+        "question": "What does architecture runway mean in product/platform planning?",
+        "options": [
+          "Unused cloud capacity",
+          "Intentional technical preparation enabling near-term feature delivery",
+          "Eliminating all refactoring",
+          "Only documenting future ideas"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Runway balances immediate delivery with targeted foundational work so future capabilities can be built without major rework."
+      },
+      {
+        "id": 27,
+        "question": "Why should architecture reviews include threat modeling?",
+        "options": [
+          "Security is handled only after release",
+          "Early identification of abuse paths and trust boundaries reduces systemic security risk",
+          "Threat modeling replaces penetration testing",
+          "It is needed only for regulated industries"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Security architecture must be proactive: trust boundaries, attacker goals, and mitigation design are core early decisions."
+      },
+      {
+        "id": 28,
+        "question": "What is a hallmark of good API boundary design between services?",
+        "options": [
+          "Leaking internal persistence details",
+          "Stable domain-aligned contracts with clear ownership and evolution policy",
+          "Frequent breaking changes",
+          "Undocumented behavior"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Boundaries should communicate intent, remain stable, and support independent evolution of service internals."
+      },
+      {
+        "id": 29,
+        "question": "What is the key downside of centralizing all business logic in a single shared service?",
+        "options": [
+          "Lower cohesion and increased bottleneck risk for delivery and scaling",
+          "Better autonomy for domain teams",
+          "Improved fault isolation",
+          "Reduced dependency complexity"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Over-centralization can create coordination bottlenecks and a single point of failure for both architecture and organization."
+      },
+      {
+        "id": 30,
+        "question": "In architecture governance, why define golden paths?",
+        "options": [
+          "To block all experimentation",
+          "To provide opinionated defaults that reduce accidental complexity and improve consistency",
+          "To enforce one programming language",
+          "To eliminate code ownership"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Golden paths accelerate delivery by giving teams proven patterns while still allowing justified exceptions."
+      },
+      {
+        "id": 31,
+        "question": "What is an architectural consequence of eventual consistency often missed by product teams?",
+        "options": [
+          "UI and workflow semantics must handle temporary divergence across read models",
+          "No user-visible impact ever",
+          "It only affects backend logs",
+          "It eliminates duplicate handling"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Product behavior must account for stale views and reconciliation states, not just backend correctness."
+      },
+      {
+        "id": 32,
+        "question": "Why is data contract ownership critical in event-driven systems?",
+        "options": [
+          "Events are self-validating",
+          "Without ownership/versioning policy, schema drift breaks consumers and replay pipelines",
+          "Contracts matter only for REST",
+          "Ownership slows delivery"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Event schemas are APIs. Governance, compatibility rules, and lifecycle management are required for safe evolution."
+      },
+      {
+        "id": 33,
+        "question": "What is a mature strategy for architectural technical debt?",
+        "options": [
+          "Ignore until outages occur",
+          "Track debt explicitly, prioritize by risk/impact, and pay down continuously",
+          "Rewrite every 12 months",
+          "Hide debt in backlog without ownership"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Debt management is ongoing portfolio governance, balancing risk reduction with product delivery."
+      },
+      {
+        "id": 34,
+        "question": "Why is cost architecture (FinOps perspective) a first-class concern?",
+        "options": [
+          "Cost is fixed regardless of design",
+          "Architectural choices directly affect unit economics and sustainability at scale",
+          "Only finance teams handle cost",
+          "Caching always lowers cost"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Latency, availability, and throughput targets must be balanced with cost efficiency and business viability."
+      },
+      {
+        "id": 35,
+        "question": "What is the main architectural benefit of feature flags in large systems?",
+        "options": [
+          "Replacing testing",
+          "Controlling rollout risk and decoupling deployment from release",
+          "Enforcing strict consistency",
+          "Reducing code size automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Flags support progressive delivery, safer experimentation, and targeted rollback without full redeploys."
+      },
+      {
+        "id": 36,
+        "question": "Why can excessive abstraction layers harm architecture?",
+        "options": [
+          "They always improve portability",
+          "They can obscure intent, increase cognitive load, and reduce debuggability",
+          "They remove coupling",
+          "They simplify incident response"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Abstractions should pay for themselves. Unnecessary layers create indirection without proportional benefit."
+      },
+      {
+        "id": 37,
+        "question": "What is a practical criterion for choosing sync vs async integration between services?",
+        "options": [
+          "Use sync for all communication",
+          "Base choice on user latency needs, consistency requirements, and failure tolerance",
+          "Use async only for logging",
+          "Use whichever framework supports first"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Communication style should follow business semantics and reliability goals, not tooling preference alone."
+      },
+      {
+        "id": 38,
+        "question": "In architecture evolution, why are compatibility windows needed?",
+        "options": [
+          "To force simultaneous deployments",
+          "To allow independent producers/consumers to upgrade safely over time",
+          "To avoid observability updates",
+          "To prevent rollback"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rolling upgrades require overlap periods where old and new contracts coexist safely."
+      },
+      {
+        "id": 39,
+        "question": "What is the strongest indicator an architecture is scaling organizationally?",
+        "options": [
+          "Single team owning all services",
+          "Teams can ship independently with clear boundaries, low coordination overhead, and reliable operations",
+          "High microservice count",
+          "Largest CI pipeline"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Organizational scalability is about autonomy plus alignment, not the number of repositories or services."
+      },
+      {
+        "id": 40,
+        "question": "What defines architecture maturity in practice?",
+        "options": [
+          "Perfect upfront design",
+          "Continuous tradeoff management with measurable outcomes, clear ownership, and safe evolution mechanisms",
+          "No incidents",
+          "Maximum tool diversity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mature architecture is adaptive and evidence-driven, combining technical quality with operational and product accountability."
+      }
+    ]
+  }
+]

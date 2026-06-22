@@ -1,0 +1,489 @@
+[
+  {
+    "id": "api-design-interview",
+    "title": "API Design Interview",
+    "description": "Senior-level API design interview quiz covering contracts, versioning, reliability, security, and evolution",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the most important principle for designing external APIs at scale?",
+        "options": [
+          "Optimize for implementation convenience over consumer clarity",
+          "Design stable, explicit contracts that prioritize consumer usability and backward compatibility",
+          "Expose every internal field to reduce future migrations",
+          "Rely on undocumented conventions for flexibility"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Public APIs are long-lived contracts. Consumer-centric design and compatibility strategy reduce integration cost and breakage risk."
+      },
+      {
+        "id": 2,
+        "question": "When should you prefer resource-oriented REST endpoints over action-style RPC endpoints?",
+        "options": [
+          "When domain entities and standard CRUD semantics are clear and consistent",
+          "Only when using GraphQL",
+          "Never; RPC is always superior",
+          "Only for internal APIs"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Resource-oriented design supports predictable semantics, caching, and discoverability when operations align with entity lifecycle behavior."
+      },
+      {
+        "id": 3,
+        "question": "Why is idempotency key support critical for POST operations in distributed clients?",
+        "options": [
+          "It improves JSON compression ratio",
+          "It prevents duplicate side effects when clients retry after timeouts or uncertain failures",
+          "It replaces authentication",
+          "It enforces strict serializability"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Retries are unavoidable in distributed systems. Idempotency keys let servers deduplicate repeated intent safely."
+      },
+      {
+        "id": 4,
+        "question": "What is the senior-level guidance on API versioning?",
+        "options": [
+          "Never version; breaking changes are acceptable",
+          "Version only database schemas, not APIs",
+          "Use explicit versioning with strong deprecation policy and migration guidance",
+          "Use hidden version negotiation in undocumented headers"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Versioning is governance plus communication. A predictable deprecation lifecycle is as important as the mechanism itself."
+      },
+      {
+        "id": 5,
+        "question": "Which HTTP status usage is most correct for asynchronous job creation?",
+        "options": [
+          "200 OK with no job identifier",
+          "201 Created with immediate final result only",
+          "202 Accepted with a location or job resource for status polling",
+          "204 No Content always"
+        ],
+        "correctAnswer": 2,
+        "explanation": "202 indicates accepted but not completed work. Returning a job resource supports progress retrieval and eventual completion handling."
+      },
+      {
+        "id": 6,
+        "question": "What is a practical reason to return problem details (RFC 7807 style) for errors?",
+        "options": [
+          "To provide machine-readable, consistent error contracts across endpoints",
+          "To hide all operational diagnostics",
+          "To avoid status codes",
+          "To force client-side retries"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Standardized error payloads improve client handling, observability, and support workflows by making failures structured and predictable."
+      },
+      {
+        "id": 7,
+        "question": "For pagination in large mutable datasets, why is cursor pagination often preferred to offset pagination?",
+        "options": [
+          "Cursor pagination avoids duplicates/skips under concurrent inserts and scales better for deep pages",
+          "Cursor pagination is easier to debug manually in SQL",
+          "Offset pagination cannot be used with indexes",
+          "Cursor pagination always returns exact total count"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Offsets become expensive and unstable under churn. Cursors encode traversal position and improve consistency/performance."
+      },
+      {
+        "id": 8,
+        "question": "What is a key downside of exposing internal database IDs as public identifiers?",
+        "options": [
+          "They prevent caching",
+          "They can leak system internals and constrain future storage migrations",
+          "They disable authorization checks",
+          "They break TLS"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Public identifiers become long-term contracts. Coupling them to internal persistence choices can reduce flexibility and expose sensitive patterns."
+      },
+      {
+        "id": 9,
+        "question": "When should an API choose eventual consistency semantics explicitly in documentation?",
+        "options": [
+          "Only if clients request it",
+          "Whenever read-after-write may not be immediate and client workflows must account for lag",
+          "Never; consistency details are internal",
+          "Only for GraphQL APIs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Consistency behavior affects product flows. Explicitly documenting it prevents incorrect client assumptions and brittle UX."
+      },
+      {
+        "id": 10,
+        "question": "Which pattern best supports safe API field deprecation?",
+        "options": [
+          "Immediate removal after release",
+          "Mark as deprecated, observe usage telemetry, communicate timeline, then remove",
+          "Keep fields forever without docs",
+          "Remove from docs but keep behavior undefined"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Deprecation is lifecycle management: visibility, migration path, measurement, and controlled removal."
+      },
+      {
+        "id": 11,
+        "question": "Why should APIs include request correlation IDs?",
+        "options": [
+          "To increase payload entropy",
+          "To trace requests across services for debugging and incident response",
+          "To replace authentication tokens",
+          "To improve load balancing decisions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Correlation IDs enable end-to-end tracing through distributed systems, reducing time to identify failure paths."
+      },
+      {
+        "id": 12,
+        "question": "What is a robust timeout strategy for API clients calling downstream services?",
+        "options": [
+          "Infinite timeout with no retries",
+          "Explicit bounded timeouts, retry budgets, and jittered backoff",
+          "Aggressive immediate retries without limits",
+          "No timeouts for idempotent requests"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bounded timeouts and controlled retries prevent resource exhaustion and cascading failures under partial outages."
+      },
+      {
+        "id": 13,
+        "question": "What is the main architectural value of API gateways?",
+        "options": [
+          "A centralized policy layer for auth, routing, rate limiting, and observability",
+          "Replacing all service-level authorization",
+          "Guaranteeing zero latency",
+          "Eliminating service discovery"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Gateways can consolidate cross-cutting concerns, but core domain authorization and resilience logic still belong in services."
+      },
+      {
+        "id": 14,
+        "question": "Which statement about rate limiting is most accurate?",
+        "options": [
+          "Rate limits are only for DDoS defense",
+          "Rate limits protect fairness and system stability under varying client behavior",
+          "Rate limits should never be exposed in responses",
+          "Rate limits eliminate the need for autoscaling"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rate limiting is a capacity governance tool. Good APIs return limit metadata and retry guidance for clients."
+      },
+      {
+        "id": 15,
+        "question": "What is a common mistake in API authorization design?",
+        "options": [
+          "Evaluating permissions only at gateway level without resource-context checks in services",
+          "Using short-lived tokens",
+          "Applying principle of least privilege",
+          "Auditing privileged operations"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Gateways help, but resource-aware authorization often requires service-level checks with domain context."
+      },
+      {
+        "id": 16,
+        "question": "Why might you choose PATCH over PUT?",
+        "options": [
+          "PATCH supports partial updates where full replacement semantics are not desired",
+          "PATCH always guarantees idempotency",
+          "PUT cannot update resources",
+          "PATCH is faster in all cases"
+        ],
+        "correctAnswer": 0,
+        "explanation": "PUT typically implies full replacement, while PATCH applies partial modifications. Semantics should match business intent."
+      },
+      {
+        "id": 17,
+        "question": "What is the strongest argument for schema-first API development?",
+        "options": [
+          "It eliminates integration testing",
+          "It aligns teams around explicit contracts and enables code generation and validation",
+          "It removes need for versioning",
+          "It guarantees backward compatibility automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Schema-first workflows improve contract clarity, collaboration, and tooling, but still require governance and compatibility discipline."
+      },
+      {
+        "id": 18,
+        "question": "Contract tests in API ecosystems primarily protect against:",
+        "options": [
+          "Slow SQL queries",
+          "Breaking changes between providers and consumers",
+          "Expired TLS certificates",
+          "Incorrect autoscaling thresholds"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Consumer/provider contract tests catch incompatibilities early, especially in independently deployable service environments."
+      },
+      {
+        "id": 19,
+        "question": "What is a key benefit of HATEOAS-style links in some APIs?",
+        "options": [
+          "They can guide clients through state transitions with discoverable actions",
+          "They replace authentication",
+          "They force monolithic architecture",
+          "They prevent versioning"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Hypermedia links can improve evolvability by reducing hardcoded client knowledge of endpoint paths and transitions."
+      },
+      {
+        "id": 20,
+        "question": "Which response behavior is best when an update request carries a stale entity version?",
+        "options": [
+          "Silently overwrite current data",
+          "Return conflict/precondition failure and require client reconciliation",
+          "Retry indefinitely on server",
+          "Delete and recreate resource"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Version-aware updates should reject stale writes to prevent lost updates and force deterministic conflict handling."
+      },
+      {
+        "id": 21,
+        "question": "Why should APIs avoid returning different shapes for the same endpoint based on hidden flags?",
+        "options": [
+          "It reduces payload size",
+          "It creates brittle, hard-to-test contracts and surprises consumers",
+          "It improves backward compatibility",
+          "It simplifies SDK generation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Predictable schemas are critical for maintainability. Hidden polymorphism increases integration complexity and bug risk."
+      },
+      {
+        "id": 22,
+        "question": "What is the main purpose of ETags with If-Match/If-None-Match headers?",
+        "options": [
+          "Enable optimistic concurrency and conditional requests",
+          "Encrypt responses in transit",
+          "Replace OAuth scopes",
+          "Guarantee cache hit ratios"
+        ],
+        "correctAnswer": 0,
+        "explanation": "ETags support cache validation and safe update preconditions to avoid conflicting writes and unnecessary payload transfer."
+      },
+      {
+        "id": 23,
+        "question": "In API observability, why are RED metrics (Rate, Errors, Duration) useful?",
+        "options": [
+          "They provide a concise operational health baseline for service endpoints",
+          "They replace logs entirely",
+          "They only apply to frontend telemetry",
+          "They are equivalent to business KPIs"
+        ],
+        "correctAnswer": 0,
+        "explanation": "RED is an effective first-layer view of API behavior and helps triage incidents before deeper diagnostics."
+      },
+      {
+        "id": 24,
+        "question": "What is a robust approach to handling partial failures in composite APIs?",
+        "options": [
+          "Fail silently and return 200",
+          "Surface partial status explicitly and design compensating or fallback behavior",
+          "Retry forever until all dependencies succeed",
+          "Disable timeouts"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Composite endpoints should communicate partial success/failure clearly and avoid hiding degraded behavior."
+      },
+      {
+        "id": 25,
+        "question": "Why should API teams publish explicit SLAs/SLOs for critical endpoints?",
+        "options": [
+          "To create measurable reliability expectations and guide error budgets",
+          "To avoid internal monitoring",
+          "To guarantee no incidents",
+          "To remove the need for capacity planning"
+        ],
+        "correctAnswer": 0,
+        "explanation": "SLOs align engineering and business expectations, informing prioritization of reliability work and tradeoffs."
+      },
+      {
+        "id": 26,
+        "question": "What is a common anti-pattern in API naming?",
+        "options": [
+          "Consistent resource nouns with clear hierarchy",
+          "Inconsistent verb-heavy paths that encode implementation details",
+          "Plural collection resources",
+          "Stable naming with deprecation policy"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Naming should reflect domain concepts, not transient internals. Inconsistency increases client learning and maintenance costs."
+      },
+      {
+        "id": 27,
+        "question": "For webhooks, what design choice most improves producer-consumer reliability?",
+        "options": [
+          "At-most-once delivery with no retries",
+          "Signed payloads, idempotency keys, retry policy, and replay support",
+          "Unversioned payload shape",
+          "Synchronous acknowledgment of downstream processing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Webhook ecosystems are distributed and failure-prone; integrity, replay safety, and retries are core reliability requirements."
+      },
+      {
+        "id": 28,
+        "question": "Why is request validation at the API boundary mandatory even with typed SDKs?",
+        "options": [
+          "Typed SDKs guarantee all clients are trusted",
+          "Boundary validation protects against malformed or malicious inputs from any client",
+          "Validation should happen only in the database",
+          "It is unnecessary for internal APIs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SDKs are helpful but not authoritative. Servers must enforce contract and security invariants independently."
+      },
+      {
+        "id": 29,
+        "question": "What is the best reason to expose retry-after headers on 429/503 responses?",
+        "options": [
+          "It helps clients back off predictably and reduces synchronized retry storms",
+          "It removes need for load balancing",
+          "It forces clients to stop retrying forever",
+          "It hides system capacity"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Explicit retry guidance improves client behavior and protects recovering systems from immediate retry spikes."
+      },
+      {
+        "id": 30,
+        "question": "Which security practice is most critical for machine-to-machine APIs?",
+        "options": [
+          "Long-lived shared static tokens with broad scope",
+          "Short-lived scoped credentials with rotation and auditability",
+          "IP allowlist only with no auth",
+          "Client-side encryption only"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Scoped, rotated credentials reduce blast radius and improve governance and incident response posture."
+      },
+      {
+        "id": 31,
+        "question": "In GraphQL API operations, what is a major risk if query complexity is uncontrolled?",
+        "options": [
+          "Schema introspection becomes impossible",
+          "Expensive nested queries can amplify backend load and create denial-of-wallet patterns",
+          "Mutations cannot be retried",
+          "Caching headers stop working"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Complexity limits, depth limits, and persisted queries help prevent expensive request abuse and operational instability."
+      },
+      {
+        "id": 32,
+        "question": "Why are compatibility tests across SDK versions important for API providers?",
+        "options": [
+          "To verify evolution does not break existing generated/manual clients",
+          "To optimize CDN hit rates",
+          "To replace canary deployments",
+          "To avoid semantic versioning"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Provider changes can break old clients in subtle ways. Cross-version test matrices catch regressions before release."
+      },
+      {
+        "id": 33,
+        "question": "What is a proper use of 409 Conflict in API semantics?",
+        "options": [
+          "Authentication failure",
+          "State conflict such as duplicate unique resource or version mismatch",
+          "Malformed JSON syntax",
+          "Rate-limited request"
+        ],
+        "correctAnswer": 1,
+        "explanation": "409 indicates request semantic conflict with current resource state, distinct from syntax or auth errors."
+      },
+      {
+        "id": 34,
+        "question": "When designing search endpoints, why separate filtering, sorting, and pagination concerns explicitly?",
+        "options": [
+          "It enables stable, testable query semantics and easier client reasoning",
+          "It reduces need for indexes",
+          "It prevents all cache misses",
+          "It forces eventual consistency"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Clear parameter semantics reduce ambiguity and make both backend implementation and client integration more robust."
+      },
+      {
+        "id": 35,
+        "question": "What is the best reason to enforce strict response schema validation in CI?",
+        "options": [
+          "To catch accidental contract drift before deployment",
+          "To eliminate runtime monitoring",
+          "To avoid writing documentation",
+          "To disable feature flags"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Automated contract validation prevents unintentional response changes that can break consumers unexpectedly."
+      },
+      {
+        "id": 36,
+        "question": "Which API change is generally backward compatible?",
+        "options": [
+          "Removing a required request field",
+          "Narrowing enum values",
+          "Adding an optional response field that consumers can ignore",
+          "Changing response field type"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Non-breaking evolution usually means additive, optional changes that do not invalidate existing client assumptions."
+      },
+      {
+        "id": 37,
+        "question": "What is the purpose of canarying API changes by traffic percentage or client cohort?",
+        "options": [
+          "To detect regressions with limited blast radius before full rollout",
+          "To reduce code review time",
+          "To avoid writing migration notes",
+          "To bypass SLO monitoring"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Canary releases enable controlled exposure and fast rollback if error rates or latencies degrade."
+      },
+      {
+        "id": 38,
+        "question": "Why should APIs distinguish 401 and 403 clearly?",
+        "options": [
+          "They are interchangeable",
+          "401 signals missing/invalid authentication; 403 signals authenticated but unauthorized",
+          "401 is for validation errors",
+          "403 is for server timeouts"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Correct auth semantics improve security clarity and client behavior, reducing confusion during integration and incident triage."
+      },
+      {
+        "id": 39,
+        "question": "What is a key governance benefit of centralized API style guides and linting?",
+        "options": [
+          "Fewer architectural discussions",
+          "Consistent contracts across teams, reducing cognitive load and integration friction",
+          "Automatic database tuning",
+          "Guaranteed zero breaking changes"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Style consistency improves discoverability and predictability at organization scale, though compatibility still needs explicit lifecycle management."
+      },
+      {
+        "id": 40,
+        "question": "For long-term API success, what is the strongest indicator of maturity?",
+        "options": [
+          "High endpoint count",
+          "Contract stability, observability, deprecation discipline, and strong consumer feedback loops",
+          "Frequent breaking rewrites",
+          "Undocumented internal-only behavior"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mature API programs treat contract evolution as product management, balancing velocity with reliability for downstream consumers."
+      }
+    ]
+  }
+]
